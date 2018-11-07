@@ -7,7 +7,7 @@ public class SecureDataContainer<E> implements SecureDataContainerInterface {
     Map<KeyCouple,Vector<E>> DBUsers;
 
     public SecureDataContainer(){
-        this.DBUsers = new HashMap<KeyCouple,Vector<E>>();
+        this.DBUsers = new HashMap<>();
     }
 
     @Override
@@ -15,13 +15,15 @@ public class SecureDataContainer<E> implements SecureDataContainerInterface {
 
     @Override
     public int getSize(String Owner, String passw) throws NullPointerException,IllegalArgumentException{
-        if(Owner.equals(null) || passw.equals(null)) throw new NullPointerException();
+        if(Owner == null || passw == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
         return DBUsers.size();
     }
 
     @Override
-    public boolean put(String Owner, String passw, Object data) {
+    public boolean put(String Owner, String passw, Object data) throws NullPointerException,IllegalArgumentException {
+        if(Owner == null || passw == null || data == null) throw new NullPointerException();
+        if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
         return false;
     }
 
