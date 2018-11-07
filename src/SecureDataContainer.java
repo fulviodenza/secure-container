@@ -1,9 +1,13 @@
 import java.util.Iterator;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class SecureDataContainer<E> implements SecureDataContainerInterface {
-  
-    public SecureDataContainer(){
 
+    private HashMap<User, ArrayList<E>> data;
+
+    public SecureDataContainer() {
+      data = new HashMap<>();
     }
 
     @Override

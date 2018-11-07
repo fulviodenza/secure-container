@@ -5,7 +5,10 @@ public interface SecureDataContainerInterface<E> {
     // Crea l’identità un nuovo utente della collezione
     /* @effects: Aggiunge un nuovo utente a this
      * @modifies: this
-     * @requires: Id, passw != null, altrimenti lancia NullPointerException */
+     * @requires: Id, passw != null, altrimenti lancia NullPointerException
+     *            Id, passw != "", altrimenti lancia una InvalidArgumentException
+  *               (id, passw) non in this, altrimenti lancia una UserAlreadyPresentException
+     */
     public void createUser(String Id, String passw);
 
     /* Restituisce il numero degli elementi di un utente presenti nella
@@ -66,7 +69,7 @@ public interface SecureDataContainerInterface<E> {
     *             Se Other non è un utente in this, lancia una UserNotPresentException. Commento troppo normale, eh?
     * @modifies: this(Other)
     */
-    public void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException;
+    public void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException, UserNotPresentException;
 
     /* restituisce un iteratore (senza remove) che genera tutti i dati
     dell’utente in ordine arbitrario
