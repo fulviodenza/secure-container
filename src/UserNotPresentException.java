@@ -1,9 +1,9 @@
 public class UserNotPresentException extends Exception {
   public UserNotPresentException(String user) {
-    super("PORCODIO " + user + " non è un utente valido, scemo!");
+    super(user + " non è un utente valido");
   }
 
   public UserNotPresentException() {
-    super("Mi scoccio di scrivere un messaggio decente per l'eccezione, poi vedo di renderlo normale");
+    super("Tentativo di accesso ad un utente non presente nella base");
   }
 }

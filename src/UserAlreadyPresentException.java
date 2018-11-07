@@ -1,9 +1,9 @@
 public class UserAlreadyPresentException extends Exception {
   public UserAlreadyPresentException(String user) {
-    super("PORCODIO " + user + " è gia presente, scemo!");
+    super(user + " è un utente già presente nella base.");
   }
 
   public UserAlreadyPresentException() {
-    super("Mi scoccio di scrivere un messaggio decente per l'eccezione, poi vedo di renderlo normale");
+    super("Tentativo di creazione di un utente già presente nella base.");
   }
 }

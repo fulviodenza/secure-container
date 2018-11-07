@@ -7,9 +7,9 @@ public interface SecureDataContainerInterface<E> {
      * @modifies: this
      * @requires: Id, passw != null, altrimenti lancia NullPointerException
      *            Id, passw != "", altrimenti lancia una InvalidArgumentException
-  *               (id, passw) non in this, altrimenti lancia una UserAlreadyPresentException
+  *               Id non in this, altrimenti lancia una UserAlreadyPresentException
      */
-    public void createUser(String Id, String passw);
+    public void createUser(String Id, String passw) throws UserAlreadyPresentException;
 
     /* Restituisce il numero degli elementi di un utente presenti nella
     collezione*/
@@ -24,18 +24,15 @@ public interface SecureDataContainerInterface<E> {
     /* @effects: Restituisce true se l'utente è presente in this (Di conseguenza l'inserimento è riuscito),
      * 		 Altrimenti restituisce false
      * @requires: Owner, passw, data != null, altrimenti ti porge una NullPointerException
-     * 		        Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
-     * 		        non è più tuo amico e ti dona una InvalidCredentialsException
      * @modifies: this(owner, passw) = this(owner,pass) + data */
-    public boolean put(String Owner, String passw, E data) throws InvalidCredentialsException;
+    public boolean put(String Owner, String passw, E data);
 
     /* Ottiene una copia del valore del dato nella collezione
     se vengono rispettati i controlli di identità*/
     /* @effects: Restituisce una copia di data se il login ha esito positivo, altrimenti ti chiava null
-     * @requires: Owner, passw, data != null, altrimenti ti soffia vicino al visino una NullPointerException
-     * 		        Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
-     * 		        ti prende a schiaffi e ti restituisce InvalidCredentialsException */
-    public E get(String Owner, String passw, E data) throws InvalidCredentialsException;
+     * @requires: Owner, passw, data != null, altrimenti lancia NullPointerException
+     */
+    public E get(String Owner, String passw, E data);
 
     /* Rimuove il dato nella collezione
     se vengono rispettati i controlli di identità*/
@@ -46,7 +43,7 @@ public interface SecureDataContainerInterface<E> {
     * 		        ti insulta con una InvalidCredentialsException
     * @modifies: this
     */
-    public E remove(String Owner, String passw, E data) throws InvalidCredentialsException;
+    public E remove(String Owner, String passw, E data);
 
     /* Crea una copia del dato nella collezione
     se vengono rispettati i controlli di identità*/
@@ -54,7 +51,7 @@ public interface SecureDataContainerInterface<E> {
     *  @requires: Owner, passw, data != null, altrimenti ti sputa in faccia una NullPointerException
     *             data deve appartenere a this(OwOner, passw), altrimenti owo he throws a sexy ElementNotInListException
     * 		        Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
-    * 		        ti regala con una InvalidCredentialsException. Che gentile <3
+    * 		        ti regala una InvalidCredentialsException. Che gentile <3
     * @modifies: this
     */
     public void copy(String Owner, String passw, E data) throws InvalidCredentialsException;
@@ -75,8 +72,9 @@ public interface SecureDataContainerInterface<E> {
     dell’utente in ordine arbitrario
     se vengono rispettati i controlli di identità*/
     /*@effects: Restituisce un iteratore degli elementi di this(Owner, passw)
-    * 		      Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
+    * 		      Owner, passw devono essere le credenziali corrette di un utente, altrimenti
     * 		      ti urla contro "InvalidCredentialsException".
+    *           this(Owner,passw) deve contenere data, altrimenti lancia InvalidArgumentException
     */
     public Iterator<E> getIterator(String Owner, String passw) throws InvalidCredentialsException;
 }
