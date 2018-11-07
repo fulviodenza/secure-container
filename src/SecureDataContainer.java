@@ -1,17 +1,26 @@
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Vector;
 
 public class SecureDataContainer<E> implements SecureDataContainerInterface {
 
-    String Id;
-    String passw;
-
+    private Map<KeyCouple,Vector<E>> DBUsers;
 
     public SecureDataContainer(){
+        DBUsers = new HashMap<>();
 
     }
 
     @Override
-    public void createUser(String Id, String passw) {}
+    public void createUser(String Id, String passw) throws NullPointerException {
+        if(Id != null && passw != null){
+            KeyCouple IdPassw = new KeyCouple(Id,passw);
+            DBUsers.put(IdPassw,null);
+        }else{
+            throw new NullPointerException();
+        }
+    }
 
     @Override
     public int getSize(String Owner, String passw) {
