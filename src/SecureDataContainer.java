@@ -14,17 +14,21 @@ public class SecureDataContainer<E> implements SecureDataContainerInterface {
 
     @Override
     public void createUser(String Id, String passw) throws NullPointerException {
-        if(Id != null && passw != null){
+        if((Id != null) && passw != null){
             KeyCouple IdPassw = new KeyCouple(Id,passw);
             DBUsers.put(IdPassw,null);
         }else{
             throw new NullPointerException();
         }
+
     }
 
     @Override
     public int getSize(String Owner, String passw) {
-        return 0;
+        if(Owner == null || passw == null) throw new NullPointerException();
+        if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
+        return DBUsers.size();
+
     }
 
     @Override
