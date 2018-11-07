@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="28a38f9c-acdc-4f20-b3bd-cfc6d8c3a545" name="Default Changelist" comment="Aggiunto il metodo createUser">
-      <change afterPath="$PROJECT_DIR$/src/KeyCouple.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="28a38f9c-acdc-4f20-b3bd-cfc6d8c3a545" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/SecureDataContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecureDataContainer.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -53,13 +51,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="1186" />
+          <entry key="java" value="1196" />
           <entry key="txt" value="34" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="1186" />
+          <entry key="JAVA" value="1196" />
           <entry key="PLAIN_TEXT" value="34" />
         </counts>
       </usages-collector>
@@ -84,8 +82,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/SecureDataContainer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="28" column="35" lean-forward="true" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
+            <state relative-caret-position="150">
+              <caret line="10" column="12" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -200,7 +198,7 @@
       <workItem from="1541596292733" duration="334000" />
       <workItem from="1541596680530" duration="452000" />
       <workItem from="1541603628976" duration="5386000" />
-      <workItem from="1541609201106" duration="236000" />
+      <workItem from="1541609201106" duration="561000" />
     </task>
     <task id="LOCAL-00001" summary="Aggiunto il metodo createUser">
       <created>1541608768687</created>
@@ -209,11 +207,18 @@
       <option name="project" value="LOCAL" />
       <updated>1541608768687</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Aggiunto il metodo createUser">
+      <created>1541609464296</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1541609464296</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6408000" />
+    <option name="totallyTimeSpent" value="6733000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="741" extended-state="6" />
@@ -237,7 +242,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32888147" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32888147" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32888147" />
-      <window_info active="true" anchor="bottom" id="Messages" order="11" visible="true" weight="0.32888147" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32888147" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -294,8 +299,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SecureDataContainer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="28" column="35" lean-forward="true" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
+        <state relative-caret-position="150">
+          <caret line="10" column="12" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

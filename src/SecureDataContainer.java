@@ -8,7 +8,7 @@ public class SecureDataContainer<E> implements SecureDataContainerInterface {
     private Map<KeyCouple,Vector<E>> DBUsers;
 
     public SecureDataContainer(){
-        DBUsers = new HashMap<>();
+        this.DBUsers = new HashMap<>();
 
     }
 
