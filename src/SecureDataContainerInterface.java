@@ -1,5 +1,6 @@
 import java.util.Iterator;
 
+/* Typical element: {<user1, elts1>...<usern, eltsn>}*/
 public interface SecureDataContainerInterface<E> {
 
     // Crea l’identità un nuovo utente della collezione
