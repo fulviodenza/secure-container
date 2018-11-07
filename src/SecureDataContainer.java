@@ -4,7 +4,7 @@ import java.util.Vector;
 import java.util.HashMap;
 public class SecureDataContainer<E> implements SecureDataContainerInterface {
 
-    Map<KeyCouple,Vector<E>> DBUsers;
+    private Map<KeyCouple,Vector> DBUsers;
 
     public SecureDataContainer(){
         this.DBUsers = new HashMap<>();
@@ -21,27 +21,44 @@ public class SecureDataContainer<E> implements SecureDataContainerInterface {
     }
 
     @Override
-    public boolean put(String Owner, String passw, Object data) throws NullPointerException,IllegalArgumentException {
+    public boolean put(String Owner, String passw, Object data) throws NullPointerException,IllegalArgumentException,NoUserException {
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        return false;
+        KeyCouple user = new KeyCouple(Owner,passw);
+        if(DBUsers.containsKey(user)){
+            return DBUsers.get(user).add(data);
+        }else{
+            throw new NoUserException("Non esiste l'utente richiesto");
+        }
     }
 
     @Override
-    public Object get(String Owner, String passw, Object data) {
+    public Object get(String Owner, String passw, Object data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException{
+        if(Owner == null || passw == null || data == null) throw new NullPointerException();
+        if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
+        KeyCouple user = new KeyCouple(Owner,passw);
+        if(DBUsers.containsKey(user)){
+            if(DBUsers.get(user).contains(data)){
+                Object aux = data;
+                return aux;
+            }else{
+                throw new DataNotFoundException("Non esiste il dato richiesto");
+            }
+        }else{
+            throw new NoUserException("Non esiste l'utente richiesto");
+        }
+    }
+
+    @Override
+    public Object remove(String Owner, String passw, Object data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException{
         return null;
     }
 
     @Override
-    public Object remove(String Owner, String passw, Object data) {
-        return null;
-    }
+    public void copy(String Owner, String passw, Object data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException{}
 
     @Override
-    public void copy(String Owner, String passw, Object data) {}
-
-    @Override
-    public void share(String Owner, String passw, String Other, Object data) {}
+    public void share(String Owner, String passw, String Other, Object data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException{}
 
     @Override
     public Iterator getIterator(String Owner, String passw) {
