@@ -21,9 +21,9 @@ public interface SecureDataContainerInterface<E> {
     /* @effects: Restituisce true se l'utente è presente in this (Di conseguenza l'inserimento è riuscito),
      * 		 Altrimenti restituisce false
      * @requires: Owner, passw, data != null, altrimenti ti porge una NullPointerException
-     * @modifies: this(owner, passw) = this(owner,pass) + data
      * 		        Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
-     * 		        non è più tuo amico e ti dona una InvalidCredentialsException */
+     * 		        non è più tuo amico e ti dona una InvalidCredentialsException
+     * @modifies: this(owner, passw) = this(owner,pass) + data */
     public boolean put(String Owner, String passw, E data) throws InvalidCredentialsException;
 
     /* Ottiene una copia del valore del dato nella collezione
@@ -41,6 +41,7 @@ public interface SecureDataContainerInterface<E> {
     *             data deve appartenere a this(owner, passw), altrimenti owo he throws a sexy ElementNotInListException
     * 		        Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
     * 		        ti insulta con una InvalidCredentialsException
+    * @modifies: this
     */
     public E remove(String Owner, String passw, E data) throws InvalidCredentialsException;
 
@@ -51,6 +52,7 @@ public interface SecureDataContainerInterface<E> {
     *             data deve appartenere a this(OwOner, passw), altrimenti owo he throws a sexy ElementNotInListException
     * 		        Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
     * 		        ti regala con una InvalidCredentialsException. Che gentile <3
+    * @modifies: this
     */
     public void copy(String Owner, String passw, E data) throws InvalidCredentialsException;
 
@@ -62,6 +64,7 @@ public interface SecureDataContainerInterface<E> {
     * 		        Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
     * 		        ti regala con una InvalidCredentialsException. Che gentile <3
     *             Se Other non è un utente in this, lancia una UserNotPresentException. Commento troppo normale, eh?
+    * @modifies: this(Other)
     */
     public void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException;
 
