@@ -1,11 +1,7 @@
 import java.util.Iterator;
 
 public class SecureDataContainer<E> implements SecureDataContainerInterface {
-
-    String Id;
-    String passw;
-
-
+  
     public SecureDataContainer(){
 
     }
