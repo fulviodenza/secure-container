@@ -1,94 +1,44 @@
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Vector;
-import java.util.HashMap;
 
-public class SecureDataContainer<E> implements SecureDataContainerInterface<E> {
+public interface SecureDataContainer<E> {
 
-    private Map<KeyCouple,Vector<E>> DBUsers;
+    // Crea l’identità un nuovo utente della collezione
 
-    public SecureDataContainer(){
-        DBUsers = new HashMap<>();
-    }
+    public void createUser(String Id, String passw)throws DoubleUserException;
 
-    @Override
-    public void createUser(String Id, String passw) {}
+    /* Restituisce il numero degli elementi di un utente presenti nella
+    collezione*/
 
-    @Override
-    public int getSize(String Owner, String passw) throws NullPointerException,IllegalArgumentException{
-        if(Owner == null || passw == null) throw new NullPointerException();
-        if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        return DBUsers.size();
-    }
+    public int getSize(String Owner, String passw)throws NoUserException;
 
-    @Override
-    public boolean put(String Owner, String passw, E data) throws NullPointerException,IllegalArgumentException,NoUserException {
-        if(Owner == null || passw == null || data == null) throw new NullPointerException();
-        if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        KeyCouple user = new KeyCouple(Owner,passw);
-        if(DBUsers.containsKey(user)){
-            Vector<E> aux = DBUsers.get(user);
-            return aux.add(data);
-        }else{
-            throw new NoUserException("Non esiste l'utente richiesto");
-        }
-    }
+    /*Inserisce il valore del dato nella collezione
+    se vengono rispettati i controlli di identità*/
 
+    public boolean put(String Owner, String passw, E data) throws NoUserException;
 
-    @Override
-    public E get(String Owner, String passw, Object data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException{
-        if(Owner == null || passw == null || data == null) throw new NullPointerException();
-        if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        KeyCouple user = new KeyCouple(Owner,passw);
-        if(DBUsers.containsKey(user)){
-            if(DBUsers.get(user).contains(data)){
-                return DBUsers.get(user).get(DBUsers.get(user).indexOf(data));
-            }else{
-                throw new DataNotFoundException("Non esiste il dato richiesto");
-            }
-        }else{
-            throw new NoUserException("Non esiste il dato richiesto");
-        }
-    }
+    /* Ottiene una copia del valore del dato nella collezione
+    se vengono rispettati i controlli di identità*/
 
-    @Override
-    public E remove(String Owner, String passw, E data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException{
-        if(Owner == null || passw == null || data == null) throw new NullPointerException();
-        if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        KeyCouple user = new KeyCouple(Owner,passw);
-        if(DBUsers.containsKey(user)){
-            if(DBUsers.get(user).contains(data)){
-                DBUsers.get(user).remove(DBUsers.get(user).indexOf(data));
-                return data;
-            }else{
-                throw new DataNotFoundException("Non esiste il dato richiesto");
-            }
-        }else{
-            throw new NoUserException("Non esiste il dato richiesto");
-        }
-    }
-    @Override
-    public void copy(String Owner, String passw, E data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException{
-        if(Owner == null || passw == null || data == null) throw new NullPointerException();
-        if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        KeyCouple user = new KeyCouple(Owner,passw);
-        if(DBUsers.containsKey(user)){
-            if(DBUsers.get(user).contains(data)){
-                DBUsers.get(user).add(data);
-            }else{
-                throw new DataNotFoundException("Non esiste il dato richiesto");
-            }
-        }else{
-            throw new NoUserException("Non esiste il dato richiesto");
-        }
-    }
+    public E get(String Owner, String passw, E data)throws NoUserException,DataNotFoundException;
 
+    /* Rimuove il dato nella collezione
+    se vengono rispettati i controlli di identità*/
 
-    @Override
-    public void share(String Owner, String passw, String Other, E data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException{}
+    public E remove(String Owner, String passw, E data)throws NoUserException,DataNotFoundException;
 
-    @Override
-    public Iterator getIterator(String Owner, String passw) {
-        return null;
-    }
+    /* Crea una copia del dato nella collezione
+    se vengono rispettati i controlli di identità*/
+
+    public void copy(String Owner, String passw, E data)throws NoUserException,DataNotFoundException;
+
+    /* Condivide il dato nella collezione con un altro utente
+    se vengono rispettati i controlli di identità*/
+
+    public void share(String Owner, String passw, String Other, E data)throws NoUserException,DataNotFoundException;
+
+    /* restituisce un iteratore (senza remove) che genera tutti i dati
+    dell’utente in ordine arbitrario
+    se vengono rispettati i controlli di identità*/
+
+    public Iterator<E> getIterator(String Owner, String passw);
 }
