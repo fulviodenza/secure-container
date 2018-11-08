@@ -53,9 +53,10 @@ public interface SecureDataContainerInterface<E> {
     *             data deve appartenere a this(OwOner, passw), altrimenti owo he throws a sexy ElementNotInListException
     * 		        Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
     * 		        ti regala una InvalidCredentialsException. Che gentile <3
+    *             Se l'utente possiede già data, ti prende a schiaffi e ti restituisce ElementAlreadyPresentException
     * @modifies: this
     */
-    public void copy(String Owner, String passw, E data) throws InvalidCredentialsException;
+    public void copy(String Owner, String passw, E data) throws InvalidCredentialsException, ElementAlreadyPresentException;
 
     /* Condivide il dato nella collezione con un altro utente
     se vengono rispettati i controlli di identità*/
@@ -65,6 +66,7 @@ public interface SecureDataContainerInterface<E> {
     * 		        Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
     * 		        ti regala con una InvalidCredentialsException. Che gentile <3
     *             Se Other non è un utente in this, lancia una UserNotPresentException. Commento troppo normale, eh?
+    *             Se this(Other) contiene già data, lancia una ElementAlreadyPresentException. Anche questo, neh?
     * @modifies: this(Other)
     */
     public void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException, UserNotPresentException;

@@ -7,7 +7,9 @@ import java.util.Collections;
 
   IR: data != null && per ogni <u,l> in data si ha che u != null e l != null
       per ogni u = <user, elts> in this non esiste o = <user, elts> t.c
-      u.getUserName() == o.getUserName()
+      u.getUserName() == o.getUserName() &&
+      Per ogni u = <user, elts> in this, per ogni e, u in u.elts, con e != u,
+      si ha che u != e.
   FA: f(data) = {<user1, elts1>...<usern, eltsn>} dove usern è un User e eltsn è
               una lista di elementi E
 
@@ -63,8 +65,10 @@ public class SecureDataContainer<E> implements SecureDataContainerInterface<E> {
     @Override
     public E get(String Owner, String passw, Object data) {
       User u = new User(Owner, passw);
-      if(storedElts.containsKey(u))
-        return new E(storedElts.get(u).get(storedElts.get(u).indexOf(data)));
+      if(storedElts.containsKey(u)) {
+        List<E> userElts = storedElts.get(u);
+        return userElts.get(userElts.indexOf(data));
+      }
       return null;
     }
 
@@ -72,7 +76,8 @@ public class SecureDataContainer<E> implements SecureDataContainerInterface<E> {
     public E remove(String Owner, String passw, Object data) {
       User u = new User(Owner, passw);
       if(storedElts.containsKey(u)) {
-        E backup = new E(storedElts.get(u).get(storedElts.get(u).indexOf(data)));
+        List<E> userElts = storedElts.get(u);
+        E backup = userElts.get(userElts.indexOf(data));
         storedElts.get(u).remove(data);
         return backup;
       }
@@ -80,17 +85,23 @@ public class SecureDataContainer<E> implements SecureDataContainerInterface<E> {
     }
 
     @Override
-    public void copy(String Owner, String passw, Object data) throws InvalidCredentialsException {
+    public void copy(String Owner, String passw, Object data) throws InvalidCredentialsException, ElementAlreadyPresentException {
       User u = new User(Owner, passw);
+      if(data == null) throw new NullPointerException();
       if(storedElts.containsKey(u)) {
-        storedElts.get(u).add(new E(data));
+        List<E> userList = storedElts.get(u);
+        if(userList.contains(data)) throw new ElementAlreadyPresentException();
+
+        userList.add(data);
       } else {
         throw new InvalidCredentialsException();
       }
     }
 
     @Override
-    public void share(String Owner, String passw, String Other, Object data) {
+    public void share(String Owner, String passw, String Other, Object data) throws InvalidCredentialsException,
+                                                                                UserNotPresentException,
+                                                                                ElementAlreadyPresentException {
       User u = new User(Owner, passw);
       if( !storedElts.containsKey(u) ) throw new InvalidCredentialsException();
       if( !userPresent(Other) ) throw new UserNotPresentException(Other);
@@ -98,7 +109,9 @@ public class SecureDataContainer<E> implements SecureDataContainerInterface<E> {
 
       for( User o : storedElts.keySet() ) {
         if( o.getUserName().equals(Other) ) {
-          storedElts.get(u).add(new E(data));
+          List<E> otherList = storedElts.get(u);
+          if( otherList.contains(data) ) throw new ElementAlreadyPresentException();
+          otherList.add(data);
           return;
         }
       }
