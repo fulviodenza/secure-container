@@ -1,131 +1,87 @@
 import java.util.Iterator;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Collections;
 
-/*
+/* Typical element: {<user1, elts1>...<usern, eltsn>}*/
+public interface SecureDataContainer<E> {
 
-  IR: data != null && per ogni <u,l> in data si ha che u != null e l != null
-      per ogni u = <user, elts> in this non esiste o = <user, elts> t.c
-      u.getUserName() == o.getUserName() &&
-      Per ogni u = <user, elts> in this, per ogni e, u in u.elts, con e != u,
-      si ha che u != e.
-  FA: f(data) = {<user1, elts1>...<usern, eltsn>} dove usern è un User e eltsn è
-              una lista di elementi E
+    // Crea l’identità un nuovo utente della collezione
+    /* @effects: Aggiunge un nuovo utente a this
+     * @modifies: this
+     * @requires: Id, passw != null, altrimenti lancia NullPointerException
+     *            Id, passw != "", altrimenti lancia una InvalidArgumentException
+  *               Id non in this, altrimenti lancia una UserAlreadyPresentException
+     */
+    public void createUser(String Id, String passw) throws UserAlreadyPresentException;
 
-*/
-public class SecureDataContainer<E> implements SecureDataContainerInterface<E> {
+    /* Restituisce il numero degli elementi di un utente presenti nella
+    collezione*/
+    /* @effects: Restituisce il numero di elementi contenuti da un utente, 0 se il login fallisce
+     * @requires: Owner, passw != null, altrimenti spara una NullPointerException
+     * 		       Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
+     * 		       ti odia a vita e ti da come motivazione InvalidCredentialsException */
+    public int getSize(String Owner, String passw) throws InvalidCredentialsException;
 
-    private HashMap<User, ArrayList<E>> storedElts;
+    /*Inserisce il valore del dato nella collezione
+    se vengono rispettati i controlli di identità*/
+    /* @effects: Restituisce true se l'utente è presente in this (Di conseguenza l'inserimento è riuscito),
+     * 		 Altrimenti restituisce false
+     * @requires: Owner, passw, data != null, altrimenti ti porge una NullPointerException
+     * @modifies: this(owner, passw) = this(owner,pass) + data */
+    public boolean put(String Owner, String passw, E data);
 
-    private boolean userPresent(String user ) {
-      for(User u : storedElts.keySet()) {
-        if(u.getuserName().equals(user)) {
-          return true;
-        }
-      }
+    /* Ottiene una copia del valore del dato nella collezione
+    se vengono rispettati i controlli di identità*/
+    /* @effects: Restituisce una copia di data se il login ha esito positivo, altrimenti ti chiava null
+     * @requires: Owner, passw, data != null, altrimenti lancia NullPointerException
+     */
+    public E get(String Owner, String passw, E data);
 
-      return false;
-    }
+    /* Rimuove il dato nella collezione
+    se vengono rispettati i controlli di identità*/
+    /* @effects: Rimuove data da this(owner, passw) e restituisce l'elemento rimosso
+    *  @requires: Owner, passw, data != null, altrimenti ti colpisce mortalmente con una NullPointerException
+    *             data deve appartenere a this(owner, passw), altrimenti owo he throws a sexy ElementNotInListException
+    * 		        Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
+    * 		        ti insulta con una InvalidCredentialsException
+    * @modifies: this
+    */
+    public E remove(String Owner, String passw, E data);
 
-    public SecureDataContainer() {
-      data = new HashMap<>();
-    }
+    /* Crea una copia del dato nella collezione
+    se vengono rispettati i controlli di identità*/
+    /* @effects: copia data in this(owner, passw) se è presente tra gli elementi di this(owner, passw)
+    *  @requires: Owner, passw, data != null, altrimenti ti sputa in faccia una NullPointerException
+    *             data deve appartenere a this(OwOner, passw), altrimenti owo he throws a sexy ElementNotInListException
+    * 		        Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
+    * 		        ti regala una InvalidCredentialsException. Che gentile <3
+    *             Se l'utente possiede già data, ti prende a schiaffi e ti restituisce ElementAlreadyPresentException
+    * @modifies: this
+    */
+    public void copy(String Owner, String passw, E data) throws InvalidCredentialsException, ElementAlreadyPresentException;
 
-    @Override
-    public void createUser(String Id, String passw) throws UserAlreadyPresentException {
-      if(Id.isEmpty() || passw.isEmpty()) throw new InvalidArgumentException();
-      if(userPresent(Id)) throw new UserAlreadyPresentException(Id);
-
-      User u = new User(Id, passw);
-      storedElts.put(u, new ArrayList<E>());
-    }
-
-    @Override
-    public int getSize(String Owner, String passw) throws InvalidCredentialsException {
-        User query = new User(Owner, passw);
-        if(!storedElts.containsKey(query)) throw new InvalidCredentialsException();
-
-        ArrayList<E> list = (ArrayList<E>)data.get(query);
-        return list.size();
-    }
-
-    @Override
-    public boolean put(String Owner, String passw, E data) {
-      User query = new User(Owner, passw);
-      if( !storedElts.containsKey(query) )
-        return false;
-
-      ArrayList<E> list = (ArrayList<E>)storedElts.get(query);
-      list.add(data);
-      return true;
-
-    }
-
-    @Override
-    public E get(String Owner, String passw, Object data) {
-      User u = new User(Owner, passw);
-      if(storedElts.containsKey(u)) {
-        List<E> userElts = storedElts.get(u);
-        return userElts.get(userElts.indexOf(data));
-      }
-      return null;
-    }
-
-    @Override
-    public E remove(String Owner, String passw, Object data) {
-      User u = new User(Owner, passw);
-      if(storedElts.containsKey(u)) {
-        List<E> userElts = storedElts.get(u);
-        E backup = userElts.get(userElts.indexOf(data));
-        storedElts.get(u).remove(data);
-        return backup;
-      }
-      return null;
-    }
-
-    @Override
-    public void copy(String Owner, String passw, Object data) throws InvalidCredentialsException, ElementAlreadyPresentException {
-      User u = new User(Owner, passw);
-      if(data == null) throw new NullPointerException();
-      if(storedElts.containsKey(u)) {
-        List<E> userList = storedElts.get(u);
-        if(userList.contains(data)) throw new ElementAlreadyPresentException();
-
-        userList.add(data);
-      } else {
-        throw new InvalidCredentialsException();
-      }
-    }
-
-    @Override
-    public void share(String Owner, String passw, String Other, Object data) throws InvalidCredentialsException,
+    /* Condivide il dato nella collezione con un altro utente
+    se vengono rispettati i controlli di identità*/
+    /* @effects: copia data di this(owner,passw) con this(Other) se è presente tra gli elementi di this(owner, passw)
+    *  @requires: Owner, passw, Other, data != null, altrimenti ti sputa in faccia una NullPointerException
+    *             data deve appartenere a this(OwOner, passw), altrimenti owo he throws a sexy ElementNotInListException
+    * 		        Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
+    * 		        ti regala con una InvalidCredentialsException. Che gentile <3
+    *             Se Other non è un utente in this, lancia una UserNotPresentException. Commento troppo normale, eh?
+    *             Se this(Other) contiene già data, lancia una ElementAlreadyPresentException. Anche questo, neh?
+    * @modifies: this(Other)
+    */
+    public void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException,
                                                                                 UserNotPresentException,
-                                                                                ElementAlreadyPresentException {
-      User u = new User(Owner, passw);
-      if( !storedElts.containsKey(u) ) throw new InvalidCredentialsException();
-      if( !userPresent(Other) ) throw new UserNotPresentException(Other);
-      if( !storedElts.get(u).contains(data) ) throw new InvalidArgumentException();
+                                                                                ElementAlreadyPresentException;
 
-      for( User o : storedElts.keySet() ) {
-        if( o.getUserName().equals(Other) ) {
-          List<E> otherList = storedElts.get(u);
-          if( otherList.contains(data) ) throw new ElementAlreadyPresentException();
-          otherList.add(data);
-          return;
-        }
-      }
-
-    }
-
-    @Override
-    public Iterator<E> getIterator(String Owner, String passw) throws InvalidCredentialsException {
-        User u = new User(Owner, passw);
-        if(storedElts.containsKey(u)) {
-          List<E> immutableElts = Collections.unmodifiableList<E>(storedElts.get(u));
-          return immutableElts.iterator();
-        } else {
-          throw new InvalidCredentialsException();
-        }
-    }
+    /* restituisce un iteratore (senza remove) che genera tutti i dati
+    dell’utente in ordine arbitrario
+    se vengono rispettati i controlli di identità*/
+    /*@effects: Restituisce un iteratore degli elementi di this(Owner, passw)
+    * 		      Owner, passw devono essere le credenziali corrette di un utente, altrimenti
+    * 		      ti urla contro "InvalidCredentialsException".
+    *           this(Owner,passw) deve contenere data, altrimenti lancia InvalidArgumentException
+    */
+    public Iterator<E> getIterator(String Owner, String passw) throws InvalidCredentialsException,
+                                                                      ElementAlreadyPresentException,
+                                                                      UserNotPresentException;
 }

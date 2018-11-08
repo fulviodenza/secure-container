@@ -4,7 +4,7 @@ public class User {
 
   public User(String name, String pass) {
     if(name.isEmpty() || pass.isEmpty())
-      throw new InvalidArgumentException();
+      throw new IllegalArgumentException();
 
     this.userName = name;
     this.userPass = pass;
@@ -13,9 +13,9 @@ public class User {
   public String getUserName() { return userName; }
   public String getUserPass() { return userPass; }
 
-  public String setUserPass( String newPass) {
+  public void setUserPass( String newPass) {
     if( newPass.isEmpty() )
-      throw new InvalidArgumentException();
+      throw new IllegalArgumentException();
 
     this.userPass = newPass;
   }
@@ -23,6 +23,8 @@ public class User {
   @Override
   public boolean equals(Object o) {
     User other = (User)o;
+    System.out.println( other.getUserName() + " " +  this.getUserName() + "\n"
+                      + other.getUserPass() + " " +  this.getUserPass());
     return( other.getUserName().equals( this.getUserName() ) &&
             other.getUserPass().equals( this.getUserPass() ) );
   }
