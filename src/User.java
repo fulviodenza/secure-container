@@ -1,4 +1,4 @@
-public class User {
+public class User implements Comparable<User> {
   private String userName;
   private String userPass;
 
@@ -27,5 +27,14 @@ public class User {
                       + other.getUserPass() + " " +  this.getUserPass());
     return( other.getUserName().equals( this.getUserName() ) &&
             other.getUserPass().equals( this.getUserPass() ) );
+  }
+
+  @Override
+  public int compareTo(User other) {
+     int nameC = this.getUserName().compareTo(other.getUserName());
+     if(nameC == 0) {
+       return this.getUserPass().compareTo(other.getUserPass());
+     }
+     return nameC;
   }
 }
