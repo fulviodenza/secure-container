@@ -7,7 +7,7 @@ public class SecureDataContainerTest {
         System.exit(-1);
     }
 
-    private static void testContainer(SecureDataContainer<String> container) {
+    private static void testContainer(SecureDataContainerHashMap<String> container) {
         try {
             container.createUser("Giua","comefosseantani");
         } catch (UserAlreadyPresent e) {
@@ -68,7 +68,7 @@ public class SecureDataContainerTest {
     }
 
     public static void main(String[] args) {
-        SecureDataContainer<String> hashContainer = new SecureDataContainer<>();
+        SecureDataContainerHashMap<String> hashContainer = new SecureDataContainerHashMap<>();
         testContainer(hashContainer);
     }
 }

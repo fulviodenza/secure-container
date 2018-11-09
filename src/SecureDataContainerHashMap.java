@@ -2,7 +2,7 @@ import exceptions.*;
 
 import java.util.*;
 
-public class SecureDataContainer<E> implements SecureDataContainerInterface<E>{
+public class SecureDataContainerHashMap<E> implements SecureDataContainerInterface<E>{
     /*
     IR: data != null && per ogni <u,l> in data si ha che u != null e l != null
         per ogni u = <user, elts> in this non esiste o = <user, elts> t.c
@@ -14,7 +14,7 @@ public class SecureDataContainer<E> implements SecureDataContainerInterface<E>{
 
     private Map<KeyCouple,Vector<E>> DBUsers;
 
-    public SecureDataContainer(){
+    public SecureDataContainerHashMap(){
         DBUsers = new HashMap<>();
 
     }
@@ -118,14 +118,14 @@ public class SecureDataContainer<E> implements SecureDataContainerInterface<E>{
 
     //DONE
     @Override
-    public void copy(String Owner, String passw, Object data) throws NoUserException, DataAlreadyPresent {
+    public void copy(String Owner, String passw, Object data) throws NoUserException, DataAlreadyPresentException {
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
 
         KeyCouple user = new KeyCouple(Owner,passw);
         if(DBUsers.containsKey(user)){
             if(DBUsers.get(user).contains(data)){
-                throw new DataAlreadyPresent("Il dato inserito esiste già");
+                throw new DataAlreadyPresentException("Il dato inserito esiste già");
             }else{
                 DBUsers.get(user).add((E) data);
             }
@@ -136,7 +136,7 @@ public class SecureDataContainer<E> implements SecureDataContainerInterface<E>{
 
     //DONE
     @Override
-    public void share(String Owner, String passw, String Other, E data) throws NoUserException,NoDataException,DataAlreadyPresent {
+    public void share(String Owner, String passw, String Other, E data) throws NoUserException,NoDataException, DataAlreadyPresentException {
         if(Owner == null || passw == null || data == null || Other == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty() || Other.isEmpty()) throw new IllegalArgumentException();
 
@@ -146,7 +146,7 @@ public class SecureDataContainer<E> implements SecureDataContainerInterface<E>{
                 for(KeyCouple o: DBUsers.keySet()){
                     if(o.getIdUser().equals(Other)){
                         if(DBUsers.get(o).contains(data)){
-                            throw new DataAlreadyPresent();
+                            throw new DataAlreadyPresentException();
                         }else {
                             DBUsers.get(o).add(data);
                         }

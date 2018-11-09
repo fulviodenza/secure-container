@@ -76,11 +76,11 @@ public interface SecureDataContainerInterface<E>{
     REQUIRES:Owner != null && passw != null && data != null, altrimenti throws NullPointerException
              Owner != "" && passw != "", altrimenti throws InvalidArgumentException
              La coppia (Owner,passw) appartiene all' insieme delle chiavi di this, altrimenti lancia NoUserException
-             Forall (this.get(user).(this.get(user) != (data))), altrimenti lancia DataAlreadyPresent
+             Forall (this.get(user).(this.get(user) != (data))), altrimenti lancia DataAlreadyPresentException
     EFFECTS :Crea una copia del dato nella collezione
     */
 
-    public void copy(String Owner, String passw, Object data) throws NoUserException, DataAlreadyPresent; //IMPLEMENTATA
+    public void copy(String Owner, String passw, Object data) throws NoUserException, DataAlreadyPresentException; //IMPLEMENTATA
 
     /* Condivide il dato nella collezione con un altro utente
     se vengono rispettati i controlli di identità*/
@@ -90,12 +90,12 @@ public interface SecureDataContainerInterface<E>{
              Owner != "" && passw != "" && Other != "",  altrimenti throws InvalidArgumentException
              La coppia (Owner,passw) appartiene all' insieme delle chiavi di this, altrimenti lancia NoUserException
              Other appartiene all'insieme degli utenti.getId() di this, altrimenti lancia NoUserException
-             Exists (this.get(Other).(this.get(Other) == (data))) ==> DataAlreadyPresent
+             Exists (this.get(Other).(this.get(Other) == (data))) ==> DataAlreadyPresentException
     EFFECTS :Se data esiste in this(Owner,passw), copia data di this(Owner,passw) in this(Other)
     MODIFY  :this(Other)
     */
 
-    public void share(String Owner, String passw, String Other, E data) throws NoUserException,NoDataException,DataAlreadyPresent; //IMPLEMENTATA
+    public void share(String Owner, String passw, String Other, E data) throws NoUserException,NoDataException, DataAlreadyPresentException; //IMPLEMENTATA
 
     /* restituisce un iteratore (senza remove) che genera tutti i dati
     dell’utente in ordine arbitrario

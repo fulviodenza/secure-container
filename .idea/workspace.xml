@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28a38f9c-acdc-4f20-b3bd-cfc6d8c3a545" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SecureDataContainerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/exceptions/DataAlreadyPresent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/exceptions/NoDataException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/exceptions/NoUserException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/exceptions/UserAlreadyPresent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/KeyCouple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/KeyCouple.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SecureDataContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecureDataContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecureDataContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecureDataContainerHashMap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecureDataContainerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecureDataContainerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecureDataContainerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecureDataContainerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exceptions/DataAlreadyPresent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/exceptions/DataAlreadyPresentException.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,7 +32,7 @@
     <session id="-1805479651">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="9" />
+          <entry key="project.closed" value="10" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.15" value="4" />
           <entry key="project.open.time.16" value="2" />
@@ -66,15 +59,16 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="class" value="6" />
+          <entry key="dummy" value="19" />
           <entry key="java" value="10491" />
-          <entry key="txt" value="34" />
+          <entry key="txt" value="182" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CLASS" value="6" />
           <entry key="JAVA" value="10491" />
-          <entry key="PLAIN_TEXT" value="34" />
+          <entry key="PLAIN_TEXT" value="201" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -99,10 +93,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/SecureDataContainer.java">
+        <entry file="file://$PROJECT_DIR$/src/SecureDataContainerHashMap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+            <state relative-caret-position="-1931">
+              <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -163,6 +157,7 @@
         <option value="$PROJECT_DIR$/src/KeyCouple.java" />
         <option value="$PROJECT_DIR$/src/SecureDataContainerInterface.java" />
         <option value="$PROJECT_DIR$/src/SecureDataContainer.java" />
+        <option value="$PROJECT_DIR$/src/SecureDataContainerHashMap.java" />
       </list>
     </option>
   </component>
@@ -267,7 +262,7 @@
       <workItem from="1541710759410" duration="8144000" />
       <workItem from="1541720225993" duration="711000" />
       <workItem from="1541722422695" duration="3159000" />
-      <workItem from="1541725820657" duration="2608000" />
+      <workItem from="1541725820657" duration="2945000" />
     </task>
     <task id="LOCAL-00001" summary="Aggiunto il metodo createUser">
       <created>1541608768687</created>
@@ -297,15 +292,21 @@
       <option name="project" value="LOCAL" />
       <updated>1541610009578</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Inserita la specifica dei metodi, completati svariati metodi, aggiunto testSet (non funzionante), implementate nuove exceptions.">
+      <created>1541728572805</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1541728572805</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37841000" />
+    <option name="totallyTimeSpent" value="38178000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="741" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28983307" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -315,14 +316,14 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32888147" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.21368948" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.21368948" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32888147" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32888147" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32888147" />
@@ -375,7 +376,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Aggiunto il metodo createUser" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aggiunto il metodo createUser" />
+    <MESSAGE value="Inserita la specifica dei metodi, completati svariati metodi, aggiunto testSet (non funzionante), implementate nuove exceptions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Inserita la specifica dei metodi, completati svariati metodi, aggiunto testSet (non funzionante), implementate nuove exceptions." />
   </component>
   <component name="editorHistoryManager">
     <entry file="uml://JAVA/SecureDataContainerInterface">
@@ -411,7 +413,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/exceptions/DataAlreadyPresent.java">
+    <entry file="file://$PROJECT_DIR$/src/exceptions/DataAlreadyPresentException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
@@ -456,10 +458,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SecureDataContainer.java">
+    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerHashMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+        <state relative-caret-position="-1931">
+          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
