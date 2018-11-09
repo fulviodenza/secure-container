@@ -8,7 +8,8 @@ public class KeyCouple {
         passUser = passw;
     }
 
-    public String get(){
+    public String getIdUser(){
         return idUser;
     }
+
 }

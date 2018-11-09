@@ -2,8 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28a38f9c-acdc-4f20-b3bd-cfc6d8c3a545" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/SecureDataContainerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/exceptions/DataAlreadyPresent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/exceptions/NoDataException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/exceptions/NoUserException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/exceptions/UserAlreadyPresent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/KeyCouple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/KeyCouple.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecureDataContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecureDataContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecureDataContainerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecureDataContainerInterface.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,35 +39,41 @@
     <session id="-1805479651">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="9" />
           <entry key="project.open.time.13" value="1" />
-          <entry key="project.open.time.15" value="1" />
-          <entry key="project.open.time.16" value="1" />
+          <entry key="project.open.time.15" value="4" />
+          <entry key="project.open.time.16" value="2" />
+          <entry key="project.open.time.17" value="1" />
+          <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="JAVA/SecureDataContainerInterface" value="1" />
-          <entry key="java" value="4" />
+          <entry key="class" value="2" />
+          <entry key="java" value="13" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="4" />
+          <entry key="CLASS" value="2" />
+          <entry key="JAVA" value="13" />
           <entry key="UML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="1288" />
+          <entry key="class" value="6" />
+          <entry key="java" value="10491" />
           <entry key="txt" value="34" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="1288" />
+          <entry key="CLASS" value="6" />
+          <entry key="JAVA" value="10491" />
           <entry key="PLAIN_TEXT" value="34" />
         </counts>
       </usages-collector>
@@ -74,8 +89,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SecureDataContainerInterface.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
+            <state relative-caret-position="90">
+              <caret line="6" column="110" selection-start-line="6" selection-start-column="110" selection-end-line="6" selection-end-column="110" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -83,18 +101,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/SecureDataContainer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="104" selection-start-line="24" selection-start-column="104" selection-end-line="24" selection-end-column="104" />
+            <state relative-caret-position="285">
+              <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#933#934#0" expanded="true" />
-                <element signature="e#961#962#0" expanded="true" />
-                <element signature="e#1041#1042#0" expanded="true" />
-                <element signature="e#1068#1069#0" expanded="true" />
-                <element signature="e#1151#1152#0" expanded="true" />
-                <element signature="e#1178#1179#0" expanded="true" />
-                <element signature="e#1430#1431#0" expanded="true" />
-                <element signature="e#1457#1458#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -103,8 +113,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/KeyCouple.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+            <state relative-caret-position="135">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SecureDataContainerTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="32" column="72" selection-start-line="32" selection-start-column="72" selection-end-line="32" selection-end-column="72" />
             </state>
           </provider>
         </entry>
@@ -115,9 +134,15 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="package-info" />
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>no user</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -130,7 +155,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/src/NoUserException.java" />
+        <option value="$PROJECT_DIR$/src/NoDataException.java" />
+        <option value="$PROJECT_DIR$/src/DataAlreadyPresent.java" />
+        <option value="$PROJECT_DIR$/src/exceptions/UserAlreadyPresent.java" />
+        <option value="$PROJECT_DIR$/src/SecureDataContainerTest.java" />
         <option value="$PROJECT_DIR$/src/KeyCouple.java" />
+        <option value="$PROJECT_DIR$/src/SecureDataContainerInterface.java" />
         <option value="$PROJECT_DIR$/src/SecureDataContainer.java" />
       </list>
     </option>
@@ -146,6 +177,23 @@
     <option name="y" value="27" />
     <option name="width" value="1221" />
     <option name="height" value="635" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+          <State>
+            <id>Spelling</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>SpellCheckingInspection</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -166,6 +214,12 @@
               <item name="SecureDataContainer" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="SecureDataContainer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SecureDataContainer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="exceptions" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -176,10 +230,10 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541609162130" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541719545955" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -193,7 +247,7 @@
       </list>
     </option>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="1" BundledDictionary0="english.dic" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="project-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="1" BundledDictionary0="english.dic" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="project-level" UseSingleDictionary="false" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -207,7 +261,13 @@
       <workItem from="1541596292733" duration="334000" />
       <workItem from="1541596680530" duration="452000" />
       <workItem from="1541603628976" duration="5386000" />
-      <workItem from="1541609201106" duration="799000" />
+      <workItem from="1541609201106" duration="1342000" />
+      <workItem from="1541665202752" duration="8444000" />
+      <workItem from="1541688478125" duration="7261000" />
+      <workItem from="1541710759410" duration="8144000" />
+      <workItem from="1541720225993" duration="711000" />
+      <workItem from="1541722422695" duration="3159000" />
+      <workItem from="1541725820657" duration="2608000" />
     </task>
     <task id="LOCAL-00001" summary="Aggiunto il metodo createUser">
       <created>1541608768687</created>
@@ -230,17 +290,54 @@
       <option name="project" value="LOCAL" />
       <updated>1541609779644</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Aggiunto il metodo createUser">
+      <created>1541610009578</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1541610009578</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6971000" />
+    <option name="totallyTimeSpent" value="37841000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="741" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26251897" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28983307" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.21368948" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32888147" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32888147" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32888147" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Database" order="7" weight="0.32928678" />
+      <window_info anchor="right" id="Maven Projects" order="8" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27162367" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -268,7 +365,7 @@
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Database" order="7" weight="0.32928678" />
       <window_info anchor="right" id="Maven Projects" order="8" />
-    </layout>
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -299,34 +396,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/KeyCouple.java">
+    <entry file="file://$PROJECT_DIR$/src/package-info.java" />
+    <entry file="file://$PROJECT_DIR$/src/exceptions/NoDataException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exceptions/NoUserException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exceptions/DataAlreadyPresent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exceptions/UserAlreadyPresent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+          <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/lang/Object.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="15" column="21" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="32" column="72" selection-start-line="32" selection-start-column="72" selection-end-line="32" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/KeyCouple.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SecureDataContainerInterface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
+        <state relative-caret-position="90">
+          <caret line="6" column="110" selection-start-line="6" selection-start-column="110" selection-end-line="6" selection-end-column="110" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SecureDataContainer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="104" selection-start-line="24" selection-start-column="104" selection-end-line="24" selection-end-column="104" />
+        <state relative-caret-position="285">
+          <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#933#934#0" expanded="true" />
-            <element signature="e#961#962#0" expanded="true" />
-            <element signature="e#1041#1042#0" expanded="true" />
-            <element signature="e#1068#1069#0" expanded="true" />
-            <element signature="e#1151#1152#0" expanded="true" />
-            <element signature="e#1178#1179#0" expanded="true" />
-            <element signature="e#1430#1431#0" expanded="true" />
-            <element signature="e#1457#1458#0" expanded="true" />
           </folding>
         </state>
       </provider>
