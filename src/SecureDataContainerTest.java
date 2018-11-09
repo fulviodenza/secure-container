@@ -48,6 +48,31 @@ public class SecureDataContainerTest {
         } catch (NoUserException e){
             abort("no user");
         }
+
+        try {
+            container.put("Fruvio", "GiacominoPaneEVino", "xiaomi2");
+        } catch (NoUserException e){
+            abort("no user");
+        }
+
+        try {
+            container.put("Fruvio", "GiacominoPaneEVino", "xiaomi3");
+        } catch (NoUserException e){
+            abort("no user");
+        }
+
+        try {
+            container.put("Fruvio", "GiacominoPaneEVino", "xiaomi4");
+        } catch (NoUserException e){
+            abort("no user");
+        }
+
+        try {
+            container.put("Fruvio", "GiacominoPaneEVino", "xiaomi4");
+        } catch (NoUserException e){
+            abort("no user");
+        }
+
         System.out.println(container.getSize("Giua","comefosseantani"));
         try {
             String samsungRemoved = container.remove("Luiggi", "xdxd", "samsung");
