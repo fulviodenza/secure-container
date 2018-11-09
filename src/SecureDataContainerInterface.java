@@ -67,7 +67,7 @@ public interface SecureDataContainerInterface<E>{
     MODIFY  :this
     */
 
-    public E remove(String Owner, String passw, E data); //IMPLEMENTATA
+    public E remove(String Owner, String passw, E data) throws NoUserException; //IMPLEMENTATA
 
     /* Crea una copia del dato nella collezione
     se vengono rispettati i controlli di identità*/

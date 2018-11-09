@@ -25,14 +25,7 @@ public class SecureDataContainerTest {
         } catch (UserAlreadyPresent e) {
             System.out.println("User already present");
         }
-        /**
-         * ******************************************************************************************************
-         * ******************************************************************************************************
-         * *GROSSO PROBLEMA: TUTTI I METODI ESCONO CON ECCEZIONI DI MERDA, SISTEMA QUESTA SCHIFEZZA APPENA PUOI**
-         * ******************************************************************************************************
-         * ******************************************************************************************************
-         * ******************************************************************************************************
-         * */
+
         try{
             container.getIterator("Luiggi","xdxd");
         } catch (NoUserException e){
@@ -56,10 +49,19 @@ public class SecureDataContainerTest {
             abort("no user");
         }
         System.out.println(container.getSize("Giua","comefosseantani"));
-        String huaweiRemoved = container.remove("Luiggi", "xdxd", "samsung");
-        System.out.println(huaweiRemoved);
-        huaweiRemoved = container.remove("Giua", "comefosseantani", "huawei");
-        System.out.println(huaweiRemoved);
+        try {
+            String samsungRemoved = container.remove("Luiggi", "xdxd", "samsung");
+            System.out.println(samsungRemoved);
+        } catch (NoUserException e){
+            abort("no user");
+        }
+
+        try {
+            String huaweiRemoved = container.remove("Giua", "comefosseantani", "huawei");
+            System.out.println(huaweiRemoved);
+        } catch (NoUserException e){
+            abort("no user");
+        }
         /*try {
             container.put("nomechemuore","GiacominoPaneEVino", "ciaomondo");
         } catch (NoUserException e) {

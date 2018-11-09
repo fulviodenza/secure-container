@@ -101,19 +101,19 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
 
     //DONE
     @Override
-    public E remove(String Owner, String passw, E data){
+    public E remove(String Owner, String passw, E data) throws NoUserException{
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
 
         KeyCouple user = new KeyCouple(Owner,passw);
+        E removedElement = null;
         if(DBUsers.containsKey(user)){
             if(DBUsers.get(user).contains(data)) {
-                E removedElement = DBUsers.get(user).get(DBUsers.get(user).indexOf(data));
+                removedElement = DBUsers.get(user).get(DBUsers.get(user).indexOf(data));
                 DBUsers.get(user).remove(data);
-                return removedElement;
             }
         }
-        return null;
+        return removedElement;
     }
 
     //DONE
