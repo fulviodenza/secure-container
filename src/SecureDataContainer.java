@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import exceptions.*;
 
 /* Typical element: {<user1, elts1>...<usern, eltsn>}*/
 public interface SecureDataContainer<E> {
@@ -71,6 +72,7 @@ public interface SecureDataContainer<E> {
     */
     public void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException,
                                                                                 UserNotPresentException,
+                                                                                UserNotAllowedException,
                                                                                 ElementAlreadyPresentException;
 
     /* restituisce un iteratore (senza remove) che genera tutti i dati
@@ -79,9 +81,6 @@ public interface SecureDataContainer<E> {
     /*@effects: Restituisce un iteratore degli elementi di this(Owner, passw)
     * 		      Owner, passw devono essere le credenziali corrette di un utente, altrimenti
     * 		      ti urla contro "InvalidCredentialsException".
-    *           this(Owner,passw) deve contenere data, altrimenti lancia InvalidArgumentException
     */
-    public Iterator<E> getIterator(String Owner, String passw) throws InvalidCredentialsException,
-                                                                      ElementAlreadyPresentException,
-                                                                      UserNotPresentException;
+    public Iterator<E> getIterator(String Owner, String passw) throws InvalidCredentialsException;
 }

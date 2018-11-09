@@ -4,7 +4,7 @@ import java.util.TreeMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-
+import exceptions.*;
 /*
 
   IR: data != null && per ogni <u,l> in data si ha che u != null e l != null
@@ -22,10 +22,68 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
       private String owner = null;
       private E el = null;
       private List<String> allowedUsers;
+
+      public Element(E el, String owner) {
+        if(el == null || owner == null) throw new NullPointerException();
+        this.el = el;
+        this.owner = owner;
+        allowedUsers = new ArrayList<String>();
+      }
+
+      public E getEl() {
+        return el;
+      }
+
+      public boolean ownedBy(String who) {
+        return owner.equals(who);
+      }
+
+      @Override
+      public boolean equals(Object other) {
+        if(! (other instanceof ListSecureDataContainer.Element)) throw new IllegalArgumentException();
+        Element o = (Element)other;
+        return (o.el.equals( this.el ) && o.owner.equals( this.owner ));
+      }
+
+      public void allowUser(String other) throws UserAlreadyAllowedException {
+        if(allowedUsers.contains(other)) throw new UserAlreadyAllowedException();
+        allowedUsers.add(other);
+      }
+
+      public void denyUser(String other) throws UserNotAllowedException {
+        if(!allowedUsers.contains(other)) throw new UserNotAllowedException();
+        allowedUsers.remove(other);
+      }
+
+      public Element copy() {
+        Element c = new Element(el, owner);
+        c.allowedUsers.addAll(this.allowedUsers);
+        return c;
+      }
+
+      public boolean canBeAccessedBy(String who) {
+        return ownedBy(who) || allowedUsers.contains(who);
+      }
     }
 
     private List<User> users;
     private List<Element> elements;
+
+    private boolean userAlreadyPresent(String us) {
+      for(User u : users) {
+        if(u.getUserName().equals(us)) return true;
+      }
+      return false;
+    }
+
+    private Element getElt(E el, String owner) {
+      for(Element e : elements) {
+        if(e.ownedBy(owner) && e.getEl().equals(el))
+          return e;
+      }
+
+      return null;
+    }
 
     public ListSecureDataContainer() {
       users = new ArrayList<>();
@@ -38,9 +96,9 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
         if(Id == null || passw == null) throw new NullPointerException();
         if(Id.equals("") || passw.equals("") ) throw new IllegalArgumentException();
 
-        User u = new User(Id, passw);
-        if(users.contains(u)) throw new UserAlreadyPresentException();
+        if(userAlreadyPresent(Id)) throw new UserAlreadyPresentException();
 
+        User u = new User(Id, passw);
         users.add(u);
 
     }
@@ -55,8 +113,8 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
 
       int counter = 0;
       for(Element e : elements) {
-        if(e.owner.equals(Owner) || e.allowedUsers.contains(Owner)) {
-          count ++;
+        if(e.canBeAccessedBy(Owner)) {
+          counter ++;
         }
       }
 
@@ -68,36 +126,105 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
     @Override
     public boolean put(String Owner, String passw, E data) {
       if(Owner == null || passw == null || data == null) throw new NullPointerException();
+      User u = new User(Owner, passw);
+      if(users.contains(u)) {
+        Element toBeAdded = new Element(data, Owner);
+        if(!elements.contains(toBeAdded)) {
+          elements.add(toBeAdded);
+          return true;
+        }
+      }
+
+      return false;
     }
 
     /* Ottiene una copia del valore del dato nella collezione
     se vengono rispettati i controlli di identità*/
     @Override
-    public E get(String Owner, String passw, E data) {}
+    public E get(String Owner, String passw, E data) {
+      if(Owner == null || passw == null || data == null) throw new NullPointerException();
+      User u = new User(Owner, passw);
+      E el = null;
+      if(users.contains(u)) {
+        Element elementToFind = new Element(data, Owner);
+        int ind = elements.indexOf(elementToFind);
+        if(ind >= 0) el = elements.get(ind).el;
+      }
+      return el;
+    }
 
     /* Rimuove il dato nella collezione
     se vengono rispettati i controlli di identità*/
     @Override
-    public E remove(String Owner, String passw, E data) {}
+    public E remove(String Owner, String passw, E data) {
+      if(Owner == null || passw == null || data == null) throw new NullPointerException();
+      User u = new User(Owner, passw);
+      E el = null;
+      if(users.contains(u)) {
+        Element elementToRemove = getElt(data, Owner);
+        if(elementToRemove != null)
+          el = elementToRemove.getEl();
+          elements.remove(elementToRemove);
+        }
+      return el;
+    }
 
     /* Crea una copia del dato nella collezione
     se vengono rispettati i controlli di identità*/
     @Override
     public void copy(String Owner, String passw, E data) throws InvalidCredentialsException,
-                                                                ElementAlreadyPresentException {}
+                                                                ElementAlreadyPresentException
+    {
+      if(Owner == null || passw == null || data == null) throw new NullPointerException();
+      User u = new User(Owner, passw);
+      if(users.contains(u)) {
+        Element toBeCopied = getElt(data, Owner);
+        if(toBeCopied != null) {
+          elements.add(toBeCopied.copy());
+        }
+      } else throw new InvalidCredentialsException();
+    }
 
     /* Condivide il dato nella collezione con un altro utente
     se vengono rispettati i controlli di identità*/
     @Override
     public void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException,
                                                                                 UserNotPresentException,
-                                                                                ElementAlreadyPresentException {}
+                                                                                UserNotAllowedException,
+                                                                                ElementAlreadyPresentException
+    {
+      if(Owner == null || passw == null || data == null || Other == null) throw new NullPointerException();
+      if(!userAlreadyPresent(Other)) throw new UserNotPresentException();
+
+      User u = new User(Owner, passw);
+      if(users.contains(u)) {
+        Element e = getElt(data, Owner);
+        if(e == null) throw new UserNotAllowedException();
+        try {
+          e.allowUser(Other);
+        } catch (UserAlreadyAllowedException ex ) {
+
+        }
+      }
+    }
 
     /* restituisce un iteratore (senza remove) che genera tutti i dati
     dell’utente in ordine arbitrario
     se vengono rispettati i controlli di identità*/
       @Override
-    public Iterator<E> getIterator(String Owner, String passw) throws InvalidCredentialsException,
-                                                                      ElementAlreadyPresentException,
-                                                                      UserNotPresentException {}
+    public Iterator<E> getIterator(String Owner, String passw) throws InvalidCredentialsException {
+      if(Owner == null || passw == null) throw new NullPointerException();
+      User u = new User(Owner, passw);
+      if(users.contains(u)) {
+        List<E> userElements = new ArrayList<E>();
+        for(Element e : elements) {
+          if(e.canBeAccessedBy(Owner))
+            userElements.add(e.getEl());
+        }
+
+        List<E> unmodifiable = Collections.unmodifiableList(userElements);
+        return unmodifiable.iterator();
+      }
+      throw new InvalidCredentialsException();
+    }
 }

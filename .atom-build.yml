@@ -1,4 +1,1 @@
-cmd: "javac -d build/ src/MapSecureDataContainer.java src/InvalidCredentialsException.java
-src/SecureDataContainer.java src/SecureDataContainerTests.java src/User.java
-src/UserAlreadyPresentException.java src/UserNotPresentException.java
-src/ElementAlreadyPresentException.java"
+cmd: "javac -d build/ src/*.java"

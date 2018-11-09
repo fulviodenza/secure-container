@@ -23,8 +23,6 @@ public class User implements Comparable<User> {
   @Override
   public boolean equals(Object o) {
     User other = (User)o;
-    System.out.println( other.getUserName() + " " +  this.getUserName() + "\n"
-                      + other.getUserPass() + " " +  this.getUserPass());
     return( other.getUserName().equals( this.getUserName() ) &&
             other.getUserPass().equals( this.getUserPass() ) );
   }
