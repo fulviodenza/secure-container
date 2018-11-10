@@ -19,6 +19,19 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
         }
         return false;
     }
+    private User chiave(String name){
+        for(User t : DBUsers.keySet()){
+            if(t.isHere(name)) return t;
+        }
+        return null;
+    }
+    private List<String> cercaOwners(E dato){
+        List<String> chiavi = new Vector<>();
+        for(User t : DBUsers.keySet()){
+            if(DBUsers.get(t).contains(dato)) chiavi.add(t.getIdUser());
+        }
+        return chiavi;
+    }
     @Override
     /*OVERVIEW: Crea un nuovo utente nella collezione*/
     public void createUser(String Id, String passw) throws NullPointerException,IllegalArgumentException,DoubleUserException{
@@ -62,7 +75,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
     @Override
     /*OVERVIEW: Ottiene una copia del valore del dato nella collezione
     se vengono rispettati i controlli di identità*/
-    public E get(String Owner, String passw, E data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException{
+    public E get(String Owner, String passw, E data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException,NotAuthorizedUserException{
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
         User user = new User(Owner,passw);
@@ -71,7 +84,16 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
                 List<E> aux = DBUsers.get(user);
                 return aux.get(aux.indexOf(data));
             }else{
-                throw new DataNotFoundException("Non esiste il dato richiesto");
+                if(cercaOwners(data) != null){
+                    for(String a : cercaOwners(data)){
+                        if(chiave(a).getPower().contains(Owner)){
+                            return get(Owner,passw,data,a);
+                        }
+                    }
+                    throw new NotAuthorizedUserException("Non sei autorizzato ad accedere ai dati");
+                }else{
+                    throw new DataNotFoundException("Non esiste il dato richiesto");
+                }
             }
         }else{
             throw new NoUserException("Non esiste l'utente richiesto");
@@ -125,15 +147,19 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
         if(Owner == null || passw == null || data == null ||Other == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty() || Other.isEmpty()) throw new IllegalArgumentException();
         User user = new User(Owner,passw);
-        if(!(checkUser(Other))){
-            throw new NoUserException("L'utente con cui condividere il dato non esiste");
-        }
-        else{
-            for(User t : DBUsers.keySet()){
-                if(t.isHere(Other)){
-                    List<E> aux = DBUsers.get(t);
-                    aux.add(data);
-                    break;
+        if(!DBUsers.containsKey(user)){
+            throw new NoUserException("Non esiste l'utente richiesto");
+        }else{
+            if(!(checkUser(Other))){
+                throw new NoUserException("L'utente con cui condividere il dato non esiste");
+            }
+            else{
+                for(User t : DBUsers.keySet()){
+                    if(t.isHere(Other)){
+                        List<E> aux = DBUsers.get(t);
+                        aux.add(data);
+                        break;
+                    }
                 }
             }
         }
@@ -149,6 +175,76 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
         User user = new User(Owner,passw);
         if(DBUsers.containsKey(user)){
             return DBUsers.get(user).iterator();
+        }else{
+            throw new NoUserException("Non esiste l'utente richiesto");
+        }
+    }
+
+    @Override
+    public void empowerUser(String owner, String passw,String nome) throws NoUserException,AlreadyPoweredException{
+        if(owner==null || passw == null || nome == null)throw new NullPointerException();
+        if(owner.isEmpty() || passw.isEmpty() || nome.isEmpty())throw new IllegalArgumentException();
+        User u = new User(owner,passw);
+        if(DBUsers.containsKey(u)){
+            if(!(checkUser(nome))){
+                throw new NoUserException("L'utente a cui autorizzare l'accesso non esiste");
+            }else{
+                if (u.getPower().contains(nome)) {
+                    throw new AlreadyPoweredException("L'utente scelto ha già i diritti di accedere ai tuoi dati");
+                } else {
+                    User neo = new User(owner,passw);
+                    neo.increasePower(nome);
+                    DBUsers.put(neo,DBUsers.get(u));
+                    DBUsers.remove(u);
+                }
+            }
+        }else{
+            throw new NoUserException("Non esiste l'utente richiesto");
+        }
+    }
+
+    @Override
+    public void depowerUser(String owner, String passw, String nome) throws NoUserException,AlreadyWeakException{
+        if(owner==null || passw == null || nome == null)throw new NullPointerException();
+        if(owner.isEmpty() || passw.isEmpty() || nome.isEmpty())throw new IllegalArgumentException();
+        User u = new User(owner,passw);
+        if(DBUsers.containsKey(u)){
+            if(!(checkUser(nome))){
+                throw new NoUserException("L'utente a cui togliere l'autorizzazione non esiste");
+            }else{
+                if (u.getPower().contains(nome)) {
+                    User neo = new User(owner,passw);
+                    neo.decreasePower(nome);
+                    DBUsers.put(neo,DBUsers.get(u));
+                    DBUsers.remove(u);
+                } else {
+                    throw new AlreadyWeakException("L'utente scelto è già stato bannato dai tuoi dati");
+                }
+            }
+        }else{
+            throw new NoUserException("Non esiste l'utente richiesto");
+        }
+    }
+
+    public E get(String name, String passw, E data, String owner)throws NoUserException,DataNotFoundException,NotAuthorizedUserException{
+        if(owner==null || passw == null || name == null || data == null)throw new NullPointerException();
+        if(owner.isEmpty() || passw.isEmpty() || name.isEmpty())throw new IllegalArgumentException();
+        User u = new User(name,passw);
+        if(DBUsers.containsKey(u)){
+            if(!(checkUser(owner))){
+                throw new NoUserException("Il proprietario del dato non esiste");
+            }else{
+                if(chiave(owner).getPower().contains(name)){
+                        if(DBUsers.get(chiave(owner)).contains(data)){
+                            List<E> aux = DBUsers.get(chiave(owner));
+                            return aux.get(aux.indexOf(data));
+                        }else{
+                            throw new DataNotFoundException("Non esiste il dato richiesto");
+                        }
+                }else{
+                    throw new NotAuthorizedUserException("Non sei autorizzato ad accedere ai dati di "+owner);
+                }
+            }
         }else{
             throw new NoUserException("Non esiste l'utente richiesto");
         }
