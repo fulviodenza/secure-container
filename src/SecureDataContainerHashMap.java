@@ -1,3 +1,8 @@
+/*
+* IR: DBUsers != null && forall <u,list(el)> ==> (u != null && list(el)) != null && (forall el ==> el != null) && forall(x,y).(x,y appartengano a DBUsers && x != y) ==> x.getUserName != y.getUserName
+* FA: DBUsers = {<u1,{el0,...,eln}k>,....<uk,{el0,...,eln}k>} dove u1 è un User e {el0,...eln} una lista di elementi dove n == list.size()-1 e k == DBUsers.size()-1
+* */
+
 import java.util.*;
 
 public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
