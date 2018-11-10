@@ -138,17 +138,27 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
     @Override
     /*OVERVIEW: Crea una copia del dato nella collezione
     se vengono rispettati i controlli di identità*/
-    public void copy(String Owner, String passw, E data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException{
+    public void copy(String Owner, String passw, E data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException,NotAuthorizedUserException{
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        User user = new User(Owner,passw);
+        User user = chiave(Owner);
         if(DBUsers.containsKey(user)){
             if(DBUsers.get(user).contains(data)){
                 List<E> aux = DBUsers.get(user);
                 E cpy = aux.get(aux.indexOf(data));
                 aux.add(cpy);
             }else{
-                throw new DataNotFoundException("Non esiste il dato richiesto");
+                if(cercaOwners(data) != null){
+                    for(String a : cercaOwners(data)){
+                        if(chiave(a).getPower().contains(Owner)){
+                            copy(Owner,passw,data,a);
+                            return;
+                        }
+                    }
+                    throw new NotAuthorizedUserException("Non sei autorizzato ad accedere ai dati");
+                }else{
+                    throw new DataNotFoundException("Non esiste il dato richiesto");
+                }
             }
         }else{
             throw new NoUserException("Non esiste l'utente richiesto");
@@ -289,4 +299,30 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
             throw new NoUserException("Non esiste l'utente richiesto");
         }
     }
+    public void copy(String name, String passw, E data, String owner)throws NoUserException,DataNotFoundException,NotAuthorizedUserException{
+        if(owner==null || passw == null || name == null || data == null)throw new NullPointerException();
+        if(owner.isEmpty() || passw.isEmpty() || name.isEmpty())throw new IllegalArgumentException();
+        User u = new User(name,passw);
+        if(DBUsers.containsKey(u)){
+            if(!(checkUser(owner))){
+                throw new NoUserException("Il proprietario del dato non esiste");
+            }else{
+                if(chiave(owner).getPower().contains(name)){
+                    if(DBUsers.get(chiave(owner)).contains(data)){
+                        List<E> aux = DBUsers.get(chiave(owner));
+                        E cpy = aux.get(aux.indexOf(data));
+                        aux.add(cpy);
+                    }else{
+                        throw new DataNotFoundException("Non esiste il dato richiesto");
+                    }
+                }else{
+                    throw new NotAuthorizedUserException("Non sei autorizzato ad accedere ai dati di "+owner);
+                }
+            }
+        }else{
+            throw new NoUserException("Non esiste l'utente richiesto");
+        }
+    }
+
+
 }

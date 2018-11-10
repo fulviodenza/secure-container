@@ -65,6 +65,9 @@ public class HashMapTestMain{
                     } catch (DataNotFoundException e) {
                         e.printStackTrace();
                     }
+                    catch (NotAuthorizedUserException e) {
+                        e.printStackTrace();
+                    }
                     scelta = tast.nextInt();
                     break;
                 case 4:

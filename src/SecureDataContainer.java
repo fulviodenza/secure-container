@@ -29,7 +29,7 @@ public interface SecureDataContainer<E> {
     /* Crea una copia del dato nella collezione
     se vengono rispettati i controlli di identità*/
 
-    public void copy(String Owner, String passw, E data)throws NoUserException,DataNotFoundException;
+    public void copy(String Owner, String passw, E data)throws NoUserException,DataNotFoundException,NotAuthorizedUserException;
 
     /* Condivide il dato nella collezione con un altro utente
     se vengono rispettati i controlli di identità*/
@@ -47,6 +47,9 @@ public interface SecureDataContainer<E> {
     /*banna l'utente dall'accesso ai dati del proprietario*/
     public void depowerUser(String owner,String passw,String nome)throws NoUserException,AlreadyWeakException;
 
+
+
     public E get(String name, String passw, E data, String owner)throws NoUserException,DataNotFoundException,NotAuthorizedUserException;
     public E remove(String name, String passw, E data, String owner)throws NoUserException,DataNotFoundException,NotAuthorizedUserException;
+    public void copy(String nome, String passw, E data,String owner)throws NoUserException,DataNotFoundException,NotAuthorizedUserException;
 }
