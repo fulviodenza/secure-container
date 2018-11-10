@@ -3,7 +3,7 @@ import java.util.*;
 public class User {
     private String idUser;
     private String passUser;
-    List<String> power;
+    private Vector<String> power;
 
     public User(String idUser, String passUser) {
         if(idUser == null || passUser == null) throw new NullPointerException();
@@ -14,14 +14,17 @@ public class User {
     }
 
     public void increasePower(String u){
-        power.add(u);
+        this.power.add(u);
     }
     public void decreasePower(String u) {
-        power.remove(u);
+        this.power.remove(u);
     }
 
-    public List<String> getPower() {
-        return power;
+    public void setPower(Vector<String> p){
+        this.power = p;
+    }
+    public Vector<String> getPower() {
+        return this.power;
     }
 
     public String getIdUser() {

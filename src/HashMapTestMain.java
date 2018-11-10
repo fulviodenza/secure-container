@@ -1,5 +1,6 @@
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.*;
 public class HashMapTestMain{
     public static void stampaIt(Iterator t){
         System.out.println("I tuoi dati sono:");
@@ -111,6 +112,8 @@ public class HashMapTestMain{
                         e.printStackTrace();
                     } catch (DataNotFoundException e) {
                         e.printStackTrace();
+                    }catch (NotAuthorizedUserException e) {
+                        e.printStackTrace();
                     }
                     scelta = tast.nextInt();
                     break;
@@ -166,7 +169,7 @@ public class HashMapTestMain{
                     name = tast.next();
                     System.out.println("Inserisci password");
                     passw = tast.next();
-                    System.out.println("Inserisci utente da autorizzare");
+                    System.out.println("Inserisci utente da bannare");
                     altro = tast.next();
                     try {
                         database.depowerUser(name,passw,altro);
@@ -176,6 +179,10 @@ public class HashMapTestMain{
                     } catch (AlreadyWeakException e) {
                         e.printStackTrace();
                     }
+                    scelta = tast.nextInt();
+                    break;
+                case 11:
+                    database.stampaAuth("luiggi","cane");
                     scelta = tast.nextInt();
                     break;
             }

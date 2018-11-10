@@ -24,7 +24,7 @@ public interface SecureDataContainer<E> {
     /* Rimuove il dato nella collezione
     se vengono rispettati i controlli di identità*/
 
-    public E remove(String Owner, String passw, E data)throws NoUserException,DataNotFoundException;
+    public E remove(String Owner, String passw, E data)throws NoUserException,DataNotFoundException,NotAuthorizedUserException;
 
     /* Crea una copia del dato nella collezione
     se vengono rispettati i controlli di identità*/
@@ -48,5 +48,5 @@ public interface SecureDataContainer<E> {
     public void depowerUser(String owner,String passw,String nome)throws NoUserException,AlreadyWeakException;
 
     public E get(String name, String passw, E data, String owner)throws NoUserException,DataNotFoundException,NotAuthorizedUserException;
-
+    public E remove(String name, String passw, E data, String owner)throws NoUserException,DataNotFoundException,NotAuthorizedUserException;
 }
