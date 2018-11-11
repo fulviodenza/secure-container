@@ -19,10 +19,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
         return false;
     }
     private boolean checkUser(String name){
-        for(User t : DBUsers.keySet()){
-            if(t.isHere(name)) return true;
-        }
-        return false;
+        return doubleUser(chiave(name));
     }
     private User chiave(String name){
         for(User t : DBUsers.keySet()){
@@ -37,19 +34,31 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
         }
         return chiavi;
     }
-    public void stampaAuth(String name, String passw){
+    //metodo che usa un algoritmo simile al cifrario di Cesare a (7+i) posizioni per cifrare la password
+    private String encrypt(String passw){
+        char[] lettere = passw.toCharArray();
+        passw = "";
+
+        for(int i=0;i<lettere.length;i++){
+            lettere[i] += 7+i;
+            passw += lettere[i];
+        }
+        return passw;
+
+    }
+    /*public void stampaAuth(String name, String passw){
         User u = chiave(name);
-        System.out.println("Gli utenti autorizzati sono: "+u.getPower().size());
+        System.out.println("Gli utenti autorizzati da "+name+" sono: "+u.getPower().size());
         for(int i=0;i<u.getPower().size();i++){
             System.out.println(u.getPower().get(i));
         }
-    }
+    }*/
     @Override
     /*OVERVIEW: Crea un nuovo utente nella collezione*/
     public void createUser(String Id, String passw) throws NullPointerException,IllegalArgumentException,DoubleUserException{
         if(Id == null || passw == null) throw new NullPointerException();
         if(Id.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        User user = new User(Id,passw);
+        User user = new User(Id,encrypt(passw));
         if(doubleUser(user)){
             throw new DoubleUserException("Utente già esistente");
         }else{
@@ -63,7 +72,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
     public int getSize(String Owner, String passw) throws NullPointerException,IllegalArgumentException,NoUserException{
         if(Owner == null || passw == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        User user = new User(Owner,passw);
+        User user = new User(Owner,encrypt(passw));
         if(!DBUsers.containsKey(user)) throw new NoUserException("Non esiste l'utente richiesto");
         Vector<E> aux = DBUsers.get(user);
         return aux.size();
@@ -72,14 +81,14 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
     @Override
     /*OVERVIEW: Inserisce il valore del dato nella collezione
     se vengono rispettati i controlli di identità*/
-    public boolean put(String Owner, String passw, E data) throws NullPointerException,IllegalArgumentException,NoUserException {
+    public boolean put(String Owner, String passw, E data) throws NullPointerException,IllegalArgumentException {
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        User user = new User(Owner,passw);
+        User user = new User(Owner,encrypt(passw));
         if(DBUsers.containsKey(user)){
             return DBUsers.get(user).add(data);
         }else{
-            throw new NoUserException("Non esiste l'utente richiesto");
+            return false;
         }
     }
 
@@ -90,7 +99,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
     public E get(String Owner, String passw, E data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException,NotAuthorizedUserException{
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        User user = new User(Owner,passw);
+        User user = new User(Owner,encrypt(passw));
         if(DBUsers.containsKey(user)){
             if(DBUsers.get(user).contains(data)){
                 List<E> aux = DBUsers.get(user);
@@ -118,7 +127,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
     public E remove(String Owner, String passw, E data) throws NullPointerException,IllegalArgumentException,NoUserException,DataNotFoundException,NotAuthorizedUserException{
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        User user = new User(Owner,passw);
+        User user = new User(Owner,encrypt(passw));
         if(DBUsers.containsKey(user)){
             if(DBUsers.get(user).contains(data)){
                 E cpy = DBUsers.get(user).get(DBUsers.get(user).indexOf(data));
@@ -147,7 +156,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
         User user = chiave(Owner);
-        if(DBUsers.containsKey(user)){
+        if(DBUsers.containsKey(user) && user.getPassUser().equals(encrypt(passw))){
             if(DBUsers.get(user).contains(data)){
                 List<E> aux = DBUsers.get(user);
                 E cpy = aux.get(aux.indexOf(data));
@@ -177,7 +186,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
     public void share(String Owner, String passw, String Other, E data) throws NullPointerException,IllegalArgumentException,NoUserException{
         if(Owner == null || passw == null || data == null ||Other == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty() || Other.isEmpty()) throw new IllegalArgumentException();
-        User user = new User(Owner,passw);
+        User user = new User(Owner,encrypt(passw));
         if(!DBUsers.containsKey(user)){
             throw new NoUserException("Non esiste l'utente richiesto");
         }else{
@@ -200,11 +209,11 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
     /*OVERVIEW: restituisce un iteratore (senza remove) che genera tutti i dati
     dell’utente in ordine arbitrario
     se vengono rispettati i controlli di identità*/
-    public Iterator getIterator(String Owner, String passw) throws NullPointerException,IllegalArgumentException,NoUserException{
+    public Iterator<E> getIterator(String Owner, String passw) throws NullPointerException,IllegalArgumentException,NoUserException{
         if(Owner == null || passw == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        User user = new User(Owner,passw);
-        if(DBUsers.containsKey(user)){
+        User user = new User(Owner,encrypt(passw));
+        if((DBUsers.containsKey(user) && user.getPassUser().equals(encrypt(passw)))){
             return DBUsers.get(user).iterator();
         }else{
             throw new NoUserException("Non esiste l'utente richiesto");
@@ -216,7 +225,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
         if(owner==null || passw == null || nome == null)throw new NullPointerException();
         if(owner.isEmpty() || passw.isEmpty() || nome.isEmpty())throw new IllegalArgumentException();
         User u = chiave(owner);
-        if(DBUsers.containsKey(u)){
+        if(DBUsers.containsKey(u) && u.getPassUser().equals(encrypt(passw))){
             if(!(checkUser(nome))){
                 throw new NoUserException("L'utente a cui autorizzare l'accesso non esiste");
             }else{
@@ -239,7 +248,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
         if(owner==null || passw == null || nome == null)throw new NullPointerException();
         if(owner.isEmpty() || passw.isEmpty() || nome.isEmpty())throw new IllegalArgumentException();
         User u = chiave(owner);
-        if(DBUsers.containsKey(u)){
+        if(DBUsers.containsKey(u) && u.getPassUser().equals(encrypt(passw))){
             if(!(checkUser(nome))){
                 throw new NoUserException("L'utente a cui togliere l'autorizzazione non esiste");
             }else{
@@ -257,10 +266,10 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
         }
     }
 
-    public E get(String name, String passw, E data, String owner)throws NoUserException,DataNotFoundException,NotAuthorizedUserException{
+    private E get(String name, String passw, E data, String owner)throws NoUserException,DataNotFoundException,NotAuthorizedUserException{
         if(owner==null || passw == null || name == null || data == null)throw new NullPointerException();
         if(owner.isEmpty() || passw.isEmpty() || name.isEmpty())throw new IllegalArgumentException();
-        User u = new User(name,passw);
+        User u = new User(name,encrypt(passw));
         if(DBUsers.containsKey(u)){
             if(!(checkUser(owner))){
                 throw new NoUserException("Il proprietario del dato non esiste");
@@ -280,10 +289,10 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
             throw new NoUserException("Non esiste l'utente richiesto");
         }
     }
-    public E remove(String name, String passw, E data, String owner)throws NoUserException,DataNotFoundException,NotAuthorizedUserException{
+    private E remove(String name, String passw, E data, String owner)throws NoUserException,DataNotFoundException,NotAuthorizedUserException{
         if(owner==null || passw == null || name == null || data == null)throw new NullPointerException();
         if(owner.isEmpty() || passw.isEmpty() || name.isEmpty())throw new IllegalArgumentException();
-        User u = new User(name,passw);
+        User u = new User(name,encrypt(passw));
         if(DBUsers.containsKey(u)){
             if(!(checkUser(owner))){
                 throw new NoUserException("Il proprietario del dato non esiste");
@@ -304,10 +313,10 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
             throw new NoUserException("Non esiste l'utente richiesto");
         }
     }
-    public void copy(String name, String passw, E data, String owner)throws NoUserException,DataNotFoundException,NotAuthorizedUserException{
+    private void copy(String name, String passw, E data, String owner)throws NoUserException,DataNotFoundException,NotAuthorizedUserException{
         if(owner==null || passw == null || name == null || data == null)throw new NullPointerException();
         if(owner.isEmpty() || passw.isEmpty() || name.isEmpty())throw new IllegalArgumentException();
-        User u = new User(name,passw);
+        User u = new User(name,encrypt(passw));
         if(DBUsers.containsKey(u)){
             if(!(checkUser(owner))){
                 throw new NoUserException("Il proprietario del dato non esiste");
@@ -328,6 +337,4 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
             throw new NoUserException("Non esiste l'utente richiesto");
         }
     }
-
-
 }

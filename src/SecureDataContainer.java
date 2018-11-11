@@ -36,7 +36,7 @@ public interface SecureDataContainer<E> {
      * EFFECTS: Aggiunge un elemento all'utente Owner se le sue credenziali sono corrette e ritorna true, false altrimenti
      * THROWS: NullPointerException se (Owner || passw) == null (unchecked), IllegalArgumentException se (Owner || passw) == "" (unchecked)
      * */
-    public boolean put(String Owner, String passw, E data) throws NoUserException;
+    public boolean put(String Owner, String passw, E data);
 
     /* Ottiene una copia del valore del dato nella collezione
     se vengono rispettati i controlli di identità*/

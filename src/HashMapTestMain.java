@@ -1,16 +1,17 @@
 import java.util.*;
 public class HashMapTestMain{
-    public static void stampaIt(Iterator t){
+    private static void stampaIt(Iterator t){
         System.out.println("I tuoi dati sono:");
         while(t.hasNext()){
             System.out.println(t.next());
         }
     }
     public static void main(String [] args){
-        SecureDataContainerHashMap<String> database = new SecureDataContainerHashMap<>();
+        SecureDataContainerHashMap database = new SecureDataContainerHashMap<>();
         Scanner tast = new Scanner(System.in);
-        int scelta = 7;
-        String name="",passw="",dato="",altro="";
+        int scelta;
+        String name,passw,altro;
+        String dato;
         System.out.println("Benvenuto! Scegli cosa vuoi fare:");
         System.out.println("1 - Registrati\n2 - Aggiungi dati\n3 - Copia dato\n4 - Visualizza numero elementi\n5 - Ottieni copia valore\n6 - Cancella dato\n7 - Condividi dato\n8 - Stampa con iteratore\n9 - Autorizza un utente\n10 - Banna un utente\n0 - Esci");
         scelta = tast.nextInt();
@@ -40,12 +41,8 @@ public class HashMapTestMain{
                     passw = tast.next();
                     System.out.println("Inserisci dato da aggiungere");
                     dato = tast.next();
-                    try {
-                        database.put(name,passw,dato);
-                        System.out.println("Dato aggiunto con successo! Cosa vuoi fare ora?");
-                    } catch (NoUserException e) {
-                        e.printStackTrace();
-                    }
+                    if(database.put(name,passw,dato)) System.out.println("Dato aggiunto con successo! Cosa vuoi fare ora?");
+                    else System.out.println("Dato non aggiunto... Cosa vuoi fare ora?");
                     scelta = tast.nextInt();
                     break;
                 case 3:
@@ -58,12 +55,7 @@ public class HashMapTestMain{
                     try {
                         database.copy(name,passw,dato);
                         System.out.println("Dato copiato con successo! Cosa vuoi fare ora?");
-                    } catch (NoUserException e) {
-                        e.printStackTrace();
-                    } catch (DataNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    catch (NotAuthorizedUserException e) {
+                    } catch (NoUserException | DataNotFoundException | NotAuthorizedUserException e) {
                         e.printStackTrace();
                     }
                     scelta = tast.nextInt();
@@ -90,11 +82,7 @@ public class HashMapTestMain{
                     dato = tast.next();
                     try {
                         System.out.println("Il dato che hai copiato è: " + database.get(name, passw, dato) + " Cosa vuoi fare ora?");
-                    }catch(NoUserException e){
-                        e.printStackTrace();
-                    }catch(DataNotFoundException e){
-                        e.printStackTrace();
-                    }catch(NotAuthorizedUserException e){
+                    }catch(NoUserException | NotAuthorizedUserException | DataNotFoundException e){
                         e.printStackTrace();
                     }
                     scelta = tast.nextInt();
@@ -109,11 +97,7 @@ public class HashMapTestMain{
                     try {
                         database.remove(name,passw,dato);
                         System.out.println("Dato rimosso con successo! Cosa vuoi fare ora?");
-                    } catch (NoUserException e) {
-                        e.printStackTrace();
-                    } catch (DataNotFoundException e) {
-                        e.printStackTrace();
-                    }catch (NotAuthorizedUserException e) {
+                    } catch (NoUserException | DataNotFoundException | NotAuthorizedUserException e) {
                         e.printStackTrace();
                     }
                     scelta = tast.nextInt();
@@ -158,9 +142,7 @@ public class HashMapTestMain{
                     try {
                         database.empowerUser(name,passw,altro);
                         System.out.println(altro+" autorizzato con successo! Cosa vuoi fare ora?");
-                    } catch (NoUserException e) {
-                        e.printStackTrace();
-                    } catch (AlreadyPoweredException e) {
+                    } catch (NoUserException | AlreadyPoweredException e) {
                         e.printStackTrace();
                     }
                     scelta = tast.nextInt();
@@ -175,15 +157,9 @@ public class HashMapTestMain{
                     try {
                         database.depowerUser(name,passw,altro);
                         System.out.println(altro+" bannato con successo! Cosa vuoi fare ora?");
-                    } catch (NoUserException e) {
-                        e.printStackTrace();
-                    } catch (AlreadyWeakException e) {
+                    } catch (NoUserException | AlreadyWeakException e) {
                         e.printStackTrace();
                     }
-                    scelta = tast.nextInt();
-                    break;
-                case 11:
-                    database.stampaAuth("luiggi","cane");
                     scelta = tast.nextInt();
                     break;
             }
