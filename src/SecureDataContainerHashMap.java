@@ -1,6 +1,8 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
 import exceptions.*;
-
-import java.util.*;
+import java.util.Iterator;
 
 public class SecureDataContainerHashMap<E> implements SecureDataContainerInterface<E>{
     /*
@@ -14,7 +16,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
 
     private Map<KeyCouple,Vector<E>> DBUsers;
 
-    public SecureDataContainerHashMap(){
+    SecureDataContainerHashMap(){
         DBUsers = new HashMap<>();
 
     }
@@ -33,10 +35,8 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
     //DONE
     @Override
     /*public void createUser(String Id, String passw) throws UserAlreadyPresent {
-
         if(Id == null || passw == null) throw new NullPointerException();
         if(Id.isEmpty() || passw.isEmpty()) throw  new IllegalArgumentException();
-
         KeyCouple IdPassw = new KeyCouple(Id, passw);
         if(DBUsers.containsKey(IdPassw)){
             if(!existsUser(IdPassw)){
@@ -48,6 +48,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
     }*/
 
     public void createUser(String Id, String passw) throws UserAlreadyPresent {
+
         if(Id.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
         if(existsUser(Id)) throw new UserAlreadyPresent(Id);
 
@@ -58,16 +59,19 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
     //DONE
     @Override
     public int getSize(String Owner, String passw) throws NullPointerException, IllegalArgumentException{
+
         if(Owner == null || passw == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
 
-        return DBUsers.size();
+        KeyCouple user = new KeyCouple(Owner,passw);
+        return DBUsers.get(user).size();
 
     }
 
     //DONE
     @Override
     public boolean put(String Owner, String passw, E data) throws NoUserException {
+
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
         KeyCouple user = new KeyCouple(Owner,passw);
@@ -83,6 +87,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
     //DONE
     @Override
     public E get(String Owner, String passw, E data) throws NoUserException, NoDataException {
+
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
 
@@ -102,6 +107,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
     //DONE
     @Override
     public E remove(String Owner, String passw, E data) throws NoUserException{
+
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
 
@@ -112,6 +118,8 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
                 removedElement = DBUsers.get(user).get(DBUsers.get(user).indexOf(data));
                 DBUsers.get(user).remove(data);
             }
+        } else {
+            throw new NoUserException("No user");
         }
         return removedElement;
     }
@@ -127,7 +135,9 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
             if(DBUsers.get(user).contains(data)){
                 throw new DataAlreadyPresentException("Il dato inserito esiste già");
             }else{
-                DBUsers.get(user).add((E) data);
+                Object copied;
+                copied = data;
+                DBUsers.get(user).add((E)copied);
             }
         }else{
             throw new NoUserException("Non esiste l'utente richiesto");
@@ -160,8 +170,10 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
         }
     }
 
+    //DONE
     @Override
-    public Iterator getIterator(String Owner, String passw) throws NoUserException{
+    public Iterator getIterator(String Owner, String passw) throws NoUserException {
+
         if(Owner == null || passw == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
 
