@@ -17,7 +17,7 @@ public class SecureDataContainerTest2 {
             switch (scelta) {
                 case 0:
                     System.out.println("A presto!");
-                    scelta=-1;
+                    scelta=-99;
                     break;
                 case 1:
                     System.out.println("Inserisci nome utente");
