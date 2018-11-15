@@ -74,7 +74,7 @@ public interface SecureDataContainer<E> {
     public void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException,
                                                                                 UserNotPresentException,
                                                                                 UserNotAllowedException,
-                                                                                ElementAlreadyPresentException.
+                                                                                ElementAlreadyPresentException,
                                                                                 UserAlreadyAllowedException ;
 
     /* restituisce un iteratore (senza remove) che genera tutti i dati

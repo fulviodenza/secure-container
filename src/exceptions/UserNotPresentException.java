@@ -1,3 +1,5 @@
+package exceptions;
+
 public class UserNotPresentException extends Exception {
   public UserNotPresentException(String user) {
     super(user + " non è un utente valido");

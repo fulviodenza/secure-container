@@ -18,94 +18,8 @@ import exceptions.*;
 */
 public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
 
-
-    /*Overview: Tipo contenitore del generico con aggiunge due informazioni: Il possessore dell'elemento
-                e una lista di utenti autorizzati ad accedere al dato
-                IR: owner != null, el != null e allowedUsers != null
-                FA: a(el, owner) = {owner, el, allowedUsers} dove owner è la stringa che indica
-                                  il proprietario dell'elemento el, e allowUser indica gli utenti autorizzati
-                                  ad accedere al dato
-    */
-    private class Element {
-      private String owner = null;
-      private E el = null;
-      private List<String> allowedUsers;
-
-
-      /*
-      REQUIRES: el, owner != null, altrimenti lancia NullPointerException (unchecked)
-      EFFECTS: inizializza this.el, this.owner a (el, owner) e allowedUsers a una lista vuota
-      */
-      public Element(E el, String owner) {
-        if(el == null || owner == null) throw new NullPointerException();
-        this.el = el;
-        this.owner = owner;
-        allowedUsers = new ArrayList<String>();
-      }
-
-      /*EFFECTS: Restituisce l'elemento contenuto in this*/
-      public E getEl() {
-        return el;
-      }
-
-      /*EFFECTS: Restituisce true se who è il proprietario di this
-        REQUIRES: who != null, altrimenti lancia NullPointerException (unchecked) */
-      public boolean ownedBy(String who) {
-        return who.equals(owner);
-      }
-
-      /*EFFECTS: Restituisce true se il possessore di other e this sono uguali e se
-                 l'elemento in other è lo stesso di this (secondo la concezione di uguaglianza
-                 di E)
-        REQUIRES: other deve essere una istanza di Element, altrimenti lancia IllegalArgumentException (checked)
-                  other non dev'essere null, altrimenti lancia NullPointerException (unchecked)
-      */
-      @Override
-      public boolean equals(Object other) {
-        if(! (other instanceof ListSecureDataContainer.Element)) throw new IllegalArgumentException();
-        Element o = (Element) other;
-        return (o.el.equals( this.el ) && o.owner.equals( this.owner ));
-      }
-
-      /*EFFECTS: Permette all'utente other di accedere ad El
-        REQUIRES: other != null, altrimenti lancia NullPointerException (unchecked)
-                  other non in allowedUsers, altrimenti lancia UserAlreadyAllowedException (checked)
-        MODIFIES: this */
-      public void allowUser(String other) throws UserAlreadyAllowedException {
-        if(other == null) throw new NullPointerException();
-        if(allowedUsers.contains(other)) throw new UserAlreadyAllowedException();
-        allowedUsers.add(other);
-      }
-
-      /*EFFECTS: Blocca l'accesso al dato a other
-        REQUIRES: other != null, altrimenti lancia NullPointerException (unchecked)
-                  other in allowedUsers, altrimenti lancia UserNotAllowedException (checked)
-        MODIFIES: this */
-      public void denyUser(String other) throws UserNotAllowedException {
-        if(other == null) throw new NullPointerException();
-        if(!allowedUsers.contains(other)) throw new UserNotAllowedException();
-        allowedUsers.remove(other);
-      }
-
-      /*EFFECTS: Crea una copia di this, cioè un nuovo Element c t.c c.owner = this.owner,
-                c.el = this.el e per ogni u in c.allowedUsers, esiste o in t.allowedUsers t.c u = o
-      */
-      public Element copy() {
-        Element c = new Element(el, owner);
-        c.allowedUsers.addAll(this.allowedUsers);
-        return c;
-      }
-
-      /*EFFECTS: Restituisce true who può accedere a this
-        REQUIRES: who != null, altrimenti lancia (da parte di ownedBy) NullPointerException (unchecked)
-      */
-      public boolean canBeAccessedBy(String who) {
-        return ownedBy(who) || allowedUsers.contains(who);
-      }
-    }
-
     private List<User> users;
-    private List<Element> elements;
+    private List<Element<E>> elements;
 
     //Controlla se l'utente us è presente tra gli utenti di this
     private boolean userAlreadyPresent(String us) {
@@ -176,7 +90,7 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
 
       User u = new User(Owner, passw);
       if(users.contains(u)) {
-        Element toBeAdded = new Element(data, Owner);
+        Element toBeAdded = new Element<E>(data, Owner);
         //Per evitare di reinserire più copie dello stesso elemento
         if(!elements.contains(toBeAdded)) {
           elements.add(toBeAdded);
@@ -195,9 +109,9 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
       User u = new User(Owner, passw);
       E el = null;
       if(users.contains(u)) {
-        Element elementToFind = new Element(data, Owner);
+        Element elementToFind = new Element<E>(data, Owner);
         int ind = elements.indexOf(elementToFind);
-        if(ind >= 0) el = elements.get(ind).el;
+        if(ind >= 0) el = elements.get(ind).getEl();
       }
       return el;
     }
@@ -212,7 +126,7 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
       if(users.contains(u)) {
         Element elementToRemove = getElt(data, Owner);
         if(elementToRemove != null)
-          el = elementToRemove.getEl();
+          el = (E) elementToRemove.getEl();
           elements.remove(elementToRemove);
         }
       return el;
@@ -254,7 +168,11 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
         // restituisce null
         if(e == null) throw new UserNotAllowedException();
         e.allowUser(Other);
+        return;
       }
+
+      // Se raggiungiamo questo punto, il login è fallito
+        throw new InvalidCredentialsException();
     }
 
     /* restituisce un iteratore (senza remove) che genera tutti i dati
@@ -265,11 +183,11 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
       if(Owner == null || passw == null) throw new NullPointerException();
       User u = new User(Owner, passw);
       if(users.contains(u)) {
-        List<E> userElements = new ArrayList<E>();
+        List<E> userElements = new ArrayList<>();
 
         for(Element e : elements) {
           if(e.canBeAccessedBy(Owner))
-            userElements.add(e.getEl());
+            userElements.add( (E) e.getEl());
         }
         // unmodifiableList restituisce una lista il cui metodo remove lancia
         // UnsupportedOperationException()

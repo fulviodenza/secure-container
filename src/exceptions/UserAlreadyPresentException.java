@@ -1,3 +1,5 @@
+package exceptions;
+
 public class UserAlreadyPresentException extends Exception {
   public UserAlreadyPresentException(String user) {
     super(user + " è un utente già presente nella base.");
