@@ -68,12 +68,14 @@ public interface SecureDataContainer<E> {
     * 		        ti regala con una InvalidCredentialsException. Che gentile <3
     *             Se Other non è un utente in this, lancia una UserNotPresentException. Commento troppo normale, eh?
     *             Se this(Other) contiene già data, lancia una ElementAlreadyPresentException. Anche questo, neh?
+    *             Se this(Other) è già autorizzato ad acceder a data, lancia una UserAlreadyAllowedException. Anche questo, neh?
     * @modifies: this(Other)
     */
     public void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException,
                                                                                 UserNotPresentException,
                                                                                 UserNotAllowedException,
-                                                                                ElementAlreadyPresentException;
+                                                                                ElementAlreadyPresentException.
+                                                                                UserAlreadyAllowedException ;
 
     /* restituisce un iteratore (senza remove) che genera tutti i dati
     dell’utente in ordine arbitrario

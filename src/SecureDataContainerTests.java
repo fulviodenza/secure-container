@@ -75,6 +75,8 @@ public class SecureDataContainerTests {
       abort("A quanto pare luigi è morto");
     } catch (ElementAlreadyPresentException e) {
       abort("Luigi ha un Meizu, e chi lo sapeva?");
+    } catch (UserAlreadyAllowedException e) {
+      abort("L'utente è già autorizzato");
     }
 
     String huawei = (String)container.get("crax", CRAX_PASSWORD, new String("Huawei"));
