@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="28a38f9c-acdc-4f20-b3bd-cfc6d8c3a545" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecureDataContainerHashMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecureDataContainerHashMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecureDataContainerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecureDataContainerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SecureDataContainerTest2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecureDataContainerTest2.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -30,30 +32,32 @@
     <session id="-1805479651">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="22" />
+          <entry key="project.closed" value="26" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.15" value="6" />
           <entry key="project.open.time.16" value="4" />
           <entry key="project.open.time.17" value="4" />
-          <entry key="project.open.time.18" value="2" />
+          <entry key="project.open.time.18" value="3" />
           <entry key="project.open.time.19" value="3" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.22" value="1" />
+          <entry key="project.open.time.23" value="1" />
+          <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.opened" value="23" />
+          <entry key="project.opened" value="26" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="JAVA/SecureDataContainerInterface" value="1" />
           <entry key="class" value="4" />
-          <entry key="java" value="23" />
+          <entry key="java" value="25" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="4" />
-          <entry key="JAVA" value="23" />
+          <entry key="JAVA" value="25" />
           <entry key="UML" value="1" />
         </counts>
       </usages-collector>
@@ -61,14 +65,14 @@
         <counts>
           <entry key="class" value="6" />
           <entry key="dummy" value="21" />
-          <entry key="java" value="13796" />
+          <entry key="java" value="14180" />
           <entry key="txt" value="296" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CLASS" value="6" />
-          <entry key="JAVA" value="13796" />
+          <entry key="JAVA" value="14180" />
           <entry key="PLAIN_TEXT" value="317" />
         </counts>
       </usages-collector>
@@ -81,11 +85,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/SecureDataContainerHashMap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="184" column="14" lean-forward="true" selection-start-line="184" selection-start-column="14" selection-end-line="184" selection-end-column="14" />
+            <state relative-caret-position="162">
+              <caret line="169" lean-forward="true" selection-start-line="169" selection-end-line="169" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -93,11 +97,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SecureDataContainerTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="87" column="9" selection-start-line="87" selection-start-column="9" selection-end-line="87" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SecureDataContainerTest2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2115">
-              <caret line="141" column="21" lean-forward="true" selection-start-line="141" selection-start-column="21" selection-end-line="141" selection-end-column="21" />
+            <state relative-caret-position="2205">
+              <caret line="149" column="21" selection-start-line="149" selection-start-column="21" selection-end-line="149" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -120,6 +133,7 @@
     <findStrings>
       <find>no user</find>
       <find>Vector&lt;E&gt;</find>
+      <find>samsung</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -138,15 +152,15 @@
         <option value="$PROJECT_DIR$/src/DataAlreadyPresent.java" />
         <option value="$PROJECT_DIR$/src/exceptions/UserAlreadyPresent.java" />
         <option value="$PROJECT_DIR$/src/SecureDataContainer.java" />
-        <option value="$PROJECT_DIR$/src/SecureDataContainerTest.java" />
         <option value="$PROJECT_DIR$/src/SecureDataContainerInterface.java" />
         <option value="$PROJECT_DIR$/src/KeyCouple.java" />
         <option value="$PROJECT_DIR$/src/Data.java" />
         <option value="$PROJECT_DIR$/src/SecureDataContainerHashMap2a.java" />
         <option value="$PROJECT_DIR$/src/SecureDataContainerHashMap2.java" />
         <option value="$PROJECT_DIR$/src/Pair.java" />
-        <option value="$PROJECT_DIR$/src/SecureDataContainerHashMap.java" />
         <option value="$PROJECT_DIR$/src/SecureDataContainerTest2.java" />
+        <option value="$PROJECT_DIR$/src/SecureDataContainerTest.java" />
+        <option value="$PROJECT_DIR$/src/SecureDataContainerHashMap.java" />
       </list>
     </option>
   </component>
@@ -157,10 +171,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="506" />
+    <option name="x" value="683" />
     <option name="y" value="27" />
-    <option name="width" value="1221" />
-    <option name="height" value="635" />
+    <option name="width" value="683" />
+    <option name="height" value="741" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -201,8 +215,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -259,7 +273,10 @@
       <workItem from="1541795967953" duration="7593000" />
       <workItem from="1541957567726" duration="779000" />
       <workItem from="1541966630399" duration="869000" />
-      <workItem from="1542200744097" duration="863000" />
+      <workItem from="1542200744097" duration="986000" />
+      <workItem from="1542205142267" duration="810000" />
+      <workItem from="1542294136463" duration="5527000" />
+      <workItem from="1542366799662" duration="1125000" />
     </task>
     <task id="LOCAL-00001" summary="Aggiunto il metodo createUser">
       <created>1541608768687</created>
@@ -324,17 +341,24 @@
       <option name="project" value="LOCAL" />
       <updated>1542201569393</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fine:)">
+      <created>1542201615104</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1542201615104</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62011000" />
+    <option name="totallyTimeSpent" value="69596000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1366" height="741" extended-state="6" />
+    <frame x="683" y="27" width="683" height="741" extended-state="4" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24962063" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.0" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -349,7 +373,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.21535893" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.03672788" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32888147" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32888147" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32888147" />
@@ -464,23 +488,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="8" lean-forward="true" selection-start-line="29" selection-start-column="8" selection-end-line="31" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/KeyCouple.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-          <folding>
-            <element signature="e#260#261#0" expanded="true" />
-            <element signature="e#289#290#0" expanded="true" />
-            <element signature="e#578#579#0" expanded="true" />
-            <element signature="e#631#632#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -489,28 +500,35 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SecureDataContainer.class" />
-    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-687">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Pair.java" />
-    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerHashMap.java">
+    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerTest2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="184" column="14" lean-forward="true" selection-start-line="184" selection-start-column="14" selection-end-line="184" selection-end-column="14" />
+        <state relative-caret-position="2205">
+          <caret line="149" column="21" selection-start-line="149" selection-start-column="21" selection-end-line="149" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerTest2.java">
+    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerInterface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2115">
-          <caret line="141" column="21" lean-forward="true" selection-start-line="141" selection-start-column="21" selection-end-line="141" selection-end-column="21" />
+        <state relative-caret-position="-469">
+          <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="87" column="9" selection-start-line="87" selection-start-column="9" selection-end-line="87" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerHashMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="169" lean-forward="true" selection-start-line="169" selection-end-line="169" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

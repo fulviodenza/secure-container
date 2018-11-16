@@ -1,8 +1,6 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
+
 import exceptions.*;
-import java.util.Iterator;
 
 public class SecureDataContainerHashMap<E> implements SecureDataContainerInterface<E>{
     /*
@@ -179,9 +177,8 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
 
         KeyCouple user = new KeyCouple(Owner,passw);
         if(DBUsers.containsKey(user)){
-            Iterator<Map.Entry<KeyCouple, Vector<E>>> it;
-            it = DBUsers.entrySet().iterator();
-            return it;
+            List<E> unmodifiable = DBUsers.get(user);
+            return unmodifiable.iterator();
         }else{
             throw new NoUserException("Non esiste l'utente richiesto");
         }

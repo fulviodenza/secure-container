@@ -67,12 +67,6 @@ public class SecureDataContainerTest {
             abort("no user");
         }
 
-        try {
-            container.put("Fruvio", "GiacominoPaneEVino", "xiaomi4");
-        } catch (NoUserException e){
-            abort("no user");
-        }
-
         System.out.println(container.getSize("Giua","comefosseantani"));
         try {
             String samsungRemoved = container.remove("Luiggi", "xdxd", "samsung");
@@ -82,16 +76,16 @@ public class SecureDataContainerTest {
         }
 
         try {
-            String huaweiRemoved = container.remove("Giua", "comefosseantani", "huawei");
+            String huaweiRemoved = container.remove("Giua", "comefosseantani", "apple");
             System.out.println(huaweiRemoved);
         } catch (NoUserException e){
             abort("no user");
         }
-        /*try {
+        try {
             container.put("nomechemuore","GiacominoPaneEVino", "ciaomondo");
         } catch (NoUserException e) {
             System.out.println("User not present");
-        }*/
+        }
     }
 
     public static void main(String[] args) {

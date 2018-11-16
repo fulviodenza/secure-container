@@ -142,6 +142,13 @@ public class SecureDataContainerTest2 {
                     }
                     scelta = tast.nextInt();
                     break;
+                case 9:
+                    try {
+                        database.getIterator("luigi","ciao").remove();
+                    } catch (NoUserException e) {
+                        e.printStackTrace();
+                    }
+
             }
         }
     }
