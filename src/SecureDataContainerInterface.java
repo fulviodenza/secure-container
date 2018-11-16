@@ -27,8 +27,9 @@ public interface SecureDataContainerInterface<E>{
     EFFECTS :Restituisce il numero di elementi a cui l'utente Owner ha accesso, se il login
              fallisce restituisce 0
      */
+    public void removeUser(String Id, String passw) throws NoUserException;
 
-    public int getSize(String Owner, String passw); //IMPLEMENTATA
+    public int getSize(String Owner, String passw) throws NullPointerException, IllegalArgumentException; //IMPLEMENTATA
 
     /*Inserisce il valore del dato nella collezione
     se vengono rispettati i controlli di identità*/

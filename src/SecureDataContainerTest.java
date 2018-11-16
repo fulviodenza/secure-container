@@ -85,6 +85,14 @@ public class SecureDataContainerTest {
             container.put("nomechemuore","GiacominoPaneEVino", "ciaomondo");
         } catch (NoUserException e) {
             System.out.println("User not present");
+        }try {
+            container.removeUser("Luiggi","xdxd");
+        } catch (NoUserException e) {
+            System.out.println("User not present");
+        }try {
+            container.printUsers();
+        } catch (NullPointerException e){
+            System.out.println("No users");
         }
     }
 

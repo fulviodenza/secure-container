@@ -144,10 +144,12 @@ public class SecureDataContainerTest2 {
                     break;
                 case 9:
                     try {
-                        database.getIterator("luigi","ciao").remove();
+                        database.removeUser("fulvio","pass");
                     } catch (NoUserException e) {
                         e.printStackTrace();
                     }
+                    System.out.println("Utente eliminato con successo! Cosa vuoi fare ora?");
+                    scelta = tast.nextInt();
 
             }
         }

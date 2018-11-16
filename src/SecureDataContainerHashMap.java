@@ -31,20 +31,6 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
     }
 
     //DONE
-    @Override
-    /*public void createUser(String Id, String passw) throws UserAlreadyPresent {
-        if(Id == null || passw == null) throw new NullPointerException();
-        if(Id.isEmpty() || passw.isEmpty()) throw  new IllegalArgumentException();
-        KeyCouple IdPassw = new KeyCouple(Id, passw);
-        if(DBUsers.containsKey(IdPassw)){
-            if(!existsUser(IdPassw)){
-                throw new UserAlreadyPresent("User already present");
-            }
-        }else{
-            DBUsers.put(IdPassw, new Vector<E>());
-        }
-    }*/
-
     public void createUser(String Id, String passw) throws UserAlreadyPresent {
 
         if(Id.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
@@ -52,6 +38,19 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
 
         KeyCouple u = new KeyCouple(Id, passw);
         DBUsers.put(u, new Vector<>());
+    }
+
+    //DONE
+    public void removeUser(String Id, String passw) throws NoUserException {
+
+        if(Id.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
+        KeyCouple u = new KeyCouple(Id, passw);
+        if(DBUsers.containsKey(u)){
+            DBUsers.remove(u);
+        }else{
+            throw new NoUserException("No user");
+        }
+
     }
 
     //DONE
@@ -123,6 +122,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
     }
 
     //DONE
+    @SuppressWarnings("SuspiciousMethodCalls")
     @Override
     public void copy(String Owner, String passw, Object data) throws NoUserException, DataAlreadyPresentException {
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
@@ -181,6 +181,12 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
             return unmodifiable.iterator();
         }else{
             throw new NoUserException("Non esiste l'utente richiesto");
+        }
+    }
+
+    public void printUsers(){
+        for(KeyCouple K: DBUsers.keySet()){
+            System.out.println(K.getIdUser());
         }
     }
 }
