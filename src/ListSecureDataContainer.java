@@ -99,7 +99,7 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
 
       int counter = 0;
       for(Element e : elements) {
-        if(e.canBeAccessedBy(Owner)) {
+        if(e.ownedBy(Owner)) {
           counter ++;
         }
       }
