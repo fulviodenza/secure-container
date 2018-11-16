@@ -86,12 +86,37 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
 
     @Override
     public E remove(String Owner, String passw, E data) {
+        if(Owner == null || passw == null || data == null ) throw new NullPointerException();
+
+        User u = new User(Owner, passw);
+        if(db.containsKey(u)) {
+            Element<E> el = new Element<E>(data, Owner);
+            List<Element<E>> userData = db.get(u);
+            if(userData.contains(el)) {
+                E backup = userData.get( userData.indexOf(el) ).getEl();
+                userData.remove(el);
+                return backup;
+            }
+        }
+
         return null;
     }
 
     @Override
     public void copy(String Owner, String passw, E data) throws InvalidCredentialsException,
                                                                 ElementAlreadyPresentException {
+
+        if(Owner == null || passw == null || data == null ) throw new NullPointerException();
+
+        User u = new User(Owner, passw);
+        if(db.containsKey(u)) {
+            Element<E> el = new Element<E>(data, Owner);
+            List<Element<E>> userData = db.get(u);
+//            if (userData.contains(el)) {
+//                Element<E> toBeCopied = new Element<E>(data, Owner);
+//
+//            }
+        }
 
     }
 
