@@ -127,6 +127,26 @@ public class SecureDataContainerTests {
     } catch (InvalidCredentialsException ex) {
       abort("Login fallito con luigi, e che cazz però");
     }
+
+    System.out.println("------------------------------Rimuovo Crax-----------------------------------");
+    try {
+        container.removeUser("crax", CRAX_PASSWORD);
+    } catch (InvalidCredentialsException ex) {
+        abort("Sono scappato in Messico");
+    }
+
+  System.out.println("------------------------------Telefoni di Luigi----------------------------------");
+  try {
+      phoneIt = container.getIterator("luigi", "asfg2354aga");
+      while(phoneIt.hasNext()) {
+          String phone = phoneIt.next();
+          System.out.println(phone);
+      }
+  } catch (InvalidCredentialsException ex) {
+      abort("Login fallito con luigi, e che cazz però");
+  }
+
+
   }
 
   public static void main(String[] args) {

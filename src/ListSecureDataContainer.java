@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
@@ -58,6 +59,30 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
 
         User u = new User(Id, passw);
         users.add(u);
+
+    }
+
+    // Crea l’identità un nuovo utente della collezione
+    @Override
+    public void removeUser(String Id, String passw) throws InvalidCredentialsException {
+        if(Id == null || passw == null) throw new NullPointerException();
+        if(Id.equals("") || passw.equals("") ) throw new IllegalArgumentException();
+
+        User u = new User(Id, passw);
+        //Per evitare che si registrino due utenti con lo stesso nome
+        if(!users.contains(u)) throw new InvalidCredentialsException();
+
+        users.remove(u);
+
+        ArrayList<Element> toBeRemoved = new ArrayList<Element>();
+
+        for(Element el : elements ) {
+            if(el.ownedBy(Id)) {
+                toBeRemoved.add( el );
+            }
+        }
+
+        elements.removeAll(toBeRemoved);
 
     }
 

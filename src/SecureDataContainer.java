@@ -9,9 +9,17 @@ public interface SecureDataContainer<E> {
      * @modifies: this
      * @requires: Id, passw != null, altrimenti lancia NullPointerException
      *            Id, passw != "", altrimenti lancia una InvalidArgumentException
-  *               Id non in this, altrimenti lancia una UserAlreadyPresentException
+     *            Id non in this, altrimenti lancia una UserAlreadyPresentException
      */
-    public void createUser(String Id, String passw) throws UserAlreadyPresentException;
+    void createUser(String Id, String passw) throws UserAlreadyPresentException;
+
+    // Rimuove l’identità dalla collezione, assieme a tutti gli elementi che possiede
+    /* @effects: Rimuove (Id, passw) da this, elts = elts / { v : v.owner = Id }
+     * @modifies: this
+     * @requires: Id, passw != null, altrimenti lancia NullPointerException
+     *            Id, passw != "", altrimenti lancia una InvalidArgumentException
+     */
+    void removeUser(String Id, String passw) throws InvalidCredentialsException;
 
     /* Restituisce il numero degli elementi di un utente presenti nella
     collezione*/
@@ -19,7 +27,7 @@ public interface SecureDataContainer<E> {
      * @requires: Owner, passw != null, altrimenti spara una NullPointerException
      * 		       Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
      * 		       ti odia a vita e ti da come motivazione InvalidCredentialsException */
-    public int getSize(String Owner, String passw) throws InvalidCredentialsException;
+    int getSize(String Owner, String passw) throws InvalidCredentialsException;
 
     /*Inserisce il valore del dato nella collezione
     se vengono rispettati i controlli di identità*/
@@ -27,14 +35,14 @@ public interface SecureDataContainer<E> {
      * 		 Altrimenti restituisce false
      * @requires: Owner, passw, data != null, altrimenti ti porge una NullPointerException
      * @modifies: this(owner, passw) = this(owner,pass) + data */
-    public boolean put(String Owner, String passw, E data);
+    boolean put(String Owner, String passw, E data);
 
     /* Ottiene una copia del valore del dato nella collezione
     se vengono rispettati i controlli di identità*/
     /* @effects: Restituisce una copia di data se il login ha esito positivo, altrimenti ti chiava null
      * @requires: Owner, passw, data != null, altrimenti lancia NullPointerException
      */
-    public E get(String Owner, String passw, E data);
+    E get(String Owner, String passw, E data);
 
     /* Rimuove il dato nella collezione
     se vengono rispettati i controlli di identità*/
@@ -45,7 +53,7 @@ public interface SecureDataContainer<E> {
     * 		        ti insulta con una InvalidCredentialsException
     * @modifies: this
     */
-    public E remove(String Owner, String passw, E data);
+    E remove(String Owner, String passw, E data);
 
     /* Crea una copia del dato nella collezione
     se vengono rispettati i controlli di identità*/
@@ -57,7 +65,7 @@ public interface SecureDataContainer<E> {
     *             Se l'utente possiede già data, ti prende a schiaffi e ti restituisce ElementAlreadyPresentException
     * @modifies: this
     */
-    public void copy(String Owner, String passw, E data) throws InvalidCredentialsException, ElementAlreadyPresentException;
+    void copy(String Owner, String passw, E data) throws InvalidCredentialsException, ElementAlreadyPresentException;
 
     /* Condivide il dato nella collezione con un altro utente
     se vengono rispettati i controlli di identità*/
@@ -71,7 +79,7 @@ public interface SecureDataContainer<E> {
     *             Se this(Other) è già autorizzato ad acceder a data, lancia una UserAlreadyAllowedException. Anche questo, neh?
     * @modifies: this(Other)
     */
-    public void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException,
+    void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException,
                                                                                 UserNotPresentException,
                                                                                 UserNotAllowedException,
                                                                                 ElementAlreadyPresentException,
@@ -84,5 +92,5 @@ public interface SecureDataContainer<E> {
     * 		      Owner, passw devono essere le credenziali corrette di un utente, altrimenti
     * 		      ti urla contro "InvalidCredentialsException".
     */
-    public Iterator<E> getIterator(String Owner, String passw) throws InvalidCredentialsException;
+    Iterator<E> getIterator(String Owner, String passw) throws InvalidCredentialsException;
 }

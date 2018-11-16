@@ -16,6 +16,11 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
     }
 
     @Override
+    public void removeUser(String Id, String passw) throws InvalidCredentialsException {
+
+    }
+
+    @Override
     public int getSize(String Owner, String passw) throws InvalidCredentialsException {
         return 0;
     }
