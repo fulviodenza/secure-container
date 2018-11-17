@@ -1,5 +1,7 @@
 /*
-* IR: DBUsers != null && forall <u,list(el)> ==> (u != null && list(el) != null) && (forall el ==> el != null)
+* Prima implementazione
+*
+* IR: DBUsers != null && forall <u,list(el)> ==> (u != null) && (forall el ==> el != null)
 * && forall(x,y).(x,y appartengano a DBUsers && x != y) ==> x.getUserName != y.getUserName
 * FA: f(DBUsers) = {<u1,{el0,...,eln}k>,....<uk,{el0,...,eln}k>} dove u1 è un User e {el0,...eln} una lista di elementi
  * dove n == list.size()-1 e k == DBUsers.size()-1
@@ -47,13 +49,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
         passw = passwBuilder.toString();
         return passw;
     }
-    /*public void stampaAuth(String name, String passw){
-        User u = chiave(name);
-        System.out.println("Gli utenti autorizzati da "+name+" sono: "+u.getPower().size());
-        for(int i=0;i<u.getPower().size();i++){
-            System.out.println(u.getPower().get(i));
-        }
-    }*/
+
     /*OVERVIEW: Crea un nuovo utente nella collezione*/
     public void createUser(String Id, String passw) throws NullPointerException,IllegalArgumentException,DoubleUserException{
         if(Id == null || passw == null) throw new NullPointerException();

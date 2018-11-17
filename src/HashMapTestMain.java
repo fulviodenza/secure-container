@@ -8,7 +8,8 @@ public class HashMapTestMain{
         }
     }
     public static void main(String [] args){
-        SecureDataContainerHashMap database = new SecureDataContainerHashMap<>();
+        //SecureDataContainerHashMap database = new SecureDataContainerHashMap<>();
+        SecureDataContainerVectors database = new SecureDataContainerVectors<>();
         Scanner tast = new Scanner(System.in);
         int scelta;
         String name,passw,altro;
@@ -121,7 +122,7 @@ public class HashMapTestMain{
                     try {
                         database.share(name,passw,altro,dato);
                         System.out.println("Dato condiviso con "+altro+" con successo! Cosa vuoi fare ora?");
-                    } catch (NoUserException | DataNotFoundException e) {
+                    } catch (NoUserException | DataNotFoundException | AlreadyAuthorizedException e ) {
                         e.printStackTrace();
                     }
                     scelta = tast.nextInt();
