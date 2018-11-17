@@ -1,4 +1,5 @@
 import java.util.*;
+import Exceptions.*;
 public class HashMapTestMain{
     private static void stampaIt(Iterator t){
         System.out.println("I tuoi dati sono:");
@@ -13,7 +14,7 @@ public class HashMapTestMain{
         String name,passw,altro;
         String dato;
         System.out.println("Benvenuto! Scegli cosa vuoi fare:");
-        System.out.println("1 - Registrati\n2 - Aggiungi dati\n3 - Copia dato\n4 - Visualizza numero elementi\n5 - Ottieni copia valore\n6 - Cancella dato\n7 - Condividi dato\n8 - Stampa con iteratore\n9 - Autorizza un utente\n10 - Banna un utente\n0 - Esci");
+        System.out.println("1 - Registrati\n2 - Aggiungi dati\n3 - Copia dato\n4 - Visualizza numero elementi\n5 - Ottieni copia valore\n6 - Cancella dato\n7 - Condividi dato\n8 - Stampa con iteratore\n9 - Rimuovi un utente\n0 - Esci");
         scelta = tast.nextInt();
         while(scelta >= 0){
             switch (scelta){
@@ -41,8 +42,14 @@ public class HashMapTestMain{
                     passw = tast.next();
                     System.out.println("Inserisci dato da aggiungere");
                     dato = tast.next();
-                    if(database.put(name,passw,dato)) System.out.println("Dato aggiunto con successo! Cosa vuoi fare ora?");
-                    else System.out.println("Dato non aggiunto... Cosa vuoi fare ora?");
+                    try{
+                        database.put(name,passw,dato);
+                    }catch(NoUserException e){
+                        e.printStackTrace();
+                        System.out.println("Dato non aggiunto... Cosa vuoi fare ora?");
+                    }
+                    System.out.println("Dato aggiunto con successo! Cosa vuoi fare ora?");
+
                     scelta = tast.nextInt();
                     break;
                 case 3:
@@ -55,7 +62,7 @@ public class HashMapTestMain{
                     try {
                         database.copy(name,passw,dato);
                         System.out.println("Dato copiato con successo! Cosa vuoi fare ora?");
-                    } catch (NoUserException | DataNotFoundException | NotAuthorizedUserException e) {
+                    } catch (NoUserException | DataNotFoundException e) {
                         e.printStackTrace();
                     }
                     scelta = tast.nextInt();
@@ -82,7 +89,7 @@ public class HashMapTestMain{
                     dato = tast.next();
                     try {
                         System.out.println("Il dato che hai copiato è: " + database.get(name, passw, dato) + " Cosa vuoi fare ora?");
-                    }catch(NoUserException | NotAuthorizedUserException | DataNotFoundException e){
+                    }catch(NoUserException | DataNotFoundException e){
                         e.printStackTrace();
                     }
                     scelta = tast.nextInt();
@@ -97,7 +104,7 @@ public class HashMapTestMain{
                     try {
                         database.remove(name,passw,dato);
                         System.out.println("Dato rimosso con successo! Cosa vuoi fare ora?");
-                    } catch (NoUserException | DataNotFoundException | NotAuthorizedUserException e) {
+                    } catch (NoUserException | DataNotFoundException e) {
                         e.printStackTrace();
                     }
                     scelta = tast.nextInt();
@@ -114,7 +121,7 @@ public class HashMapTestMain{
                     try {
                         database.share(name,passw,altro,dato);
                         System.out.println("Dato condiviso con "+altro+" con successo! Cosa vuoi fare ora?");
-                    } catch (NoUserException e) {
+                    } catch (NoUserException | DataNotFoundException e) {
                         e.printStackTrace();
                     }
                     scelta = tast.nextInt();
@@ -137,27 +144,10 @@ public class HashMapTestMain{
                     name = tast.next();
                     System.out.println("Inserisci password");
                     passw = tast.next();
-                    System.out.println("Inserisci utente da autorizzare");
-                    altro = tast.next();
                     try {
-                        database.empowerUser(name,passw,altro);
-                        System.out.println(altro+" autorizzato con successo! Cosa vuoi fare ora?");
-                    } catch (NoUserException | AlreadyPoweredException e) {
-                        e.printStackTrace();
-                    }
-                    scelta = tast.nextInt();
-                    break;
-                case 10:
-                    System.out.println("Inserisci nome utente");
-                    name = tast.next();
-                    System.out.println("Inserisci password");
-                    passw = tast.next();
-                    System.out.println("Inserisci utente da bannare");
-                    altro = tast.next();
-                    try {
-                        database.depowerUser(name,passw,altro);
-                        System.out.println(altro+" bannato con successo! Cosa vuoi fare ora?");
-                    } catch (NoUserException | AlreadyWeakException e) {
+                        database.RemoveUser(name, passw);
+                        System.out.println(name +" rimosso con successo! Cosa vuoi fare ora?");
+                    }catch (NoUserException e) {
                         e.printStackTrace();
                     }
                     scelta = tast.nextInt();
