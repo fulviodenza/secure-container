@@ -26,6 +26,10 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
         return false;
     }
 
+    public TreeMapSecureDataContainer() {
+        db = new TreeMap<>();
+    }
+
     @Override
     public void createUser(String Id, String passw) throws UserAlreadyPresentException {
         if(Id == null || passw == null) throw new NullPointerException();
@@ -55,7 +59,19 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
         User u = new User(Owner, passw);
         if(!db.containsKey(u)) throw new InvalidCredentialsException();
 
-        return db.get(u).size();
+        int count = db.get(u).size();
+        for( User other : db.keySet() ) {
+            if(!other.equals(u)) {
+                List<Element<E>> userList = db.get(other);
+                for(Element e : userList ) {
+                    if(e.canBeAccessedBy(Owner)) {
+                        count ++;
+                    }
+                }
+            }
+        }
+
+        return count;
     }
 
     @Override
@@ -81,10 +97,12 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
 
         User u = new User(Owner, passw);
         if(db.containsKey(u)) {
-            Element<E> el = new Element<E>(data, Owner);
-            List<Element<E>> userData = db.get(u);
-            if(userData.contains(el)) {
-                return userData.get( userData.indexOf(el) ).getEl();
+            // Bisogna controllare ogni elemento, e non solo quelli posseduti direttamente dall'utente
+            for( User other : db.keySet() ) {
+                List<Element<E>> userList = db.get(other);
+                for(Element e : userList ) {
+                    if(e.canBeAccessedBy(Owner)) return (E) e.getEl();
+                }
             }
 
         }
@@ -99,9 +117,10 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
         if(db.containsKey(u)) {
             Element<E> el = new Element<E>(data, Owner);
             List<Element<E>> userData = db.get(u);
-            if(userData.contains(el)) {
-                E backup = userData.get( userData.indexOf(el) ).getEl();
-                userData.remove(el);
+            int index = userData.indexOf(el);
+            if(index != -1) {
+                E backup = userData.get( index ).getEl();
+                userData.remove(index);
                 return backup;
             }
         }
@@ -149,9 +168,13 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
         User u = new User(Owner, passw);
         if (!db.containsKey(u)) throw new InvalidCredentialsException();
 
+        // Bisogna iterare in ogni elemento, non solo in quelli associati direttamente all'utente
         List<E> initialList = new ArrayList<>(db.get(u).size());
-        for(Element e : db.get(u)) {
-            initialList.add( (E) e.getEl() );
+        for( User other : db.keySet() ) {
+            List<Element<E>> userList = db.get(other);
+            for(Element e : userList ) {
+                if(e.canBeAccessedBy(Owner))  initialList.add((E) e.getEl());
+            }
         }
         return Collections.unmodifiableList(initialList).iterator();
     }

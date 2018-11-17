@@ -1,158 +1,133 @@
 import exceptions.*;
 import java.util.Iterator;
+import java.util.TreeMap;
 
 public class SecureDataContainerTests {
 
-  private final static String CRAX_PASSWORD = "antaniadestra";
+  public static class Tester {
 
-  public static void abort(String msg) {
-    System.out.println(msg);
-    System.exit(-1);
+      private  static class TestFailedException extends RuntimeException {
+        public TestFailedException(String msg) {
+            super("[TEST FALLITO] " + msg);
+        }
+      }
+
+      @FunctionalInterface
+      public interface ExceptionRunner {
+
+          void exec() throws Exception;
+      }
+
+      private static void abort(String msg) {
+          System.out.println(msg);
+          System.exit(-1);
+      }
+    public static void expectExceptions(ExceptionRunner runner) {
+        try {
+            runner.exec();
+        } catch (Exception e){
+            System.out.println("Eccezione generata: " + e.getMessage());
+        }
+    }
+
+    public static  void expectNoExceptions(ExceptionRunner runner) {
+          try {
+              runner.exec();
+          } catch ( Exception e ) {
+              throw new TestFailedException(e.getMessage());
+          }
+    }
+
+    public static  void assertEquals(Object left, Object right) {
+        if (!left.equals(right))
+            throw new TestFailedException(left.toString() + " diverso da " + right.toString());
+    }
+
+    public  static void assertNotEquals(Object left, Object right) {
+          if(left.equals(right))
+              throw new TestFailedException(left.toString() + " uguale a" + right.toString());
+    }
+
+      public static void assertNotNull(Object left) {
+          if(left == null)
+              throw new TestFailedException("L' oggetto è null");
+      }
+
+      public static void assertNull(Object left) {
+          if(left != null)
+              throw new TestFailedException("L'oggetto non è null");
+      }
   }
 
   public static void testContainer( SecureDataContainer container) {
-    try {
-       container.createUser("crax", CRAX_PASSWORD);
-     } catch (UserAlreadyPresentException e ){
-       abort("createUser(crax, " + CRAX_PASSWORD + ")");
-     }
-     System.out.println("Utonto crax creato");
 
-    try {
-      container.createUser("fruvio", "aq32543y");
-     } catch (UserAlreadyPresentException e ){
-        abort("createUser(fruvio, aq32543y)");
-     }
-     System.out.println("Utonto fruvio creato");
+        String CRAX_PASSWORD = "asd123";
+        String FULVIO_PASS = "dsa321";
+        String LUIGI_PASS = "aaabbb";
+        Tester.expectNoExceptions(  () -> container.createUser("crax", CRAX_PASSWORD));
+        Tester.expectNoExceptions(  () -> container.createUser("fulvio", FULVIO_PASS));
+        Tester.expectNoExceptions(  ()-> container.createUser("luigi", LUIGI_PASS));
 
-    try {
-      container.createUser("luigi", "asfg2354aga");
-     } catch (UserAlreadyPresentException e ){
-         abort("createUser(luigi, asfg2354aga)");
-     }
-     System.out.println("Utonto luigi creato");
+        Tester.expectExceptions(    () -> container.createUser("crax", CRAX_PASSWORD));
 
-    try {
-        container.createUser("crax", CRAX_PASSWORD);
-     } catch (UserAlreadyPresentException e ){
-        System.out.println("Eccezione generata correttamente");
-     }
-     System.out.println("Utente luigi creato");
+        container.put("crax", CRAX_PASSWORD, "Meizu");
+        Tester.expectNoExceptions(  () -> Tester.assertEquals(container.getSize("crax", CRAX_PASSWORD), 1));
+        Tester.assertNotNull( container.get("crax", CRAX_PASSWORD, "Meizu") );
 
-    container.put("crax", CRAX_PASSWORD, new String("Meizu"));
+        Tester.expectNoExceptions(  () -> container.copy("crax", CRAX_PASSWORD, "Meizu"));
+        Tester.expectNoExceptions(  () -> Tester.assertEquals(container.getSize("crax", CRAX_PASSWORD), 2));
+        Tester.assertNotNull( container.get("crax", CRAX_PASSWORD, "Meizu") );
 
-    try {
-       container.copy("crax", CRAX_PASSWORD, new String("Meizu"));
-     } catch (InvalidCredentialsException e) {
-       abort("2 copy(..., meizu): Utente non presente");
-     } catch (ElementAlreadyPresentException e) {
-       System.out.println("Copia fallita PORCAPUTTANA WHY");
-     }
+        container.put("crax", CRAX_PASSWORD, "Huawei");
+        Tester.expectNoExceptions(  () -> Tester.assertEquals(container.getSize("crax", CRAX_PASSWORD), 3));
+        Tester.assertNotNull( container.get("crax", CRAX_PASSWORD, "Huawei") );
 
-     System.out.println("Crax ha un due Meizu ora. Riccone.");
-     System.out.println("------------------------------Telefoni di Crax----------------------------------");
-     Iterator<String> phoneIt;
-     try {
-       phoneIt = container.getIterator("crax", CRAX_PASSWORD);
-       while(phoneIt.hasNext()) {
-         String phone = phoneIt.next();
-         System.out.println(phone);
-       }
-     } catch (InvalidCredentialsException ex) {
-       abort("Login fallito con Crax, e che cazz però");
-     }
+        Tester.expectNoExceptions(  () -> container.share("crax", CRAX_PASSWORD, "luigi", "Meizu"));
+        Tester.assertNotNull( container.get("luigi", LUIGI_PASS, "Meizu") );
 
-     container.put("crax", CRAX_PASSWORD, new String("Huawei"));
+        Tester.expectNoExceptions(  () -> Tester.assertEquals(container.getSize("luigi", LUIGI_PASS), 1));
+        Tester.assertNotNull(container.get("crax", CRAX_PASSWORD, "Huawei"));
+
+        Tester.assertNotNull(container.remove("crax", CRAX_PASSWORD, "Huawei"));
+        Tester.assertNull(container.remove("crax", CRAX_PASSWORD, "Huawei"));
+
+        Tester.expectNoExceptions(  () -> Tester.assertEquals(container.getSize("crax", CRAX_PASSWORD), 2));
+        Tester.expectExceptions(    () -> container.remove("luigi", LUIGI_PASS, "Meizu"));
+        Tester.assertNotNull( container.get("luigi", LUIGI_PASS, "Meizu") );
+
+        Tester.expectNoExceptions(  () -> Tester.assertEquals(container.getSize("luigi", LUIGI_PASS), 1));
+
+        printUserPhones("crax", CRAX_PASSWORD, container);
+
+        printUserPhones("luigi", LUIGI_PASS, container);
 
 
-    try {
-      container.share("crax", CRAX_PASSWORD, "luigi", new String("Meizu"));
-    } catch (UserNotAllowedException ex) {
-      abort ("Quel pezzente di crax non ha un Meizu");
-    } catch (InvalidCredentialsException e) {
-      abort("Login fallito a container.share()");
-    } catch (UserNotPresentException e) {
-      abort("A quanto pare luigi è morto");
-    } catch (ElementAlreadyPresentException e) {
-      abort("Luigi ha un Meizu, e chi lo sapeva?");
-    } catch (UserAlreadyAllowedException e) {
-      abort("L'utente è già autorizzato");
-    }
+        Tester.expectNoExceptions(  () -> container.removeUser("crax", CRAX_PASSWORD));
 
-    String huawei = (String)container.get("crax", CRAX_PASSWORD, new String("Huawei"));
-    if(huawei == null) {
-      abort("Huawei è fallita");
-    } else {
-      System.out.println("Ora crax possiede " + huawei);
-    }
-
-    System.out.println("------------------------------Prima di cancellare Huawei dal mondo----------------------------------");
-    try {
-      phoneIt = container.getIterator("crax", CRAX_PASSWORD);
-      while(phoneIt.hasNext()) {
-        String phone = phoneIt.next();
-        System.out.println(phone);
-      }
-    } catch (InvalidCredentialsException ex) {
-      abort("Login fallito con Crax, e che cazz però");
-    }
-
-    String huaweiRemoved = (String)container.remove("crax", CRAX_PASSWORD, "Huawei");
-    if(!huaweiRemoved.equals("Huawei")) {
-      abort ("WTF DUDE");
-    }
-    huaweiRemoved = (String)container.remove("crax", CRAX_PASSWORD, "Huawei");
-    if(huaweiRemoved != null && huaweiRemoved.equals("Huawei")) {
-      abort ( "EVEN MORE WTF DUDE" );
-    }
-
-    System.out.println("------------------------------Dopo aver cancellato Huawei dal mondo MUHUHAUHAUAHA----------------------------------");
-    try {
-      phoneIt = container.getIterator("crax", CRAX_PASSWORD);
-      while(phoneIt.hasNext()) {
-        String phone = phoneIt.next();
-        System.out.println(phone);
-      }
-    } catch (InvalidCredentialsException ex) {
-      abort("Login fallito con Crax, e mannaggia chella scurnacchiata zuccolona zombapereta di tua madre");
-    }
-
-    System.out.println("------------------------------Telefoni di Luigi----------------------------------");
-    try {
-      phoneIt = container.getIterator("luigi", "asfg2354aga");
-      while(phoneIt.hasNext()) {
-        String phone = phoneIt.next();
-        System.out.println(phone);
-      }
-    } catch (InvalidCredentialsException ex) {
-      abort("Login fallito con luigi, e che cazz però");
-    }
-
-    System.out.println("------------------------------Rimuovo Crax-----------------------------------");
-    try {
-        container.removeUser("crax", CRAX_PASSWORD);
-    } catch (InvalidCredentialsException ex) {
-        abort("Sono scappato in Messico");
-    }
-
-  System.out.println("------------------------------Telefoni di Luigi----------------------------------");
-  try {
-      phoneIt = container.getIterator("luigi", "asfg2354aga");
-      while(phoneIt.hasNext()) {
-          String phone = phoneIt.next();
-          System.out.println(phone);
-      }
-  } catch (InvalidCredentialsException ex) {
-      abort("Login fallito con luigi, e che cazz però");
-  }
-
+        printUserPhones("luigi", LUIGI_PASS, container);
+        Tester.assertNull( container.get("luigi", LUIGI_PASS, "Meizu") );
 
   }
 
-  public static void main(String[] args) {
-    SecureDataContainer<String> hashContainer = new ListSecureDataContainer<>();
-    testContainer(hashContainer);
-    System.out.println("Primo round vinto");
+    private static void printUserPhones(String who, String pass, SecureDataContainer container) {
+        System.out.println("-----------------------Telefoni di " + who + "----------------------------");
+        Tester.expectNoExceptions(() -> {
+            Iterator phoneIt = container.getIterator(who, pass);
+            while(phoneIt.hasNext()) {
+                String phone = (String) phoneIt.next();
+                System.out.println(phone);
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        SecureDataContainer<String> hashContainer = new ListSecureDataContainer<>();
+        TreeMapSecureDataContainer<String> treeContainer = new TreeMapSecureDataContainer<>();
+        testContainer(hashContainer);
+        System.out.println("Primo round vinto");
+
+        testContainer(treeContainer);
+
   }
 
 }

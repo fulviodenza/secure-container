@@ -99,7 +99,7 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
 
       int counter = 0;
       for(Element e : elements) {
-        if(e.ownedBy(Owner)) {
+        if(e.canBeAccessedBy(Owner)) {
           counter ++;
         }
       }
@@ -132,13 +132,13 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
     public E get(String Owner, String passw, E data) {
       if(Owner == null || passw == null || data == null) throw new NullPointerException();
       User u = new User(Owner, passw);
-      E el = null;
       if(users.contains(u)) {
-        Element elementToFind = new Element<E>(data, Owner);
-        int ind = elements.indexOf(elementToFind);
-        if(ind >= 0) el = elements.get(ind).getEl();
+        for(Element e : elements) {
+            if(e.getEl().equals(data) && e.canBeAccessedBy(Owner))
+                return (E) e.getEl();
+        }
       }
-      return el;
+      return null;
     }
 
     /* Rimuove il dato nella collezione
