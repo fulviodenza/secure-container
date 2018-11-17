@@ -1,6 +1,4 @@
-import exceptions.*;
 import java.util.Iterator;
-import java.util.TreeMap;
 
 public class SecureDataContainerTests {
 
@@ -84,8 +82,10 @@ public class SecureDataContainerTests {
 
         Tester.expectNoExceptions(  () -> container.share("crax", CRAX_PASSWORD, "luigi", "Meizu"));
         Tester.assertNotNull( container.get("luigi", LUIGI_PASS, "Meizu") );
+        Tester.assertNull( container.getInOwned("luigi", LUIGI_PASS, "Meizu") );
 
         Tester.expectNoExceptions(  () -> Tester.assertEquals(container.getSize("luigi", LUIGI_PASS), 1));
+        Tester.expectNoExceptions(  () -> Tester.assertEquals(container.getOwnedSize("luigi", LUIGI_PASS), 0));
         Tester.assertNotNull(container.get("crax", CRAX_PASSWORD, "Huawei"));
 
         Tester.assertNotNull(container.remove("crax", CRAX_PASSWORD, "Huawei"));

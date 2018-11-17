@@ -91,20 +91,38 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
     e non solo quelli di cui è il proprietario.*/
     @Override
     public int getSize(String Owner, String passw) throws InvalidCredentialsException {
-      if(Owner == null || passw == null) throw new NullPointerException();
-      User u = new User(Owner, passw);
+        if(Owner == null || passw == null) throw new NullPointerException();
+        User u = new User(Owner, passw);
 
-      // Meccanismo di login nella SecureDataContainer usando User.equals()
-      if(!users.contains(u)) throw new InvalidCredentialsException();
+        // Meccanismo di login nella SecureDataContainer usando User.equals()
+        if(!users.contains(u)) throw new InvalidCredentialsException();
 
-      int counter = 0;
-      for(Element e : elements) {
-        if(e.canBeAccessedBy(Owner)) {
-          counter ++;
+        int counter = 0;
+        for(Element e : elements) {
+            if(e.canBeAccessedBy(Owner)) {
+                counter ++;
+            }
         }
-      }
 
-      return counter;
+        return counter;
+    }
+
+    @Override
+    public int getOwnedSize(String Owner, String passw) throws InvalidCredentialsException {
+        if(Owner == null || passw == null) throw new NullPointerException();
+        User u = new User(Owner, passw);
+
+        // Meccanismo di login nella SecureDataContainer usando User.equals()
+        if(!users.contains(u)) throw new InvalidCredentialsException();
+
+        int counter = 0;
+        for(Element e : elements) {
+            if(e.ownedBy(Owner)) {
+                counter ++;
+            }
+        }
+
+        return counter;
     }
 
     /*Inserisce il valore del dato nella collezione
@@ -139,6 +157,19 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
         }
       }
       return null;
+    }
+
+    @Override
+    public E getInOwned(String Owner, String passw, E data) {
+        if(Owner == null || passw == null || data == null) throw new NullPointerException();
+        User u = new User(Owner, passw);
+        if(users.contains(u)) {
+            for(Element e : elements) {
+                if(e.getEl().equals(data) && e.ownedBy(Owner))
+                    return (E) e.getEl();
+            }
+        }
+        return null;
     }
 
     /* Rimuove il dato nella collezione
@@ -221,5 +252,25 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
       }
       //Se raggiungiamo questa parte, vuol dire che il login è fallito
       throw new InvalidCredentialsException();
+    }
+
+    @Override
+    public Iterator<E> getOwnedIterator(String Owner, String passw) throws InvalidCredentialsException {
+        if(Owner == null || passw == null) throw new NullPointerException();
+        User u = new User(Owner, passw);
+        if(users.contains(u)) {
+            List<E> userElements = new ArrayList<>();
+
+            for(Element e : elements) {
+                if(e.ownedBy(Owner))
+                    userElements.add( (E) e.getEl());
+            }
+            // unmodifiableList restituisce una lista il cui metodo remove lancia
+            // UnsupportedOperationException()
+            List<E> unmodifiable = Collections.unmodifiableList(userElements);
+            return unmodifiable.iterator();
+        }
+        //Se raggiungiamo questa parte, vuol dire che il login è fallito
+        throw new InvalidCredentialsException();
     }
 }

@@ -75,6 +75,16 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
     }
 
     @Override
+    public int getOwnedSize(String Owner, String passw) throws InvalidCredentialsException {
+        if(Owner == null || passw == null) throw new NullPointerException();
+
+        User u = new User(Owner, passw);
+        if(!db.containsKey(u)) throw new InvalidCredentialsException();
+
+        return db.get(u).size();
+    }
+
+    @Override
     public boolean put(String Owner, String passw, E data) {
         if(Owner == null || passw == null || data == null ) throw new NullPointerException();
 
@@ -105,6 +115,19 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
                 }
             }
 
+        }
+        return null;
+    }
+
+    @Override
+    public E getInOwned(String Owner, String passw, E data) {
+        if(Owner == null || passw == null || data == null ) throw new NullPointerException();
+
+        User u = new User(Owner, passw);
+        if(db.containsKey(u)) {
+            Element<E> elt = findElt(u, data);
+            if(elt != null)
+                return (E) elt.getEl();
         }
         return null;
     }
@@ -175,6 +198,20 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
             for(Element e : userList ) {
                 if(e.canBeAccessedBy(Owner))  initialList.add((E) e.getEl());
             }
+        }
+        return Collections.unmodifiableList(initialList).iterator();
+    }
+
+    @Override
+    public Iterator<E> getOwnedIterator(String Owner, String passw) throws InvalidCredentialsException {
+        if (Owner == null || passw == null ) throw new NullPointerException();
+        User u = new User(Owner, passw);
+        if (!db.containsKey(u)) throw new InvalidCredentialsException();
+
+        // Bisogna iterare in ogni elemento, non solo in quelli associati direttamente all'utente
+        List<E> initialList = new ArrayList<>(db.get(u).size());
+        for( Element e : db.get(u)) {
+            initialList.add( (E) e.getEl() );
         }
         return Collections.unmodifiableList(initialList).iterator();
     }
