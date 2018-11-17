@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28a38f9c-acdc-4f20-b3bd-cfc6d8c3a545" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Dato.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Exceptions/AlreadyAuthorizedException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SecureDataContainerVectors.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HashMapTestMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HashMapTestMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SecureDataContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecureDataContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SecureDataContainerHashMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecureDataContainerHashMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Dato.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Dato.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecureDataContainerVectors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecureDataContainerVectors.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -77,14 +73,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="9268" />
-          <entry key="txt" value="189" />
+          <entry key="java" value="9269" />
+          <entry key="txt" value="253" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="9268" />
-          <entry key="PLAIN_TEXT" value="189" />
+          <entry key="JAVA" value="9269" />
+          <entry key="PLAIN_TEXT" value="253" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -136,7 +132,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SecureDataContainerHashMap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1087">
+            <state relative-caret-position="-1448">
               <caret line="70" column="30" selection-start-line="70" selection-start-column="30" selection-end-line="70" selection-end-column="30" />
               <folding>
                 <element signature="e#0#9677#0" expanded="true" />
@@ -157,11 +153,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SecureDataContainerVectors.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="110" selection-start-line="23" selection-start-column="110" selection-end-line="23" selection-end-column="110" />
+            <state relative-caret-position="300">
+              <caret line="47" column="33" lean-forward="true" selection-start-line="47" selection-start-column="33" selection-end-line="47" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -182,7 +178,7 @@
         <entry file="file://$PROJECT_DIR$/src/Exceptions/DataNotFoundException.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
-              <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="7" selection-end-column="5" />
+              <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -190,10 +186,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Dato.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+            <state relative-caret-position="120">
+              <caret line="8" column="21" lean-forward="true" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="e#301#302#0" expanded="true" />
                 <element signature="e#332#333#0" expanded="true" />
                 <element signature="e#367#368#0" expanded="true" />
@@ -214,17 +209,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HashMapTestMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="120" column="40" selection-start-line="120" selection-start-column="40" selection-end-line="120" selection-end-column="40" />
+            <state relative-caret-position="-375">
+              <caret line="108" column="44" lean-forward="true" selection-start-line="108" selection-start-column="44" selection-end-line="108" selection-end-column="44" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="45" selection-start-line="13" selection-start-column="45" selection-end-line="13" selection-end-column="45" />
+            <state relative-caret-position="135">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
             </state>
           </provider>
         </entry>
@@ -253,10 +248,10 @@
         <option value="$PROJECT_DIR$/src/SecureDataContainerHashMap.java" />
         <option value="$PROJECT_DIR$/src/Exceptions/AlreadyAuthorizedException.java" />
         <option value="$PROJECT_DIR$/src/SecureDataContainer.java" />
-        <option value="$PROJECT_DIR$/src/User.java" />
-        <option value="$PROJECT_DIR$/src/Dato.java" />
         <option value="$PROJECT_DIR$/src/HashMapTestMain.java" />
         <option value="$PROJECT_DIR$/src/SecureDataContainerVectors.java" />
+        <option value="$PROJECT_DIR$/src/Dato.java" />
+        <option value="$PROJECT_DIR$/src/User.java" />
       </list>
     </option>
   </component>
@@ -324,7 +319,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542475406281" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542475725957" />
     <property name="last_opened_file_path" value="$USER_HOME$/Scaricati/Telegram Desktop/TestMain.java" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -436,17 +431,24 @@
       <option name="project" value="LOCAL" />
       <updated>1541877657058</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Finita anche seconda implementazione con IR e FA&#10;&#10;VITTORIA 2.0">
+      <created>1542475449514</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1542475449514</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74783000" />
+    <option name="totallyTimeSpent" value="75061000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1920" height="1034" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2683706" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2683706" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -455,7 +457,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32967034" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3967033" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3967033" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39871383" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -516,7 +518,8 @@
     <MESSAGE value="Aggiustato tutto yeeeee" />
     <MESSAGE value="Implementazione finita" />
     <MESSAGE value="Implementazione terminata, aggiunta specifica, typical element, funzione di astrazione e invariante di rappresentazione.&#10;Victory" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementazione terminata, aggiunta specifica, typical element, funzione di astrazione e invariante di rappresentazione.&#10;Victory" />
+    <MESSAGE value="Finita anche seconda implementazione con IR e FA&#10;&#10;VITTORIA 2.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finita anche seconda implementazione con IR e FA&#10;&#10;VITTORIA 2.0" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -564,50 +567,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Exceptions/DataNotFoundException.java">
+    <entry file="file://$PROJECT_DIR$/src/SecureDataContainer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="7" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Exceptions/AlreadyAuthorizedException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="45" selection-start-line="13" selection-start-column="45" selection-end-line="13" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerHashMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1087">
-          <caret line="70" column="30" selection-start-line="70" selection-start-column="30" selection-end-line="70" selection-end-column="30" />
+        <state relative-caret-position="105">
+          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="55" />
           <folding>
-            <element signature="e#0#9677#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HashMapTestMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="120" column="40" selection-start-line="120" selection-start-column="40" selection-end-line="120" selection-end-column="40" />
+        <state relative-caret-position="-375">
+          <caret line="108" column="44" lean-forward="true" selection-start-line="108" selection-start-column="44" selection-end-line="108" selection-end-column="44" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Dato.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+        <state relative-caret-position="120">
+          <caret line="8" column="21" lean-forward="true" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="e#301#302#0" expanded="true" />
             <element signature="e#332#333#0" expanded="true" />
             <element signature="e#367#368#0" expanded="true" />
@@ -624,23 +605,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SecureDataContainer.java">
+    <entry file="file://$PROJECT_DIR$/src/Exceptions/DataNotFoundException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="55" />
+        <state relative-caret-position="30">
+          <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Exceptions/AlreadyAuthorizedException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerVectors.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="47" column="33" lean-forward="true" selection-start-line="47" selection-start-column="33" selection-end-line="47" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerVectors.java">
+    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerHashMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="110" selection-start-line="23" selection-start-column="110" selection-end-line="23" selection-end-column="110" />
+        <state relative-caret-position="-1448">
+          <caret line="70" column="30" selection-start-line="70" selection-start-column="30" selection-end-line="70" selection-end-column="30" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#9677#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>

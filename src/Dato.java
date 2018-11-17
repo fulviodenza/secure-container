@@ -1,4 +1,3 @@
-import Exceptions.*;
 import java.util.*;
 public class Dato<E> {
     private String Owner;

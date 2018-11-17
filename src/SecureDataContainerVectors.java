@@ -105,7 +105,7 @@ public class SecureDataContainerVectors<E> implements SecureDataContainer<E> {
         if(DBUsers.contains(u)){
             for(Dato<E> t : DBElems){
                 if(t.getEl().equals(data) && t.auth(Owner)){
-                    return (E) t.getEl();
+                    return t.getEl();
                 }
             }
             throw new DataNotFoundException("Il dato non esiste");
@@ -167,7 +167,7 @@ public class SecureDataContainerVectors<E> implements SecureDataContainer<E> {
             List<E> utenti = new Vector<>();
             for(Dato<E> t : DBElems) {
                 if(t.auth(Owner)) {
-                    utenti.add((E) t.getEl());
+                    utenti.add(t.getEl());
                 }
             }
             List<E> aux = Collections.unmodifiableList(utenti);

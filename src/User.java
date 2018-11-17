@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class User<E> {
+public class User {
     private String idUser;
     private String passUser;
 
