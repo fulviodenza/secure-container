@@ -65,7 +65,7 @@ public interface SecureDataContainer<E> {
     *             Se l'utente possiede già data, ti prende a schiaffi e ti restituisce ElementAlreadyPresentException
     * @modifies: this
     */
-    void copy(String Owner, String passw, E data) throws InvalidCredentialsException, ElementAlreadyPresentException;
+    void copy(String Owner, String passw, E data) throws InvalidCredentialsException, ElementNotPresentException;
 
     /* Condivide il dato nella collezione con un altro utente
     se vengono rispettati i controlli di identità*/
@@ -82,7 +82,6 @@ public interface SecureDataContainer<E> {
     void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException,
                                                                                 UserNotPresentException,
                                                                                 UserNotAllowedException,
-                                                                                ElementAlreadyPresentException,
                                                                                 UserAlreadyAllowedException ;
 
     /* restituisce un iteratore (senza remove) che genera tutti i dati

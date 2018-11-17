@@ -161,7 +161,7 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
     se vengono rispettati i controlli di identità*/
     @Override
     public void copy(String Owner, String passw, E data) throws InvalidCredentialsException,
-                                                                ElementAlreadyPresentException
+                                                                ElementNotPresentException
     {
       if(Owner == null || passw == null || data == null) throw new NullPointerException();
       User u = new User(Owner, passw);
@@ -169,8 +169,9 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
         //Cerca l'elemento per vedere se copiarlo o no
         Element toBeCopied = getElt(data, Owner);
         if(toBeCopied != null) {
-          elements.add(toBeCopied.copy());
-        }
+          elements.add( new Element<>(data, Owner) );
+        } else throw new ElementNotPresentException();
+
       } else throw new InvalidCredentialsException();
     }
 
@@ -180,7 +181,6 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
     public void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException,
                                                                                 UserNotPresentException,
                                                                                 UserNotAllowedException,
-                                                                                ElementAlreadyPresentException,
                                                                                 UserAlreadyAllowedException
     {
       if(Owner == null || passw == null || data == null || Other == null) throw new NullPointerException();

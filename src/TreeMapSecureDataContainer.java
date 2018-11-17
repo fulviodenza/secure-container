@@ -1,7 +1,4 @@
-import java.util.TreeMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 import exceptions.*;
 
@@ -9,6 +6,16 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
 
 
     private TreeMap< User, List<Element<E> > > db;
+
+    //Assumendo che l'utente si sia autenticato
+    private Element<E> findElt(User u, E data) {
+        for(Element e : db.get(u)) {
+            if(e.getEl().equals(data))
+                return e;
+        }
+
+        return null;
+    }
 
     private boolean userAlreadyPresent(String who) {
         for(User u : db.keySet()) {
@@ -104,19 +111,17 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
 
     @Override
     public void copy(String Owner, String passw, E data) throws InvalidCredentialsException,
-                                                                ElementAlreadyPresentException {
-
+                                                                ElementNotPresentException {
         if(Owner == null || passw == null || data == null ) throw new NullPointerException();
 
         User u = new User(Owner, passw);
-        if(db.containsKey(u)) {
-            Element<E> el = new Element<E>(data, Owner);
-            List<Element<E>> userData = db.get(u);
-//            if (userData.contains(el)) {
-//                Element<E> toBeCopied = new Element<E>(data, Owner);
-//
-//            }
-        }
+        if(!db.containsKey(u)) throw new InvalidCredentialsException();
+
+        Element<E> el = new Element<E>(data, Owner);
+        List<Element<E>> userData = db.get(u);
+        if (!userData.contains(el)) throw new ElementNotPresentException();
+
+        userData.add(el);
 
     }
 
@@ -124,13 +129,30 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
     public void share(String Owner, String passw, String Other, E data) throws  InvalidCredentialsException,
                                                                                 UserNotPresentException,
                                                                                 UserNotAllowedException,
-                                                                                ElementAlreadyPresentException,
                                                                                 UserAlreadyAllowedException {
+        if (Owner == null || passw == null || Other == null || data == null ) throw new NullPointerException();
+        if (!userAlreadyPresent(Other)) throw new UserNotPresentException();
+
+        User u = new User(Owner, passw);
+        if (!db.containsKey(u)) throw new InvalidCredentialsException();
+
+        Element e = findElt(u, data);
+        if(e == null) throw new UserNotAllowedException();
+
+        e.allowUser(Other);
 
     }
 
     @Override
     public Iterator<E> getIterator(String Owner, String passw) throws InvalidCredentialsException {
-        return null;
+        if (Owner == null || passw == null ) throw new NullPointerException();
+        User u = new User(Owner, passw);
+        if (!db.containsKey(u)) throw new InvalidCredentialsException();
+
+        List<E> initialList = new ArrayList<>(db.get(u).size());
+        for(Element e : db.get(u)) {
+            initialList.add( (E) e.getEl() );
+        }
+        return Collections.unmodifiableList(initialList).iterator();
     }
 }
