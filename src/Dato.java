@@ -16,12 +16,14 @@ public class Dato<E> {
     public void setAuth(String name){
         AuthUsers.add(name);
     }
+    //metodo che svuota la lista degli autorizzati
     public void clearAuth(){
        AuthUsers.clear();
     }
     public String getOwner(){
         return Owner;
     }
+    //metodo che verifica che l'utente sia autorizzato o il proprietario (true), false altrimenti
     public boolean auth(String ow){
         return (AuthUsers.contains(ow) || ow.equals(Owner));
     }

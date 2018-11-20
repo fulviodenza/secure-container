@@ -74,7 +74,7 @@ public interface SecureDataContainer<E> {
      * passw != "" && esiste(x) (appartenente a this) ==> x.getName == Owner &&
      * x.getPass == passw && this.get(Owner).contains(data)
      * MODIFIES: this
-     * EFFECTS: Elimina data da this e restituisce una sua copia, se esiste
+     * EFFECTS: Elimina data da this e restituisce data, se esiste
      * THROWS: NullPointerException se (Owner || passw || data) == null (unchecked),
      * IllegalArgumentException se (Owner || passw) == "" (unchecked),
      * NoUserException (checked) se le credenziali sono errate o se non esiste l'user,

@@ -17,21 +17,25 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainer<E> {
     public SecureDataContainerHashMap(){
         DBUsers = new HashMap<>();
     }
+    //questo metodo cerca tra tutti gli utenti se ne esiste già uno uguale a quello passato come parametro e restituisce true in caso positivo, false altrimenti.
     private boolean doubleUser(User u){
         for(User t : DBUsers.keySet()){
             if(u.sameUser(t)) return true;
         }
         return false;
     }
-    private boolean checkUser(String name) throws NoUserException {
-        return doubleUser(chiave(name));
-    }
+    //questo metodo mi restituisce l'oggetto User relativo all'utente di cui passo il nome, se esiste.
     private User chiave(String name) throws NoUserException{
         for(User t : DBUsers.keySet()){
             if(t.isHere(name)) return t;
         }
         throw new NoUserException("Non esiste quest'utente");
     }
+    //questo metodo verifica che non esista un utente con quel nome, ricevendo come input solo la stringa del nome (per verificare che esiste l'utente 'Other' senza sapere le sue credenziali)
+    private boolean checkUser(String name) throws NoUserException {
+        return doubleUser(chiave(name));
+    }
+    //questo metodo elimina tutti i riferimenti al dato passato come parametro una volta eseguita la "remove"
     private void swap(E dato){
         for(User t : DBUsers.keySet()){
             DBUsers.get(t).remove(dato);

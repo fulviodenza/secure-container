@@ -16,15 +16,16 @@ public class User {
         return passUser;
     }
 
-
-    public boolean sameUser(Object snd){
-        User aux = (User)snd;
-        return Objects.equals(idUser,aux.idUser);
+    //metodo che restituisce true se gli id degli utenti sono uguali, false altrimenti
+    public boolean sameUser(User snd){
+        return Objects.equals(idUser,snd.idUser);
     }
+    //metodo che restituisce true se gli id degli utenti sono uguali, false altrimenti (ricevendo solo la stringa del nome)
     public boolean isHere(String name){
         return Objects.equals(idUser,name);
     }
 
+    //sovrascrivo i metodi equals e hashCode della classe Object per permettere il confronto tra gli utenti
     @Override
     public boolean equals(Object o){
         if (this == o) return true;

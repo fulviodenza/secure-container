@@ -118,12 +118,13 @@ public class SecureDataContainerVectors<E> implements SecureDataContainer<E> {
         if(Owner.equals("") || passw.equals("")) throw new IllegalArgumentException();
         User u = new User(Owner,passw);
         if(DBUsers.contains(u)){
-
             Dato<E> d = getElem(Owner,data);
+            E aux;
             if(d != null){
+                aux = d.getEl();
                 DBElems.remove(d);
             }else throw new DataNotFoundException("Il dato non esiste");
-            return data;
+            return aux;
         }else throw new NoUserException("Utente non esistente o credenziali errate");
     }
     /*OVERVIEW: Crea una copia del dato nella collezione
