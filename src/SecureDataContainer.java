@@ -8,10 +8,10 @@ public interface SecureDataContainer<E> {
     /* @effects: Aggiunge un nuovo utente a this
      * @modifies: this
      * @requires: Id, passw != null, altrimenti lancia NullPointerException
-     *            Id, passw != "", altrimenti lancia una InvalidArgumentException
+     *            Id, passw != "" (non vuote), altrimenti lancia una InvalidArgumentException
      *            Id non in this, altrimenti lancia una UserAlreadyPresentException
      */
-    void createUser(String Id, String passw) throws UserAlreadyPresentException;
+    void createUser(String Id, String passw) throws UserAlreadyPresentException, IllegalArgumentException;
 
     // Rimuove l’identità dalla collezione, assieme a tutti gli elementi che possiede
     /* @effects: Rimuove (Id, passw) da this, elts = elts / { v : v.owner = Id }

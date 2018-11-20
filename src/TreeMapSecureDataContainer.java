@@ -1,22 +1,30 @@
 import java.util.*;
-
 import exceptions.*;
 
+/*
+  IR: db != null e per ogni (u, l) in db si ha che u != null, l != null e
+      per ogni (el) in l, el != null, el.ownedBy(u.getName()) == true
+      Infine, per ogni (u, l) in db, non esiste (o, e) in db t.c u.getName() == o.getName()
+  FA: f(users, elements) = { <user_1, elts_1>...<user_n, elts_n>},
+      user_i è una istanza della classe User, mentre elts_i è una lista di Element<E>
+*/
 public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
 
 
     private TreeMap< User, List<Element<E> > > db;
 
-    //Assumendo che l'utente si sia autenticato
+    @SuppressWarnings("unchecked")
+    // Assumendo che l'utente si sia autenticato
     private Element<E> findElt(User u, E data) {
         for(Element e : db.get(u)) {
             if(e.getEl().equals(data))
-                return e;
+                return (Element<E>) e;
         }
 
         return null;
     }
 
+    // Controlla se esiste un utente di nome who
     private boolean userAlreadyPresent(String who) {
         for(User u : db.keySet()) {
             if(u.getUserName().equals(who))
@@ -31,7 +39,7 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
     }
 
     @Override
-    public void createUser(String Id, String passw) throws UserAlreadyPresentException {
+    public void createUser(String Id, String passw) throws UserAlreadyPresentException, IllegalArgumentException {
         if(Id == null || passw == null) throw new NullPointerException();
         if(Id.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
 
@@ -49,7 +57,6 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
         if(!db.containsKey(u)) throw new InvalidCredentialsException();
 
         db.remove(u);
-
     }
 
     @Override
@@ -90,7 +97,7 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
 
         User u = new User(Owner, passw);
         if(db.containsKey(u)) {
-            Element<E> e = new Element<E>(data, Owner);
+            Element<E> e = new Element<>(data, Owner);
             List<Element<E>> userData = db.get(u);
             if(!userData.contains(e)) {
                 userData.add(e);
@@ -101,6 +108,8 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
         return false;
     }
 
+    // C'è un modo per renderlo più carino?
+    @SuppressWarnings("unchecked")
     @Override
     public E get(String Owner, String passw, E data) {
         if(Owner == null || passw == null || data == null ) throw new NullPointerException();
@@ -127,7 +136,7 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
         if(db.containsKey(u)) {
             Element<E> elt = findElt(u, data);
             if(elt != null)
-                return (E) elt.getEl();
+                return elt.getEl();
         }
         return null;
     }
@@ -138,7 +147,7 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
 
         User u = new User(Owner, passw);
         if(db.containsKey(u)) {
-            Element<E> el = new Element<E>(data, Owner);
+            Element<E> el = new Element<>(data, Owner);
             List<Element<E>> userData = db.get(u);
             int index = userData.indexOf(el);
             if(index != -1) {
@@ -159,7 +168,7 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
         User u = new User(Owner, passw);
         if(!db.containsKey(u)) throw new InvalidCredentialsException();
 
-        Element<E> el = new Element<E>(data, Owner);
+        Element<E> el = new Element<>(data, Owner);
         List<Element<E>> userData = db.get(u);
         if (!userData.contains(el)) throw new ElementNotPresentException();
 
@@ -185,6 +194,7 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Iterator<E> getIterator(String Owner, String passw) throws InvalidCredentialsException {
         if (Owner == null || passw == null ) throw new NullPointerException();
@@ -202,6 +212,7 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
         return Collections.unmodifiableList(initialList).iterator();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Iterator<E> getOwnedIterator(String Owner, String passw) throws InvalidCredentialsException {
         if (Owner == null || passw == null ) throw new NullPointerException();

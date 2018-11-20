@@ -15,7 +15,7 @@ import exceptions.*;
   FA: f(users, elements) = { <(nome1, pass1), ..., (nomen, passn)>,
       <(owner1, el1, allowedUsers1), ..., (ownern, eln, allowedUsersn)>} dove
       nomei, passi ed owneri sono stringhe non vuote,
-      allowedUsersi sono liste di stringhe non vuote
+      allowedUsersi è una lista di stringhe non vuote
 */
 public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
 
@@ -50,7 +50,7 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
 
     // Crea l’identità un nuovo utente della collezione
     @Override
-    public void createUser(String Id, String passw) throws UserAlreadyPresentException {
+    public void createUser(String Id, String passw) throws UserAlreadyPresentException, IllegalArgumentException {
         if(Id == null || passw == null) throw new NullPointerException();
         if(Id.equals("") || passw.equals("") ) throw new IllegalArgumentException();
 
@@ -74,7 +74,7 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
 
         users.remove(u);
 
-        ArrayList<Element> toBeRemoved = new ArrayList<Element>();
+        ArrayList<Element> toBeRemoved = new ArrayList<>();
 
         for(Element el : elements ) {
             if(el.ownedBy(Id)) {
@@ -127,13 +127,14 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
 
     /*Inserisce il valore del dato nella collezione
     se vengono rispettati i controlli di identità*/
+    @SuppressWarnings("unchecked")
     @Override
     public boolean put(String Owner, String passw, E data) {
       if(Owner == null || passw == null || data == null) throw new NullPointerException();
 
       User u = new User(Owner, passw);
       if(users.contains(u)) {
-        Element toBeAdded = new Element<E>(data, Owner);
+        Element toBeAdded = new Element<>(data, Owner);
         //Per evitare di reinserire più copie dello stesso elemento
         if(!elements.contains(toBeAdded)) {
           elements.add(toBeAdded);
@@ -146,6 +147,7 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
 
     /* Ottiene una copia del valore del dato nella collezione
     se vengono rispettati i controlli di identità*/
+    @SuppressWarnings("unchecked")
     @Override
     public E get(String Owner, String passw, E data) {
       if(Owner == null || passw == null || data == null) throw new NullPointerException();
@@ -159,6 +161,7 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
       return null;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public E getInOwned(String Owner, String passw, E data) {
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
@@ -174,6 +177,7 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
 
     /* Rimuove il dato nella collezione
     se vengono rispettati i controlli di identità*/
+    @SuppressWarnings("unchecked")
     @Override
     public E remove(String Owner, String passw, E data) {
       if(Owner == null || passw == null || data == null) throw new NullPointerException();
@@ -234,6 +238,7 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
     /* restituisce un iteratore (senza remove) che genera tutti i dati
     dell’utente in ordine arbitrario
     se vengono rispettati i controlli di identità*/
+    @SuppressWarnings("unchecked")
     @Override
     public Iterator<E> getIterator(String Owner, String passw) throws InvalidCredentialsException {
       if(Owner == null || passw == null) throw new NullPointerException();
@@ -254,6 +259,7 @@ public class ListSecureDataContainer<E> implements SecureDataContainer<E> {
       throw new InvalidCredentialsException();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Iterator<E> getOwnedIterator(String Owner, String passw) throws InvalidCredentialsException {
         if(Owner == null || passw == null) throw new NullPointerException();
