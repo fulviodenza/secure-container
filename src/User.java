@@ -22,11 +22,6 @@ public class User implements Comparable<User> {
   public String getUserName() { return userName; }
 
   /*
-    EFFECTS: Restituisce la password dell'utente corrente
-  */
-  public String getUserPass() { return userPass; }
-
-  /*
     EFFECTS: Cambia la password dell'utente
     REQUIRES: newPass != null, altrimenti lancia NullPointerException (unchecked, a parte di isEmpty())
               newPass != "", altrimenti lancia IllegalArgumentException, checked
@@ -47,10 +42,9 @@ public class User implements Comparable<User> {
   */
   @Override
   public boolean equals(Object o) {
-    if(o == null ) throw new NullPointerException();
     User other = (User)o;
     return( other.getUserName().equals( this.getUserName() ) &&
-            other.getUserPass().equals( this.getUserPass() ) );
+            other.userPass.equals( this.userPass ) );
   }
 
   /*

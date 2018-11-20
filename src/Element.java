@@ -70,15 +70,6 @@ class Element<E> {
         allowedUsers.remove(other);
     }
 
-    /*EFFECTS: Crea una copia di this, cioè un nuovo Element c t.c c.owner = this.owner,
-              c.el = this.el e per ogni u in c.allowedUsers, esiste o in t.allowedUsers t.c u = o
-    */
-    public Element copy() {
-        Element c = new Element(el, owner);
-        c.allowedUsers.addAll(this.allowedUsers);
-        return c;
-    }
-
     /*EFFECTS: Restituisce true who può accedere a this
       REQUIRES: who != null, altrimenti lancia (da parte di ownedBy) NullPointerException (unchecked)
     */
