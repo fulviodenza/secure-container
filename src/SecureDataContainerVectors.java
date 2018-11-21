@@ -11,7 +11,7 @@ import java.util.*;
  * forall(z).(z appartenga a DBElems) ==> z != null
  *
  * FA: f(DB) = <DBUsers, DBElems>, ossia <{User0,...,Usern},{El0,...,Elk}> ossia
- * <{(Nome0,passw0),...,(Nomen,passwn)},{(Owner0,el0,AuthUsers0),...,(Ownerk,elk,AuthUsersk)}> ossia
+ * <{(Nome0,passw0),...,(Nomen,passwn)},{(Owner0,el0,{AuthUsers0}),...,(Ownerk,elk,AuthUsersk)}> ossia
  * <{(Nome0,passw0),...,(Nomen,passwn)},{(Owner0,el0,{authorized0,...authorizedt}0),...,(Ownerk,elk,{authorized0,...,authorizedt}k)}>
  * con n == DBUsers.size()-1 && k == DBElems.size()-1 && t == AuthUsers.size()-1
  *
