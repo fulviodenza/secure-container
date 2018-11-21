@@ -7,30 +7,31 @@ public class SecureDataContainerTest {
         System.exit(-1);
     }
 
-    private static void testContainer(SecureDataContainerHashMap<String> container) {
+    private static void testContainer(SecureDataContainerArrayList<String> container) {
         try {
             container.createUser("Giua","comefosseantani");
-        } catch (UserAlreadyPresent e) {
+        } catch (UserAlreadyPresentException e) {
             System.out.println("User already present");
         }
 
         try {
             container.createUser("Fruvio","GiacominoPaneEVino");
-        } catch (UserAlreadyPresent e) {
+        } catch (UserAlreadyPresentException e) {
             System.out.println("User already present");
         }
 
         try {
             container.createUser("Luiggi","xdxd");
-        } catch (UserAlreadyPresent e) {
+        } catch (UserAlreadyPresentException e) {
             System.out.println("User already present");
         }
 
-        try{
+        /*try{
             container.getIterator("Luiggi","xdxd");
-        } catch (NoUserException e){
+        } catch (NoUserException e) {
             abort("no usergetite");
-        }
+        }*/
+
         try{
             container.put("Luiggi","xdxd","samsung");
         }catch (NoUserException e){
@@ -38,7 +39,8 @@ public class SecureDataContainerTest {
         }
 
         try{
-            container.put("Giua","comefosseantani","apple");
+            boolean a = container.put("Giua","comefosseantani","apple");
+            System.out.println(a);
         }catch (NoUserException e){
             abort("no user");
         }
@@ -66,8 +68,32 @@ public class SecureDataContainerTest {
         } catch (NoUserException e){
             abort("no user");
         }
+        try {
+            System.out.println(container.get("Fruvio", "GiacominoPaneEVino", "xiaomi4"));
+        } catch (NoUserException e){
+            abort("no user");
+        } catch (NoDataException e){
+            abort("no data");
+        }
 
-        System.out.println(container.getSize("Giua","comefosseantani"));
+        try {
+            System.out.println(container.remove("Fruvio", "GiacominoPaneEVino", "apple"));
+        } catch (NoUserException e) {
+            abort("no user");
+        }
+
+        try {
+            System.out.println(container.get("Fruvio", "GiacominoPaneEVino","xiaomi"));
+        } catch (NoUserException e){
+            abort("no user");
+        } catch (NoDataException e){
+            abort("no data2");
+        }
+        try {
+            System.out.println(container.getSize("Giua","comefosseantani"));
+        } catch (NoUserException e) {
+            abort("no user");
+        }
         try {
             String samsungRemoved = container.remove("Luiggi", "xdxd", "samsung");
             System.out.println(samsungRemoved);
@@ -76,9 +102,15 @@ public class SecureDataContainerTest {
         }
 
         try {
-            String huaweiRemoved = container.remove("Giua", "comefosseantani", "apple");
-            System.out.println(huaweiRemoved);
+            String appleRemoved = container.remove("Fruvio", "GiacominoPaneEVino", "xiaomi3");
+            System.out.println(appleRemoved);
         } catch (NoUserException e){
+            abort("no user");
+        }
+
+        try {
+            container.removeUser("Fruvio", "GiacominoPaneEVino");
+        } catch (NoUserException e) {
             abort("no user");
         }
         try {
@@ -89,15 +121,15 @@ public class SecureDataContainerTest {
             container.removeUser("nomechemuore","GiacominoPaneEVino");
         } catch (NoUserException e) {
             System.out.println("User not present");
-        }try {
+        }/*try {
             container.printUsers();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("No users");
-        }
+        }*/
     }
 
     public static void main(String[] args) {
-        SecureDataContainerHashMap<String> hashContainer = new SecureDataContainerHashMap<>();
+        SecureDataContainerArrayList<String> hashContainer = new SecureDataContainerArrayList<>();
         testContainer(hashContainer);
     }
 }

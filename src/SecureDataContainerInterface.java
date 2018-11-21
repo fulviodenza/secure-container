@@ -11,12 +11,12 @@ public interface SecureDataContainerInterface<E>{
     /*
     REQUIRES:Id != null && passw != null, altrimenti throws NullPointerException
               Id != "" && passw != "", altrimenti throws InvalidArgumentException
-              Id in this ==> UserAlreadyPresent
+              Id in this ==> UserAlreadyPresentException
     EFFECTS :Aggiunge un nuovo utente a this
     MODIFY  :this
      */
 
-    public void createUser(String Id, String passw) throws UserAlreadyPresent; //IMPLEMENTATA
+    public void createUser(String Id, String passw) throws UserAlreadyPresentException; //IMPLEMENTATA
 
     /* Restituisce il numero degli elementi di un utente presenti nella
     collezione*/
@@ -29,7 +29,7 @@ public interface SecureDataContainerInterface<E>{
      */
     public void removeUser(String Id, String passw) throws NoUserException;
 
-    public int getSize(String Owner, String passw) throws NullPointerException, IllegalArgumentException; //IMPLEMENTATA
+    public int getSize(String Owner, String passw) throws NullPointerException, IllegalArgumentException, NoUserException; //IMPLEMENTATA
 
     /*Inserisce il valore del dato nella collezione
     se vengono rispettati i controlli di identità*/
@@ -68,7 +68,7 @@ public interface SecureDataContainerInterface<E>{
     MODIFY  :this
     */
 
-    public E remove(String Owner, String passw, E data) throws NoUserException; //IMPLEMENTATA
+    public E remove(String Owner, String passw, E data) throws NoUserException, NoDataException; //IMPLEMENTATA
 
     /* Crea una copia del dato nella collezione
     se vengono rispettati i controlli di identità*/
@@ -81,7 +81,7 @@ public interface SecureDataContainerInterface<E>{
     EFFECTS :Crea una copia del dato nella collezione
     */
 
-    public void copy(String Owner, String passw, Object data) throws NoUserException, DataAlreadyPresentException; //IMPLEMENTATA
+    public void copy(String Owner, String passw, E data) throws NoUserException, DataAlreadyPresentException; //IMPLEMENTATA
 
     /* Condivide il dato nella collezione con un altro utente
     se vengono rispettati i controlli di identità*/

@@ -26,7 +26,7 @@ public class SecureDataContainerTest2 {
                     passw = tast.next();
                     try {
                         database.createUser(name, passw);
-                    } catch (UserAlreadyPresent e) {
+                    } catch (UserAlreadyPresentException e) {
                         e.printStackTrace();
                     }
                     System.out.println("Utente registrato con successo! Cosa vuoi fare ora?");
@@ -70,7 +70,11 @@ public class SecureDataContainerTest2 {
                     System.out.println("Inserisci password");
                     passw = tast.next();
 
-                    System.out.println("Hai " + database.getSize(name, passw) + " elementi! Cosa vuoi fare ora?");
+                    try {
+                        System.out.println("Hai " + database.getSize(name, passw) + " elementi! Cosa vuoi fare ora?");
+                    } catch (NoUserException e) {
+                        e.printStackTrace();
+                    }
 
                     scelta = tast.nextInt();
                     break;
@@ -99,6 +103,8 @@ public class SecureDataContainerTest2 {
                     try {
                         database.remove(name, passw, dato);
                     } catch (NoUserException e) {
+                        e.printStackTrace();
+                    } catch (NoDataException e) {
                         e.printStackTrace();
                     }
 

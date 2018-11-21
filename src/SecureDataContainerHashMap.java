@@ -31,10 +31,10 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
     }
 
     //DONE
-    public void createUser(String Id, String passw) throws UserAlreadyPresent {
+    public void createUser(String Id, String passw) throws UserAlreadyPresentException {
 
         if(Id.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
-        if(existsUser(Id)) throw new UserAlreadyPresent(Id);
+        if(existsUser(Id)) throw new UserAlreadyPresentException(Id);
 
         KeyCouple u = new KeyCouple(Id, passw);
         DBUsers.put(u, new Vector<>());
@@ -55,13 +55,17 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
 
     //DONE
     @Override
-    public int getSize(String Owner, String passw) throws NullPointerException, IllegalArgumentException{
+    public int getSize(String Owner, String passw) throws NullPointerException, IllegalArgumentException, NoUserException{
 
         if(Owner == null || passw == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
 
         KeyCouple user = new KeyCouple(Owner,passw);
-        return DBUsers.get(user).size();
+        if(DBUsers.containsKey(user)) {
+            return DBUsers.get(user).size();
+        } else {
+            throw new NoUserException();
+        }
 
     }
 
@@ -103,7 +107,7 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
 
     //DONE
     @Override
-    public E remove(String Owner, String passw, E data) throws NoUserException{
+    public E remove(String Owner, String passw, E data) throws NoUserException, NoDataException{
 
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
         if(Owner.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
@@ -114,6 +118,8 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
             if(DBUsers.get(user).contains(data)) {
                 removedElement = DBUsers.get(user).get(DBUsers.get(user).indexOf(data));
                 DBUsers.get(user).remove(data);
+            }else {
+                throw new NoDataException("No data");
             }
         } else {
             throw new NoUserException("No user");
@@ -122,7 +128,6 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
     }
 
     //DONE
-    @SuppressWarnings("SuspiciousMethodCalls")
     @Override
     public void copy(String Owner, String passw, Object data) throws NoUserException, DataAlreadyPresentException {
         if(Owner == null || passw == null || data == null) throw new NullPointerException();
