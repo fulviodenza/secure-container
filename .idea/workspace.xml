@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="28a38f9c-acdc-4f20-b3bd-cfc6d8c3a545" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestMainDue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestMainDue.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -130,13 +129,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="java" value="2881" />
-          <entry key="txt" value="25" />
+          <entry key="txt" value="38" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JAVA" value="2881" />
-          <entry key="PLAIN_TEXT" value="25" />
+          <entry key="PLAIN_TEXT" value="38" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -153,9 +152,9 @@
         <counts>
           <entry key="project.closed" value="4" />
           <entry key="project.open.time.61" value="1" />
-          <entry key="project.open.time.63" value="1" />
+          <entry key="project.open.time.63" value="2" />
           <entry key="project.open.time.65" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
     </session>
@@ -179,7 +178,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SecureDataContainerVectors.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
+            <state relative-caret-position="360">
               <caret line="28" column="9" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -209,8 +208,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HashMapTestMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="46" column="30" lean-forward="true" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
+            <state relative-caret-position="675">
+              <caret line="46" column="30" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -221,7 +220,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SecureDataContainer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1258">
+            <state relative-caret-position="210">
               <caret line="15" column="71" selection-start-line="15" selection-start-column="71" selection-end-line="15" selection-end-column="71" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -341,8 +340,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -458,6 +457,7 @@
       <workItem from="1542805033412" duration="2301000" />
       <workItem from="1542826132915" duration="682000" />
       <workItem from="1542959317818" duration="3762000" />
+      <workItem from="1543059574344" duration="334000" />
     </task>
     <task id="LOCAL-00001" summary="Updated backup">
       <created>1541863495757</created>
@@ -508,16 +508,24 @@
       <option name="project" value="LOCAL" />
       <updated>1542797477450</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Finita anche seconda implementazione con IR e FA&#10;-Aggiunto main 2 yeyeye quasi finito&#10;VITTORIA 2.0">
+      <created>1543059643641</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1543059643642</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="96082000" />
+    <option name="totallyTimeSpent" value="96416000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="0" width="1368" height="743" extended-state="6" />
+    <frame x="-1" y="0" width="1368" height="743" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23787878" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24166666" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -589,7 +597,8 @@
     <MESSAGE value="Implementazione terminata, aggiunta specifica, typical element, funzione di astrazione e invariante di rappresentazione.&#10;Victory" />
     <MESSAGE value="Finita anche seconda implementazione con IR e FA&#10;&#10;VITTORIA 2.0" />
     <MESSAGE value="Finita anche seconda implementazione con IR e FA&#10;-Aggiunto main 2 yeyeye&#10;VITTORIA 2.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finita anche seconda implementazione con IR e FA&#10;-Aggiunto main 2 yeyeye&#10;VITTORIA 2.0" />
+    <MESSAGE value="Finita anche seconda implementazione con IR e FA&#10;-Aggiunto main 2 yeyeye quasi finito&#10;VITTORIA 2.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finita anche seconda implementazione con IR e FA&#10;-Aggiunto main 2 yeyeye quasi finito&#10;VITTORIA 2.0" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -642,6 +651,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerVectors.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="28" column="9" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Dato.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -653,6 +672,26 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HashMapTestMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="46" column="30" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SecureDataContainer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="15" column="71" selection-start-line="15" selection-start-column="71" selection-end-line="15" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -674,36 +713,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="19" selection-start-column="19" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SecureDataContainerVectors.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="9" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SecureDataContainer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1258">
-          <caret line="15" column="71" selection-start-line="15" selection-start-column="71" selection-end-line="15" selection-end-column="71" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HashMapTestMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="46" column="30" lean-forward="true" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
