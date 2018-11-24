@@ -31,5 +31,21 @@
 	La classe Dato ha 3 variabili di istanza: Owner, che corrisponde all'id del proprietario; el, che corrisponde al dato (Generico); AuthUsers, che è un Vector di String contenente tutti gli utenti autorizzati ad accedere a quel dato. Qui ho scritto un metodo clearAuth, che svuota la lista di utenti autorizzati, e il metodo auth, che verifica che l'utente ricevuto come parametro sia il proprietario o un utente autorizzato, restituendo true in caso positivo e  false in caso negativo.
 \section{Batterie di test}
 Ho pensato di scrivere due classi per il test di entrambe le implementazioni. La prima utilizza come tipo di dato una stringa, e ho implementato mediante uno switch case delle scelte da effettuare inserendo da tastiera (con l'aiuto della classe Scanner) dei valori:
-
+\subsection{TestMainUno}
+\begin{enumerate}  
+\item Crea un nuovo utente 
+\item Aggiunge un dato a un utente se esiste
+\item Copia un dato esistente nella collezione dell'utente se esiste
+\item Visualizza il numero di elementi di un utente
+\item Ottiene un dato esistente dalla collezione dell'utente se esiste
+\item Cancella un dato esistente dalla collezione dell'utente se esiste
+\item Condivide un dato esistente dalla collezione dell'utente se esiste ad un altro utente se esiste
+\item Stampa l'iteratore
+\item Rimuove un utente se esiste
+\item Esce
+\end{enumerate}
+Decommentando e commentando rispettivamente prima l'oggetto di tipo SecureDataContainerHashMap e SecureDataContainerVectors, si possono testare entrambe le implementazioni.
+\subsection{TestMainDue}
+Per questa seconda classe di test ho invece pensato di implementare dei metodi statici che usassero tutti i metodi di entrambe le implementazioni sia in modo "corretto" che forzando la generazione delle eccezioni checked.
+Tramite una serie di stampe si possono vedere gli effettivi risultati funzionanti di tutti i metodi delle due classi. Tra una stampa e l'altra faccio inserire un intero da tastiera per poter controllare i risultati progressivamente, "mettendo in pausa" l'esecuzione del corpo del main.
 \end{document}

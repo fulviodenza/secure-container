@@ -1,6 +1,6 @@
 import java.util.*;
 import Exceptions.*;
-public class HashMapTestMain{
+public class TestMainUno{
     private static void stampaIt(Iterator t){
         System.out.println("I tuoi dati sono:");
         while(t.hasNext()){
@@ -15,11 +15,11 @@ public class HashMapTestMain{
         String name,passw,altro;
         String dato;
         System.out.println("Benvenuto! Scegli cosa vuoi fare:");
-        System.out.println("1 - Registrati\n2 - Aggiungi dati\n3 - Copia dato\n4 - Visualizza numero elementi\n5 - Ottieni copia valore\n6 - Cancella dato\n7 - Condividi dato\n8 - Stampa con iteratore\n9 - Rimuovi un utente\n0 - Esci");
+        System.out.println("1 - Registrati\n2 - Aggiungi dati\n3 - Copia dato\n4 - Visualizza numero elementi\n5 - Ottieni copia valore\n6 - Cancella dato\n7 - Condividi dato\n8 - Stampa con iteratore\n9 - Rimuovi un utente\n10 - Esci");
         scelta = tast.nextInt();
         while(scelta >= 0){
             switch (scelta){
-                case 0:
+                case 10:
                     System.out.println("A presto!");
                     scelta = -1;
                     break;
