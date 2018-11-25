@@ -1,1 +1,0 @@
-FULVIO GAY

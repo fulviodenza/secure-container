@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ArrayListElement<E> {
 
@@ -8,6 +9,15 @@ public class ArrayListElement<E> {
     public ArrayListElement(E data1, KeyCouple user){
         data = data1;
         Users.add(user);
+    }
+
+    public boolean isOfOwner(String Owner){
+        for(KeyCouple k: Users){
+            if(k.getIdUser().equals(Owner)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addUsers(KeyCouple user){
@@ -24,6 +34,18 @@ public class ArrayListElement<E> {
             id = Users.get(0).getIdUser();
         }
         return id;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArrayListElement arrayListElement = (ArrayListElement) o;
+        return Objects.equals(data, arrayListElement.getData()) &&
+                Objects.equals(Users.get(0).getIdUser(), arrayListElement.returnOwner());
+    }
+
+    public void remove(KeyCouple user) {
+        Users.remove(user);
     }
 }
 

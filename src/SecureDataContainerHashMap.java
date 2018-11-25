@@ -6,13 +6,13 @@ public class SecureDataContainerHashMap<E> implements SecureDataContainerInterfa
     /*
     IR: data != null && per ogni <u,l> in data si ha che u != null e l != null
         per ogni u = <user, elts> in this non esiste o = <user, elts> t.c
-        u.getUserName() == o.getUserName() &&
+        u.getIdUser() == o.getIdUser() &&
         Per ogni u = <user, elts> in this, per ogni e, u in u.elts, con e != u, si ha che u != e.
     FA: f(data) = {<user1, elts1>...<usern, eltsn>} dove usern è un User e eltsn è
         una lista di elementi E
     */
 
-    private Map<KeyCouple,Vector<E>> DBUsers;
+    private HashMap<KeyCouple,Vector<E>> DBUsers;
 
     SecureDataContainerHashMap(){
         DBUsers = new HashMap<>();

@@ -10,6 +10,10 @@ public class KeyCouple {
         passUser = passw;
     }
 
+    public String getPassUser(){
+        return passUser;
+    }
+
     @Override
     public String toString(){
         return idUser;
