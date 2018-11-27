@@ -5,9 +5,9 @@
 
 \begin{document}
 	\maketitle
-	
+
 	\newpage
-	
+
 	\section[Scelte progettuali]{Scelte progettuali}
 	In generale, si è deciso di creare una classe contenitrice \texttt{Element<E>} per incapsulare il tipo generico, in modo da rendere più facili le operazioni sui permessi, e una classe \texttt{User}, rappresentante il singolo utente.
 
@@ -17,7 +17,7 @@ La classe \texttt{Element<E>} contiene tre campi privati, con relativi metodi se
 \item Il campo \texttt{owner} è una stringa contenente il proprietario del dato.
 Non è accessibile direttamente, ma è possibile controllare se un particolare utente è prioprietario del dato tramite il metodo \texttt{ownedBy(who)}.
 
-\item Il campo \texttt{allowed} è una lista di stringhe, contenente gli utenti autorizzati ad accedere al dato (escluso il proprietario). 
+\item Il campo \texttt{allowed} è una lista di stringhe, contenente gli utenti autorizzati ad accedere al dato (escluso il proprietario).
 Non è possibile accedere direttamente alla lista, ma è possibile indicare che un utente deve essere autorizzato/disautorizzato tramite i rispettivi metodi \texttt{allowUser(other)} (che lancia \texttt{UserAlreadyAllowedException} se l'utente è già autorizzato) e \texttt{denyUser(other)} (che lancia \texttt{UserNotAllowedException} in caso l'utente non sia presente tra gli utenti autorizzati).
 
 \item Il campo \texttt{el} è una riferimento ad una istanza del tipo generico E. È possibile accedervi tramite il metodo \texttt{getEl()}, che restituisce un riferimento \texttt{el}, mentre non è possibile cambiarne il valore.
@@ -32,9 +32,18 @@ La classe \texttt{User} contiene due campi privati:
 
 \item Il campo \texttt{userPass} contiene la password dell'utente, ed è possibile soltanto modificarla,  tramite il metodo \texttt{setUserPass( newPass )}, mentre non è possibile accedervi in alcun modo.
 
-Inoltre, la classe implementa come meccanismo di login la sovrascrittura del metodo \texttt{Object.equals(other)}, che restituisce true se e solo se \texttt{other.getUserName().equals( this.getUserName )} e \texttt{other.userPass.equals (this.userPass)} (si è deciso di effettuare il confronto tramite i metodi/campi di other per lo stesso motivo di  \texttt{Element<E>.equals()}), e implementa l'interfaccia \texttt{Comparable<T>}, in modo da ordinare gli utenti in base al nome (proprietà che viene usata nella classe \texttt{TreeMapSecureDataContainer}).
+Inoltre, la classe implementa come meccanismo di login la sovrascrittura del metodo \texttt{Object.equals(other)}, che restituisce true se e solo se \texttt{other.getUserName().equals( this.getUserName )} e \newline
+\texttt{other.userPass.equals (this.userPass)} (si è deciso di effettuare il confronto tramite i metodi/campi di other per lo stesso motivo di   \newline\texttt{Element<E>.equals()}), e implementa l'interfaccia \texttt{Comparable<T>}, in modo da ordinare gli utenti in base al nome (proprietà che viene usata nella classe \texttt{TreeMapSecureDataContainer}).
 \end{itemize}
 
 \section{Scelte specifiche}
+Si è scelto di non imporre vincoli sulle classi/interfacce del tipo generico di \texttt{SecureDataContainer}, in modo da rendere l'utilizzo dell'interfaccia facile e non creare problemi di compatibilità, e di non criptare gli elementi salvati.
+\subsection{ListSecureDataContainer}
+Si è deciso di fornire le due implementazioni usando due metodologie diverse:
+La prima (\texttt{ListSecureDataContainer}) si appoggia su due liste non ordinate, la prima contenente gli utenti registrati, mentre la seconda contenente i dati degli utenti.
 
+
+\subsection{TreeMapSecureDataContainer}
+La seconda (\texttt{TreeMapSecureDataContainer}) si basa su una TreeMap (ordinata tramite \texttt{User.compareTo()}), che associa ad ogni utente una lista con gli elementi da lui posseduti.
+Nonostante ciò, la ricerca/rimozione/condivisione di un elemento non si avvale delle proprietà di un albero, in quanto bisogna scorrere ogni associazione utente/lista elementi, alla ricerca degli elementi condivisi (oltre a quelli posseduti, se non ci fosse bisogno di cercare tali elementi basterebbe controllare nella lista associata all'utente che ha richiesto l'operazione).
 \end{document}
