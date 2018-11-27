@@ -120,7 +120,7 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
             for( User other : db.keySet() ) {
                 List<Element<E>> userList = db.get(other);
                 for(Element e : userList ) {
-                    if(e.canBeAccessedBy(Owner)) return (E) e.getEl();
+                    if(e.canBeAccessedBy(Owner) && e.getEl().equals(data)) return (E) e.getEl();
                 }
             }
 
@@ -151,8 +151,9 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
             List<Element<E>> userData = db.get(u);
             int index = userData.indexOf(el);
             if(index != -1) {
-                E backup = userData.get( index ).getEl();
-                userData.remove(index);
+                Element<E> inList = userData.get( index );
+                E backup = inList.getEl();
+                userData.remove(inList);
                 return backup;
             }
         }
