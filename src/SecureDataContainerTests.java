@@ -1,6 +1,5 @@
 import java.util.Iterator;
 
-@SuppressWarnings("ALL")
 public class SecureDataContainerTests {
 
     public static class ComplexClassType {
@@ -28,7 +27,7 @@ public class SecureDataContainerTests {
 
         private static class TestFailedException extends RuntimeException {
             public TestFailedException(String msg) {
-                super("[TEST FALLITO] " + msg);
+                super("[ TEST FALLITO ] " + msg);
             }
         }
 
@@ -42,7 +41,7 @@ public class SecureDataContainerTests {
             try {
                 runner.exec();
             } catch (Exception e) {
-                System.out.println("Eccezione generata: " + e.getMessage());
+                System.out.println("[ TEST OK ] Eccezione generata: " + e.getMessage());
             }
         }
 
@@ -97,7 +96,7 @@ public class SecureDataContainerTests {
         ComplexClassType diffContained = container.get("crax", CRAX_PASSWORD, new ComplexClassType("complex1", 10, "def"));
         Tester.assertNotNull(diffContained);
         Tester.assertEquals(diffContained.differentStr, comp1.differentStr);
-        Tester.assertNotNull(container.remove("crax",  CRAX_PASSWORD, new ComplexClassType("complex1", 10, "def")));
+        Tester.assertNotNull(container.remove("crax", CRAX_PASSWORD, new ComplexClassType("complex1", 10, "def")));
         diffContained = container.get("crax", CRAX_PASSWORD, new ComplexClassType("complex1", 10, "def"));
         Tester.assertNull(diffContained);
     }
@@ -127,10 +126,8 @@ public class SecureDataContainerTests {
 
         Tester.expectNoExceptions(() -> container.share("crax", CRAX_PASSWORD, "luigi", "Meizu"));
         Tester.assertNotNull(container.get("luigi", LUIGI_PASS, "Meizu"));
-        Tester.assertNull(container.getInOwned("luigi", LUIGI_PASS, "Meizu"));
 
         Tester.expectNoExceptions(() -> Tester.assertEquals(container.getSize("luigi", LUIGI_PASS), 1));
-        Tester.expectNoExceptions(() -> Tester.assertEquals(container.getOwnedSize("luigi", LUIGI_PASS), 0));
         Tester.assertNotNull(container.get("crax", CRAX_PASSWORD, "Huawei"));
 
         Tester.assertNotNull(container.remove("crax", CRAX_PASSWORD, "Huawei"));

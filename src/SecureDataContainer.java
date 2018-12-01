@@ -29,14 +29,6 @@ public interface SecureDataContainer<E> {
      * 		       lancia InvalidCredentialsException */
     int getSize(String Owner, String passw) throws InvalidCredentialsException;
 
-    /* @effects: Restituisce il numero di elementi direttamente posseduti (quindi escludendo i condivisi) di un utente
-     * @requires: Owner, passw != null, altrimenti lancia NullPointerException
-     * 		      Inoltre Owner, passw devono essere le credenziali corrette di un utente, altrimenti
-     * 		       lancia InvalidCredentialsException
-     */
-
-    int getOwnedSize(String Owner, String passw) throws InvalidCredentialsException;
-
     /*Inserisce il valore del dato nella collezione
     se vengono rispettati i controlli di identità*/
     /* @effects: Restituisce true se l'utente è presente in this (Di conseguenza l'inserimento è riuscito),
@@ -51,12 +43,6 @@ public interface SecureDataContainer<E> {
      * @requires: Owner, passw, data != null, altrimenti lancia NullPointerException
      */
     E get(String Owner, String passw, E data);
-
-    /* @Effects: Ottiene una copia del valore del dato nella collezione
-     *   se vengono rispettati i controlli di identità (Cercando solo tra gli elementi direttamente posseduti)
-     * @requires: Owner, passw, data != null, altrimenti lancia NullPointerException
-     */
-    E getInOwned(String Owner, String passw, E data);
 
     /* Rimuove il dato nella collezione
     se vengono rispettati i controlli di identità*/

@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
 \title{Relazione SecureDataContainer}
 \author{Giovanni Solimeno}
 
@@ -37,7 +38,7 @@ Inoltre, la classe implementa come meccanismo di login la sovrascrittura del met
 \end{itemize}
 
 \section{Scelte specifiche}
-Si è scelto di non imporre vincoli sulle classi/interfacce del tipo generico di \texttt{SecureDataContainer}, in modo da rendere l'utilizzo dell'interfaccia facile e non creare problemi di compatibilità, e di non criptare gli elementi salvati.
+Si è scelto di non imporre vincoli sulle classi/interfacce del tipo generico di \texttt{SecureDataContainer}, in modo da rendere l'utilizzo dell'interfaccia facile e non creare problemi di compatibilità, e di non criptare gli elementi salvati (per lo stesso motivo).
 \subsection{ListSecureDataContainer}
 Si è deciso di fornire le due implementazioni usando due metodologie diverse:
 La prima (\texttt{ListSecureDataContainer}) si appoggia su due liste non ordinate, la prima contenente gli utenti registrati, mentre la seconda contenente i dati degli utenti.
@@ -45,5 +46,9 @@ La prima (\texttt{ListSecureDataContainer}) si appoggia su due liste non ordinat
 
 \subsection{TreeMapSecureDataContainer}
 La seconda (\texttt{TreeMapSecureDataContainer}) si basa su una TreeMap (ordinata tramite \texttt{User.compareTo()}), che associa ad ogni utente una lista con gli elementi da lui posseduti.
-Nonostante ciò, la ricerca/rimozione/condivisione di un elemento non si avvale delle proprietà di un albero, in quanto bisogna scorrere ogni associazione utente/lista elementi, alla ricerca degli elementi condivisi (oltre a quelli posseduti, se non ci fosse bisogno di cercare tali elementi basterebbe controllare nella lista associata all'utente che ha richiesto l'operazione).
+Nonostante ciò, la ricerca/rimozione/condivisione di un elemento non si avvale delle proprietà di un albero, in quanto bisogna scorrere ogni associazione utente/lista elementi, alla ricerca degli elementi condivisi (oltre a quelli posseduti, se non ci fosse bisogno di cercare tali elementi basterebbe controllare nella lista associata all'utente che ha richiesto l'operazione), ma permette un login/aggiunta di un utente in modo più efficace.
+
+\section{Esecuzione della batteria di test}
+Compilare tutti i sorgenti presenti nella cartella \texttt{src} e figlie ed eseguire il main presente nella classe \texttt{SecureDataContainerTests}.
+Se il risultato è diverso da \texttt{0} (oppure se vengono generati a schermo messaggi contenenti \texttt{[ TEST FALLITO ]}), picchiare il sottoscritto.
 \end{document}

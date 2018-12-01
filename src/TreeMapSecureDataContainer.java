@@ -1,5 +1,8 @@
 import java.util.*;
+
 import exceptions.*;
+
+// Per scelta stilistica, cerco di rendere più semplici possibili gli if
 
 /*
   IR: db != null e per ogni (u, l) in db si ha che u != null, l != null e
@@ -11,14 +14,13 @@ import exceptions.*;
 public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
 
 
-    private TreeMap< User, List<Element<E> > > db;
+    private TreeMap<User, List<Element<E>>> db;
 
-    @SuppressWarnings("unchecked")
     // Assumendo che l'utente si sia autenticato
     private Element<E> findElt(User u, E data) {
-        for(Element e : db.get(u)) {
-            if(e.getEl().equals(data))
-                return (Element<E>) e;
+        for (Element<E> e : db.get(u)) {
+            if (e.getEl().equals(data))
+                return e;
         }
 
         return null;
@@ -26,8 +28,8 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
 
     // Controlla se esiste un utente di nome who
     private boolean userAlreadyPresent(String who) {
-        for(User u : db.keySet()) {
-            if(u.getUserName().equals(who))
+        for (User u : db.keySet()) {
+            if (u.getUserName().equals(who))
                 return true;
         }
 
@@ -38,12 +40,13 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
         db = new TreeMap<>();
     }
 
+    // Inserisce l'utente solo se non c'è già
     @Override
     public void createUser(String Id, String passw) throws UserAlreadyPresentException, IllegalArgumentException {
-        if(Id == null || passw == null) throw new NullPointerException();
-        if(Id.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
+        if (Id == null || passw == null) throw new NullPointerException();
+        if (Id.isEmpty() || passw.isEmpty()) throw new IllegalArgumentException();
 
-        if(userAlreadyPresent(Id)) throw new UserAlreadyPresentException(Id);
+        if (userAlreadyPresent(Id)) throw new UserAlreadyPresentException(Id);
 
         User u = new User(Id, passw);
         db.put(u, new ArrayList<>());
@@ -51,28 +54,31 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
 
     @Override
     public void removeUser(String Id, String passw) throws InvalidCredentialsException {
-        if(Id == null || passw == null) throw new NullPointerException();
+        if (Id == null || passw == null) throw new NullPointerException();
 
         User u = new User(Id, passw);
-        if(!db.containsKey(u)) throw new InvalidCredentialsException();
+        if (!db.containsKey(u)) throw new InvalidCredentialsException();
 
         db.remove(u);
     }
 
+    // Dato che contiamo anche gli elementi condivisi, bisogna controllare ogni lista
+    // Per velocizzare il processo, inizializzo count alla dimensione della lista degli
+    // elementi posseduti dall'utente.
     @Override
     public int getSize(String Owner, String passw) throws InvalidCredentialsException {
-        if(Owner == null || passw == null) throw new NullPointerException();
+        if (Owner == null || passw == null) throw new NullPointerException();
 
         User u = new User(Owner, passw);
-        if(!db.containsKey(u)) throw new InvalidCredentialsException();
+        if (!db.containsKey(u)) throw new InvalidCredentialsException();
 
         int count = db.get(u).size();
-        for( User other : db.keySet() ) {
-            if(!other.equals(u)) {
+        for (User other : db.keySet()) {
+            if (!other.equals(u)) {
                 List<Element<E>> userList = db.get(other);
-                for(Element e : userList ) {
-                    if(e.canBeAccessedBy(Owner)) {
-                        count ++;
+                for (Element<E> e : userList) {
+                    if (e.canBeAccessedBy(Owner)) {
+                        count++;
                     }
                 }
             }
@@ -82,24 +88,14 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
     }
 
     @Override
-    public int getOwnedSize(String Owner, String passw) throws InvalidCredentialsException {
-        if(Owner == null || passw == null) throw new NullPointerException();
-
-        User u = new User(Owner, passw);
-        if(!db.containsKey(u)) throw new InvalidCredentialsException();
-
-        return db.get(u).size();
-    }
-
-    @Override
     public boolean put(String Owner, String passw, E data) {
-        if(Owner == null || passw == null || data == null ) throw new NullPointerException();
+        if (Owner == null || passw == null || data == null) throw new NullPointerException();
 
         User u = new User(Owner, passw);
-        if(db.containsKey(u)) {
+        if (db.containsKey(u)) {
             Element<E> e = new Element<>(data, Owner);
             List<Element<E>> userData = db.get(u);
-            if(!userData.contains(e)) {
+            if (!userData.contains(e)) {
                 userData.add(e);
                 return true;
             }
@@ -108,19 +104,17 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
         return false;
     }
 
-    // C'è un modo per renderlo più carino?
-    @SuppressWarnings("unchecked")
     @Override
     public E get(String Owner, String passw, E data) {
-        if(Owner == null || passw == null || data == null ) throw new NullPointerException();
+        if (Owner == null || passw == null || data == null) throw new NullPointerException();
 
         User u = new User(Owner, passw);
-        if(db.containsKey(u)) {
+        if (db.containsKey(u)) {
             // Bisogna controllare ogni elemento, e non solo quelli posseduti direttamente dall'utente
-            for( User other : db.keySet() ) {
+            for (User other : db.keySet()) {
                 List<Element<E>> userList = db.get(other);
-                for(Element e : userList ) {
-                    if(e.canBeAccessedBy(Owner) && e.getEl().equals(data)) return (E) e.getEl();
+                for (Element<E> e : userList) {
+                    if (e.canBeAccessedBy(Owner) && e.getEl().equals(data)) return e.getEl();
                 }
             }
 
@@ -129,29 +123,16 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
     }
 
     @Override
-    public E getInOwned(String Owner, String passw, E data) {
-        if(Owner == null || passw == null || data == null ) throw new NullPointerException();
-
-        User u = new User(Owner, passw);
-        if(db.containsKey(u)) {
-            Element<E> elt = findElt(u, data);
-            if(elt != null)
-                return elt.getEl();
-        }
-        return null;
-    }
-
-    @Override
     public E remove(String Owner, String passw, E data) {
-        if(Owner == null || passw == null || data == null ) throw new NullPointerException();
+        if (Owner == null || passw == null || data == null) throw new NullPointerException();
 
         User u = new User(Owner, passw);
-        if(db.containsKey(u)) {
+        if (db.containsKey(u)) {
             Element<E> el = new Element<>(data, Owner);
             List<Element<E>> userData = db.get(u);
             int index = userData.indexOf(el);
-            if(index != -1) {
-                Element<E> inList = userData.get( index );
+            if (index != -1) {
+                Element<E> inList = userData.get(index);
                 E backup = inList.getEl();
                 userData.remove(inList);
                 return backup;
@@ -161,13 +142,14 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
         return null;
     }
 
+    // Copia solo se l'utente possiede già data
     @Override
     public void copy(String Owner, String passw, E data) throws InvalidCredentialsException,
-                                                                ElementNotPresentException {
-        if(Owner == null || passw == null || data == null ) throw new NullPointerException();
+            ElementNotPresentException {
+        if (Owner == null || passw == null || data == null) throw new NullPointerException();
 
         User u = new User(Owner, passw);
-        if(!db.containsKey(u)) throw new InvalidCredentialsException();
+        if (!db.containsKey(u)) throw new InvalidCredentialsException();
 
         Element<E> el = new Element<>(data, Owner);
         List<Element<E>> userData = db.get(u);
@@ -178,52 +160,50 @@ public class TreeMapSecureDataContainer<E> implements SecureDataContainer<E> {
     }
 
     @Override
-    public void share(String Owner, String passw, String Other, E data) throws  InvalidCredentialsException,
-                                                                                UserNotPresentException,
-                                                                                UserNotAllowedException,
-                                                                                UserAlreadyAllowedException {
-        if (Owner == null || passw == null || Other == null || data == null ) throw new NullPointerException();
+    public void share(String Owner, String passw, String Other, E data) throws InvalidCredentialsException,
+            UserNotPresentException,
+            UserNotAllowedException,
+            UserAlreadyAllowedException {
+        if (Owner == null || passw == null || Other == null || data == null) throw new NullPointerException();
         if (!userAlreadyPresent(Other)) throw new UserNotPresentException();
 
         User u = new User(Owner, passw);
         if (!db.containsKey(u)) throw new InvalidCredentialsException();
 
         Element e = findElt(u, data);
-        if(e == null) throw new UserNotAllowedException();
+        if (e == null) throw new UserNotAllowedException();
 
         e.allowUser(Other);
 
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterator<E> getIterator(String Owner, String passw) throws InvalidCredentialsException {
-        if (Owner == null || passw == null ) throw new NullPointerException();
+        if (Owner == null || passw == null) throw new NullPointerException();
         User u = new User(Owner, passw);
         if (!db.containsKey(u)) throw new InvalidCredentialsException();
 
         // Bisogna iterare in ogni elemento, non solo in quelli associati direttamente all'utente
         List<E> initialList = new ArrayList<>(db.get(u).size());
-        for( User other : db.keySet() ) {
+        for (User other : db.keySet()) {
             List<Element<E>> userList = db.get(other);
-            for(Element e : userList ) {
-                if(e.canBeAccessedBy(Owner))  initialList.add((E) e.getEl());
+            for (Element<E> e : userList) {
+                if (e.canBeAccessedBy(Owner)) initialList.add(e.getEl());
             }
         }
         return Collections.unmodifiableList(initialList).iterator();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterator<E> getOwnedIterator(String Owner, String passw) throws InvalidCredentialsException {
-        if (Owner == null || passw == null ) throw new NullPointerException();
+        if (Owner == null || passw == null) throw new NullPointerException();
         User u = new User(Owner, passw);
         if (!db.containsKey(u)) throw new InvalidCredentialsException();
 
         // Bisogna iterare in ogni elemento, non solo in quelli associati direttamente all'utente
         List<E> initialList = new ArrayList<>(db.get(u).size());
-        for( Element e : db.get(u)) {
-            initialList.add( (E) e.getEl() );
+        for (Element<E> e : db.get(u)) {
+            initialList.add(e.getEl());
         }
         return Collections.unmodifiableList(initialList).iterator();
     }

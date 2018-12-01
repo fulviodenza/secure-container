@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+
 import exceptions.*;
 
 /*Overview: Tipo contenitore del generico con aggiunge due informazioni: Il possessore dell'elemento
@@ -10,8 +11,8 @@ import exceptions.*;
                                   ad accedere al dato
     */
 class Element<E> {
-    private String owner = null;
-    private E el = null;
+    private String owner;
+    private E el;
     private List<String> allowedUsers;
 
 
@@ -20,10 +21,10 @@ class Element<E> {
     EFFECTS: inizializza this.el, this.owner a (el, owner) e allowedUsers a una lista vuota
     */
     public Element(E el, String owner) {
-        if(el == null || owner == null) throw new NullPointerException();
+        if (el == null || owner == null) throw new NullPointerException();
         this.el = el;
         this.owner = owner;
-        allowedUsers = new ArrayList<String>();
+        allowedUsers = new ArrayList<>();
     }
 
     /*EFFECTS: Restituisce l'elemento contenuto in this*/
@@ -45,9 +46,9 @@ class Element<E> {
     */
     @Override
     public boolean equals(Object other) {
-        if(! (other instanceof Element)) throw new IllegalArgumentException();
+        if (!(other instanceof Element)) throw new IllegalArgumentException();
         Element o = (Element) other;
-        return (o.el.equals( this.el ) && o.owner.equals( this.owner ));
+        return (o.el.equals(this.el) && o.owner.equals(this.owner));
     }
 
     /*EFFECTS: Permette all'utente other di accedere ad El
@@ -55,8 +56,8 @@ class Element<E> {
                 other non in allowedUsers, altrimenti lancia UserAlreadyAllowedException (checked)
       MODIFIES: this */
     public void allowUser(String other) throws UserAlreadyAllowedException {
-        if(other == null) throw new NullPointerException();
-        if(allowedUsers.contains(other)) throw new UserAlreadyAllowedException();
+        if (other == null) throw new NullPointerException();
+        if (allowedUsers.contains(other)) throw new UserAlreadyAllowedException();
         allowedUsers.add(other);
     }
 
@@ -65,8 +66,8 @@ class Element<E> {
                 other in allowedUsers, altrimenti lancia UserNotAllowedException (checked)
       MODIFIES: this */
     public void denyUser(String other) throws UserNotAllowedException {
-        if(other == null) throw new NullPointerException();
-        if(!allowedUsers.contains(other)) throw new UserNotAllowedException();
+        if (other == null) throw new NullPointerException();
+        if (!allowedUsers.contains(other)) throw new UserNotAllowedException();
         allowedUsers.remove(other);
     }
 
