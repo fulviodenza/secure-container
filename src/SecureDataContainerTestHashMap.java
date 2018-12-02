@@ -1,85 +1,101 @@
 import exceptions.*;
 import java.util.Iterator;
 
-public class SecureDataContainerTest {
+public class SecureDataContainerTestHashMap {
 
-    private static void testContainer(SecureDataContainerArrayList<String> container) {
+    private static void testContainer(SecureDataContainerHashMap<String> container) {
         try {
-            container.createUser("Giua", "comefosseantani");
+            container.createUser("User1", "passUser1");
         } catch (UserAlreadyPresentException e) {
             System.out.println("User already present");
         }
 
         try {
-            container.createUser("Fruvio", "GiacominoPaneEVino");
+            container.createUser("User2", "passUser2");
         } catch (UserAlreadyPresentException e) {
             System.out.println("User already present");
         }
 
         try {
-            container.createUser("Luiggi", "xdxd");
+            container.createUser("User3", "passUser3");
         } catch (UserAlreadyPresentException e) {
             System.out.println("User already present");
         }
         try {
-            container.createUser("Luiggi", "xdxd");
+            container.createUser("User2", "xdxd");
         } catch (UserAlreadyPresentException e) {
             System.out.println("User already present");
         }
 
+        //Insert brand mobile phone
         try {
-            container.put("Luiggi", "xdxd", "samsung");
+            container.put("User3", "passUser3", "samsung");
         } catch (NoUserException e) {
             System.out.println("no user");
         }
 
         try {
-            container.share("Luiggi","xdxr","Fruvio","samsung");
+            container.share("User3","passUser3","User2","samsung");
         } catch (NoUserException e) {
             System.out.println("no user");
+        } catch (NoDataException e) {
+            System.out.println(("no data"));
+        } catch (DataAlreadyPresentException e) {
+            System.out.println("data already present");
         }
 
-        System.out.println("Stampa Elementi Fruvio");
+        System.out.println("Stampa Elementi User2");
         try {
-            Iterator cacca = container.getIterator("Fruvio", "GiacominoPaneEVino");
-            while (cacca.hasNext()) {
-                System.out.println(cacca.next());
+            Iterator it = container.getIterator("User2", "passUser2");
+            while (it.hasNext()) {
+                System.out.println(it.next());
             }
         } catch (NoUserException e) {
             System.out.println("no usergetite");
         }
+
         try {
-            boolean a = container.put("Giua", "comefosseantani", "apple");
+            boolean a = container.put("User1", "passUser1", "apple");
             System.out.println(a);
         } catch (NoUserException e) {
             System.out.println("no user");
         }
 
         try {
-            container.put("Fruvio", "GiacominoPaneEVino", "xiaomi");
+            container.put("User2", "passUser2", "xiaomi");
+        } catch (NoUserException e) {
+            System.out.println("no user");
+        }
+
+
+        try {
+            container.put("User2", "passUser2", "huawei");
         } catch (NoUserException e) {
             System.out.println("no user");
         }
 
         try {
-            container.put("Fruvio", "GiacominoPaneEVino", "xiaomi2");
+            container.put("User1", "passUser1", "blackberry");
         } catch (NoUserException e) {
             System.out.println("no user");
         }
 
         try {
-            container.put("Fruvio", "GiacominoPaneEVino", "xiaomi3");
+            container.put("User3","passUser3", "htc");
         } catch (NoUserException e) {
             System.out.println("no user");
+        }
+        try {
+            System.out.println(container.get("User2", "passUser2", "xiaomi"));
+        } catch (NoUserException e) {
+            System.out.println("no user");
+        } catch (NoDataException e) {
+            System.out.println("no data");
         }
 
+        //Should throw "no data" exception
         try {
-            container.put("Fruvio", "GiacominoPaneEVino", "xiaomi4");
-        } catch (NoUserException e) {
-            System.out.println("no user");
-        }
-        try {
-            System.out.println(container.get("Fruvio", "GiacominoPaneEVino", "xiaomi4"));
+            System.out.println(container.remove("User2", "passUser2", "apple"));
         } catch (NoUserException e) {
             System.out.println("no user");
         } catch (NoDataException e) {
@@ -87,22 +103,7 @@ public class SecureDataContainerTest {
         }
 
         try {
-            System.out.println(container.remove("Fruvio", "GiacominoPaneEVino", "apple"));
-        } catch (NoUserException e) {
-            System.out.println("no user");
-        } catch (NoDataException e) {
-            System.out.println("no data");
-        }
-
-        try {
-            System.out.println(container.get("Fruvio", "GiacominoPaneEVino", "xiaomi"));
-        } catch (NoUserException e) {
-            System.out.println("no user");
-        } catch (NoDataException e) {
-            System.out.println("no data2");
-        }
-        try {
-            container.copy("Fruvio", "GiacominoPaneEVino", "xiaomi5");
+            container.copy("User2", "passUser2", "motorola");
         } catch (NoUserException e) {
             System.out.println("no user");
         } catch (DataAlreadyPresentException e) {
@@ -110,24 +111,36 @@ public class SecureDataContainerTest {
         }
 
         try {
-            container.share("Fruvio", "GiacominoPaneEVino","Giua", "xiaomi5");
-        } catch (NoUserException e){
+            container.share("User3", "passUser3","User2", "htc");
+        } catch (NoUserException e) {
             System.out.println("no user");
+        } catch (NoDataException e) {
+            System.out.println(("no data"));
+        } catch (DataAlreadyPresentException e) {
+            System.out.println("data already present");
         }
+
         try {
-            System.out.println(container.getSize("Giua", "comefosseantani"));
+            System.out.println(container.getSize("User2", "passUser2"));
         } catch (NoUserException e) {
             System.out.println("no user");
         }
 
         try {
-            System.out.println(container.getSize("Fruvio", "GiacominoPaneEVino"));
+            System.out.println(container.getSize("User1", "passUser1"));
+        } catch (NoUserException e) {
+            System.out.println("no user");
+        }
+
+        //should throw "no user" exception
+        try {
+            System.out.println(container.getSize("User3", "passUser2"));
         } catch (NoUserException e) {
             System.out.println("no user");
         }
 
         try {
-            String samsungRemoved = container.remove("Luiggi", "xdxd", "samsung");
+            String samsungRemoved = container.remove("User3", "passUser3", "samsung");
             System.out.println(samsungRemoved);
         } catch (NoUserException e) {
             System.out.println("no user");
@@ -136,70 +149,59 @@ public class SecureDataContainerTest {
         }
 
         try {
-            String xiaomi3Removed = container.remove("Fruvio", "GiacominoPaneEVino", "xiaomi3");
-            System.out.println(xiaomi3Removed);
+            String xiaomiRemoved = container.remove("User2", "passUser2", "xiaomi");
+            System.out.println(xiaomiRemoved);
         } catch (NoUserException e) {
             System.out.println("no user");
         } catch (NoDataException e) {
             System.out.println("no data");
         }
 
-        System.out.println("Stampa Elementi Fruvio");
+        System.out.println("Stampa Elementi User2");
         try {
-            Iterator cacca = container.getIterator("Fruvio", "GiacominoPaneEVino");
-            while (cacca.hasNext()) {
-                System.out.println(cacca.next());
+            Iterator it = container.getIterator("User2", "passUser2");
+            while (it.hasNext()) {
+                System.out.println(it.next());
             }
         } catch (NoUserException e) {
             System.out.println("no usergetite");
         }
 
-        System.out.println("Stampa Elementi Giua");
+        System.out.println("Stampa Elementi User1");
         try {
-            Iterator iter = container.getIterator("Giua", "comefosseantani");
-            while (iter.hasNext()) {
-                System.out.println(iter.next());
-            }
-        } catch (NoUserException e) {
-            System.out.println("no usergetite");
-        }
-
-        try {
-            Iterator iter = container.getIterator("Fruvio", "GiacominoPaneEVino");
-            while (iter.hasNext()) {
-                System.out.println(iter.next());
+            Iterator it = container.getIterator("User1", "passUser1");
+            while (it.hasNext()) {
+                System.out.println(it.next());
             }
         } catch (NoUserException e) {
             System.out.println("no usergetite");
         }
 
         try {
-            container.removeUser("Fruvio", "GiacominoPaneEVino");
+            container.removeUser("User2", "passUser2");
         } catch (NoUserException e) {
             System.out.println("no user");
         }
+
+        //Should throw "User not present" exception
         try {
-            container.put("nomechemuore", "GiacominoPaneEVino", "ciaomondo");
+            container.put("UserNotPrensent", "passUserNotPresent", "helloworld");
         } catch (NoUserException e) {
             System.out.println("User not present");
         }
 
+        //Should throw "User not present" exception
         try {
-            container.removeUser("nomechemuore", "GiacominoPaneEVino");
+            container.removeUser("UserNotPrensent", "passUserNotPresent");
         } catch (NoUserException e) {
             System.out.println("User not present");
         }
-        try {
-            container.unshare("Luiggi","xdxr","Fruvio","samsung");
-        } catch (NoUserException e){
-            System.out.println("no user");
-        }
 
-        System.out.println("Stampa Elementi Fulvio");
+        System.out.println("Stampa Elementi User3");
         try {
-            Iterator iter = container.getIterator("Fruvio", "GiacominoPaneEVino");
-            while (iter.hasNext()) {
-                System.out.println(iter.next());
+            Iterator it = container.getIterator("User3", "passUser3");
+            while (it.hasNext()) {
+                System.out.println(it.next());
             }
         } catch (NoUserException e) {
             System.out.println("no usergetite");
@@ -207,7 +209,7 @@ public class SecureDataContainerTest {
     }
 
     public static void main(String[] args) {
-        SecureDataContainerArrayList<String> hashContainer = new SecureDataContainerArrayList<>();
+        SecureDataContainerHashMap<String> hashContainer = new SecureDataContainerHashMap<>();
         testContainer(hashContainer);
     }
 }

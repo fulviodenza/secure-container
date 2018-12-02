@@ -69,7 +69,7 @@ public class SecureDataContainerArrayList<E> implements SecureDataContainerInter
         int count = 0;
         if(Users.contains(u)){
             for(int i = 0; i < DataBase.size(); i++){
-                if(DataBase.get(i).returnOwner().equals(Owner) || DataBase.get(i).isOfOwner(Owner)){
+                if(DataBase.get(i).returnOwner().equals(Owner) && DataBase.get(i).isOfOwner(Owner)){
                     count++;
                 }
             }
